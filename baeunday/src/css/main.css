@@ -1,0 +1,258 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+.main-container {
+  font-family: 'Pretendard', sans-serif;
+  width: 100vw;
+  max-width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  background: white;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.top {
+  background-color: #216CFA;
+  padding: 2vh 4vw;
+  height: 13.92vh; /* 145.49 / 812 * 100 */
+  display: flex;
+  flex-direction: column;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;  /* 줄바꿈 방지 */
+  margin-top: 3.22vh;
+  width: 100%;        /* 부모 너비에 맞추기 */
+  box-sizing: border-box; /* padding 포함한 너비 계산 */
+}
+
+
+
+.baeunday {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.search-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-icon img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+
+.location-bar {
+  background: white;
+  padding: 1vh 4vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  /* 요소를 양쪽 끝으로 분배 */
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.arrow-container {
+  margin-left: auto; /* 오른쪽 끝으로 배치 */
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+
+/* 첫 번째 요소 */
+.location-item {
+  display: flex;
+  align-items: center;
+  gap: 1.7vw;
+  flex: 1; /* 양쪽 요소가 같은 비율로 확장 */
+  justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+/* 구분선 스타일 */
+.divider {
+  width: 1px;
+  height: 60%;
+  background-color: #ccc;
+  margin: 0 4vw;
+}
+
+/* 두 번째 요소 (구미시) */
+.location-item.second {
+  flex: 1; /* 첫 번째 요소와 같은 비율로 확장 */
+  color: #216CFA; /* 강조 색상 적용 */
+}
+
+
+.category {
+  padding: 1.5vh 4vw;
+  display: flex;
+  gap: 2vw;
+  border-bottom: 1px solid #f0f0f0;
+  background: white;
+  overflow-x: auto;
+  justify-content: flex-start;
+}
+
+/* 최신순 버튼 */
+.category-btn.latest {
+  border: 1px solid #d0d0d0;
+  background: white;
+  border-radius: 20px;       /* 둥글게 처리 */
+  padding: 1vh 3vw;
+  font-size: 1.8vh;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;                /* 아이콘과 텍스트 간격 */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 살짝 그림자 추가 */
+}
+
+/* 모집상태, 신청금액 버튼 */
+.category-btn.filter {
+  border: 1px solid #e0e0e0;
+  background: white;
+  border-radius: 6px;        /* 네모난 모양 유지 */
+  padding: 1vh 3vw;
+  font-size: 1.8vh;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;                /* 아이콘과 간격 */
+}
+
+.category-btn.active {
+  background: #216CFA;       /* 활성화 시 파란색 */
+  color: white;
+  border: none;
+}
+
+
+
+.content {
+  padding: 0 4vw;
+  margin-bottom: 10vh;
+  overflow-y: auto;
+  height: calc(78vh - 10vh);
+}
+
+.lecture-card {
+  display: flex;
+  padding: 2vh 0;
+  gap: 3vw;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.lecture-image {
+  width: 20vw;
+  height: 20vw;
+  border-radius: 1vh;
+  overflow: hidden;
+}
+
+.lecture-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lecture-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.lecture-info h2 {
+  margin: 0;
+  font-size: 2vh;
+  line-height: 1.4;
+  margin-bottom: 1vh;
+}
+
+.lecture-info p {
+  margin: 0;
+  font-size: 1.6vh;
+  color: #666;
+  margin-bottom: 1vh;
+}
+
+.status-btn {
+  border: none;
+  border-radius: 0.5vh;
+  padding: 1vh 2vw;
+  font-size: 1.6vh;
+  align-self: flex-start;
+}
+
+.status-btn.recruiting {
+  background: #216CFA;
+  color: white;
+}
+
+.status-btn.filled {
+  background: #e0e0e0;
+  color: #666;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 10vh;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #f0f0f0;
+}
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5vh;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 1.4vh;
+}
+
+.nav-btn img {
+  width: 3vh;
+  height: 3vh;
+}
+
+.nav-btn.active {
+  color: #216CFA;
+}
+
+.nav-btn.plus-btn {
+  margin-bottom: 2vh;
+}
+
+.nav-btn.plus-btn img {
+  width: 6vh;
+  height: 6vh;
+  background: #216CFA;
+  border-radius: 50%;
+  padding: 1.5vh;
+}
+
+body{
+  -ms-overflow-style: none;
+  }
+ ::-webkit-scrollbar {
+   display: none;
+ }
+ 
