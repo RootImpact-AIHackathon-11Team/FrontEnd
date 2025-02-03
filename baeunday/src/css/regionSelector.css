@@ -1,0 +1,51 @@
+.region-selector {
+  position: relative;
+  width: 100%;
+  background: white;
+  z-index: 1000;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  z-index: 999;
+}
+
+.region-list, .city-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  width: 50%;
+}
+
+.region-list button,
+.city-list button {
+  padding: 10px 15px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.region-list button.active,
+.city-list button.active {
+  background: #216CFA;
+  color: white;
+  font-weight: bold;
+}
+
+.region-list button:hover,
+.city-list button:hover {
+  background: #e6f0ff;
+}
