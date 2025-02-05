@@ -114,7 +114,7 @@ const MainPage = () => {
               />
             </div>
           </div>
-          <div className="divider"></div>
+          <div className="main-divider"></div>
           <div className="location-item second" onClick={() => toggleSelector('city')}>
             <span>{selectedCity || '세부 지역 선택'}</span>
             <div className="arrow-container">

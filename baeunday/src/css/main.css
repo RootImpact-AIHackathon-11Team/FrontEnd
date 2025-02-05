@@ -99,7 +99,7 @@
 }
 
 /* 구분선 스타일 */
-.divider {
+.main-divider {
   width: 1px;
   height: 60%;
   background-color: #ccc;
@@ -221,7 +221,6 @@
   border-radius: 4px;
   font-size: 10px;
   font-weight: bold;
-  text-align: center;
   align-self: flex-start;
 }
 
