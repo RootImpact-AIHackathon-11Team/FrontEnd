@@ -1,0 +1,74 @@
+/* lectureDetail.css */
+
+.lecture-detail-container {
+  padding: 16px;
+  font-family: 'Pretendard', sans-serif;
+  background-color: #f9f9f9;
+}
+
+.lecture-detail-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.lecture-detail-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.lecture-detail-info {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+.lecture-detail-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.lecture-detail-info-details p {
+  margin: 4px 0;
+}
+
+.lecture-detail-description,
+.lecture-detail-application-status,
+.lecture-detail-inquiry-section {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+.lecture-detail-progress-bar {
+  background-color: #eee;
+  border-radius: 8px;
+  height: 20px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.lecture-detail-progress {
+  background-color: #4caf50;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.lecture-detail-inquiry-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.lecture-detail-answer {
+  background-color: #f1f1f1;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 4px;
+}

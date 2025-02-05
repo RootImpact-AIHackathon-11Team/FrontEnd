@@ -5,6 +5,12 @@ body {
   margin: 0;
 }
 
+body{
+  -ms-overflow-style: none;
+  }
+ ::-webkit-scrollbar {
+   display: none;
+ }
 
 .App {
   text-align: center;

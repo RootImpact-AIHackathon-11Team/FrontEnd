@@ -1,51 +1,156 @@
-.region-selector {
-  position: relative;
-  width: 100%;
-  background: white;
-  z-index: 1000;
+/* 기존 region-btn -> region-button으로 수정 */
+.region-button {
+  border: 1px solid #ccc;
+  background-color: white;
+  padding: 1vh 2vw;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease; /* 부드러운 전환 효과 */
 }
 
-.dropdown-menu {
+/* Hover 효과 */
+.region-button:hover {
+  background-color: #f0f8ff;
+  border-color: #216CFA;
+  color: #216CFA;
+}
+
+/* 선택된 버튼 */
+.region-button.active {
+  color: #216CFA;
+  border: 1px solid #216CFA;
+  transform: scale(1.05);
+  font-weight: bold;
+}
+
+/* 컨테이너 */
+.region-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1vh;
+  justify-content: center;
+  padding: 1vh 0;
+}
+
+/* 그리드 컨테이너 추가 */
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5개의 동일한 크기의 열 */
+  gap: 8px; /* 버튼 사이의 간격 */
+  padding: 16px;
+  background: white;
+}
+
+.region-button {
+  width: 100%; /* 버튼이 그리드 셀을 꽉 채우도록 */
+  padding: 8px 4px; /* 상하 패딩 조정 */
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden;
+  text-overflow: ellipsis; /* 길이가 긴 텍스트는 ... 처리 */
+}
+
+/* city-list를 2열 4행으로 설정하고 가로 스크롤 가능하도록 변경 */
+/* city-slider: 전체 페이지를 가로로 배치 */
+.city-slider {
+  display: flex;               /* 페이지를 가로로 나열 */
+  overflow-x: auto;            /* 가로 스크롤 활성화 */
+  scroll-snap-type: x mandatory; /* 페이지 단위로 스냅 */
+}
+
+/* 각 페이지 스타일 */
+.city-page {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 8px;
+  min-width: 100%;
+  padding: 16px;
+  background: white;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+}
+
+/* 페이지네이션 도트 스타일 */
+/* 페이지네이션 도트 위치를 절대 위치로 조정 */
+.pagination-dots {
+  position: relative;       /* 부모 요소 기준으로 위치 설정 */
+  top: -8px;               /* 위로 10px 올리기 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;      /* 하단 여백 유지 */
+  z-index: 10;              /* 다른 요소 위로 배치 */
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  background-color: #ccc;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* 현재 페이지 표시 */
+.dot.active {
+  background-color: #717171;
+}
+
+/* 도시 버튼 스타일 */
+.city-page button {
+  width: 100%;
+  padding: 8px 4px;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 스크롤바 커스터마이징 (선택 사항) */
+.city-slider::-webkit-scrollbar {
+  height: 6px;
+}
+
+.city-slider::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.city-slider::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+.region-selector {
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
   background: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  z-index: 999;
+  z-index: 1000;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  /* Transition 효과 추가 */
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
-.region-list, .city-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 10px;
-  width: 50%;
+/* Selector가 열렸을 때 */
+.region-selector.open {
+  max-height: 500px; /* 충분한 최대 높이 설정 */
+  opacity: 1;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
-.region-list button,
-.city-list button {
-  padding: 10px 15px;
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.region-list button.active,
-.city-list button.active {
-  background: #216CFA;
-  color: white;
-  font-weight: bold;
-}
-
-.region-list button:hover,
-.city-list button:hover {
-  background: #e6f0ff;
-}
