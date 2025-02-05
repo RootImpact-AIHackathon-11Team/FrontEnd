@@ -1,0 +1,82 @@
+notlogin.css
+
+.notlogin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ffffff;
+}
+
+.title {
+  font-size: 17px;
+  color: #4b5563;
+  text-align: left;
+  margin-top: 16vh;
+}
+
+.highlight {
+  color: #216CFA;
+  font-size: 24px;
+}
+
+/* ✅ "와 함께"를 subtitle 스타일과 동일하게 설정 */
+.title-sub {
+  font-size: 16px;
+  color: #4b5563;
+  font-weight: normal;
+  margin-left: 4px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #4b5563;
+  text-align: left;
+  margin-top: -1vh;
+  margin-bottom: 4vh;
+}
+
+.description {
+  font-size: 16px;
+  color: #6b7280;
+  margin-top: 20px;
+  line-height: 1.5;
+  text-align: left;
+  margin-bottom: 35vh;
+}
+
+.nl-buttons {
+  width: 100%; 
+  max-width: 344px;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5vh;
+  margin-left: 5vw;
+  margin-bottom: 4vh;
+}
+
+.nl-signup-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #216CFA;
+  color: white;
+}
+
+.nl-login-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #e0e0e0;
+}

@@ -183,9 +183,9 @@ const MainPage = () => {
 
       {isSheetOpen && (
         <ActionSheet
-          options={sheetOptions}
-          onSelect={handleSelect}
-          onClose={() => setSheetOpen(false)}
+        options={sheetOptions}
+        onSelect={handleSelect}
+        onClose={() => setSheetOpen(false)}
         />
       )}
     </div>
