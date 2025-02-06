@@ -1,0 +1,46 @@
+/* HeaderComponent.css */
+
+.lecture-detail-header {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  position: relative;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.lecture-header-left {
+  position: absolute;
+  left: -2vw;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.lecture-back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  left: 5vw;
+}
+
+.lecture-header-right {
+  position: absolute;
+  left: 5vw;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.lecture-menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  left: 85vw;
+  top: 50%;
+  transform: translateY(-50%);
+}
