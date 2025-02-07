@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../css/lectureDetail.css';
 import LectureHeader from './LectureHeader';
 import InquirySection from './InquirySection'; 
@@ -179,9 +179,11 @@ const LectureDetailPage = () => {
   const { lectureId } = useParams();
   const [lectureData, setLectureData] = useState(null);
   const [error, setError] = useState(null);
-  const [currentUser, setCurrentUser] = useState('현재 사용자');  // 기본값을 '현재 사용자'로 변경
+  const [currentUser, setCurrentUser] = useState('조림핑');
 
   const [isOwner, setIsOwner] = useState(false); // 작성자인지 여부
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const data = dummyLectures[lectureId];
@@ -211,104 +213,124 @@ const LectureDetailPage = () => {
     setCurrentUser(e.target.value);
   };
 
+  const handleInquiryClick = () => {
+    navigate(`/lecture/${lectureId}/inquiries`, {
+      state: {
+        lectureData: lectureData,
+        currentUser: currentUser
+      }
+    });
+  };
+
   if (error) return <div>Error: {error}</div>;
   if (!lectureData) return <div>Loading...</div>;
 
   return (
-    <div className="lecture-detail-container">
-      <LectureHeader />
+    <div className="lecture-detail-wrapper">
+      <div className="lecture-detail-container">
+        <LectureHeader />
+        
+        {/* 모드 선택 드롭다운 */}
+        <select 
+          onChange={handleUserChange} 
+          value={currentUser}
+          className="mode-selector"
+        >
+          <option value="조림핑">관람자 모드</option>
+          <option value="컴공 사이에 피어난 전쟁통">강사 모드</option>
+        </select>
 
-
-      <section className="lecture-detail-info">
-        <div className="lecture-detail-top">
-          <img src={lectureData.image} alt={lectureData.title} className="lecture-detail-image" />
-          <div className="lecture-detail-info-details">
-            <h2>{lectureData.title}</h2>
-            <p><strong>일시</strong> {lectureData.date}</p>
-            <p><strong>신청</strong> {lectureData.applicationPeriod}</p>
-            <p><strong>비용</strong> {lectureData.fee}</p>
-            <p><strong>장소</strong> {lectureData.location}</p>
+        <section className="lecture-detail-info">
+          <div className="lecture-detail-top">
+            <img src={lectureData.image} alt={lectureData.title} className="lecture-detail-image" />
+            <div className="lecture-detail-info-details">
+              <h2>{lectureData.title}</h2>
+              <p><strong>일시</strong> {lectureData.date}</p>
+              <p><strong>신청</strong> {lectureData.applicationPeriod}</p>
+              <p><strong>비용</strong> {lectureData.fee}</p>
+              <p><strong>장소</strong> {lectureData.location}</p>
+            </div>
           </div>
+          <div className="lecture-detail-instructor">
+            <img 
+              src={lectureData.profileImg || profileDft} 
+              alt="강사 프로필" 
+              className="instructor-image" 
+            />
+            <div className="instructor-info">
+              <p className="instructor-name">{lectureData.instructor}</p>
+              <p className="instructor-date">2025-01-28</p>
+            </div>
+            <div className="temperature-container">
+              <span className="lecture-detail-temperature">{lectureData.instructorTemperature}</span>
+              <div className="temperature-bar">
+                <div 
+                  className="temperature-fill" 
+                  style={{ width: `${getTemperaturePercentage(lectureData.instructorTemperature)}%` }}
+                ></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div className="lecture-detail-title">
+        <h3>강의 설명</h3>
         </div>
-        <div className="lecture-detail-instructor">
-          <img 
-            src={lectureData.profileImg || profileDft} 
-            alt="강사 프로필" 
-            className="instructor-image" 
-          />
-          <div className="instructor-info">
-            <p className="instructor-name">{lectureData.instructor}</p>
-            <p className="instructor-date">2025-01-28</p>
-          </div>
-          <div className="temperature-container">
-            <span className="lecture-detail-temperature">{lectureData.instructorTemperature}</span>
-            <div className="temperature-bar">
-              <div 
-                className="temperature-fill" 
-                style={{ width: `${getTemperaturePercentage(lectureData.instructorTemperature)}%` }}
-              ></div>
+        <div className="lecture-detail-description">
+          
+          {lectureData.detail ? (
+            <ReactMarkdown>{lectureData.detail}</ReactMarkdown>
+          ) : (
+            <p>강의 설명이 없습니다.</p>
+          )}
+        </div>
+        <div className="divider">
+        <h3></h3>
+        </div>
+        <div className="application-status">
+        <h3>신청 현황</h3>
+          <div className="status-circle">
+            <svg width="180" height="180" viewBox="0 0 180 180">
+              {/* 배경 원 */}
+              <circle
+                cx="90"
+                cy="90"
+                r="80"
+                fill="none"
+                stroke="#E0E0E0"
+                strokeWidth="14"
+              />
+              {/* 진행도를 나타내는 원 */}
+              <circle
+                cx="90"
+                cy="90"
+                r="80"
+                fill="none"
+                stroke="#216CFA"
+                strokeWidth="14"
+                strokeDasharray={`${2 * Math.PI * 80}`}
+                strokeDashoffset={`${2 * Math.PI * 80 * (1 - calculateProgress(lectureData.currentApplicants, lectureData.maxApplicants) / 100)}`}
+              />
+            </svg>
+            <div className="status-text">
+              <div className="status-number">{lectureData.currentApplicants}/{lectureData.maxApplicants}명</div>
+              <div className="status-subtext">최소 인원 5명</div>
             </div>
           </div>
         </div>
-      </section>
-      <div className="lecture-detail-title">
-      <h3>강의 설명</h3>
-      </div>
-      <div className="lecture-detail-description">
         
-        {lectureData.detail ? (
-          <ReactMarkdown>{lectureData.detail}</ReactMarkdown>
-        ) : (
-          <p>강의 설명이 없습니다.</p>
-        )}
-      </div>
-      <div className="divider">
-      <h3></h3>
-      </div>
-      <div className="application-status">
-      <h3>신청 현황</h3>
-        <div className="status-circle">
-          <svg width="180" height="180" viewBox="0 0 180 180">
-            {/* 배경 원 */}
-            <circle
-              cx="90"
-              cy="90"
-              r="80"
-              fill="none"
-              stroke="#E0E0E0"
-              strokeWidth="14"
-            />
-            {/* 진행도를 나타내는 원 */}
-            <circle
-              cx="90"
-              cy="90"
-              r="80"
-              fill="none"
-              stroke="#216CFA"
-              strokeWidth="14"
-              strokeDasharray={`${2 * Math.PI * 80}`}
-              strokeDashoffset={`${2 * Math.PI * 80 * (1 - calculateProgress(lectureData.currentApplicants, lectureData.maxApplicants) / 100)}`}
-            />
-          </svg>
-          <div className="status-text">
-            <div className="status-number">{lectureData.currentApplicants}/{lectureData.maxApplicants}명</div>
-            <div className="status-subtext">최소 인원 5명</div>
+        {/* 문의하기 섹션 수정 */}
+        <section className="inquiry-button-section">
+          <h3>문의하기</h3>
+          <div className="inquiry-button-wrapper">
+            <button 
+              className="inquiry-button"
+              onClick={handleInquiryClick}
+            >
+              문의 작성하기
+            </button>
           </div>
-        </div>
+        </section>
       </div>
-      <div className="lecture-detail-container">
-      {/* 사용자 전환 드롭다운 */}
-    <select onChange={handleUserChange} value={currentUser}>
-      <option value="현재 사용자">관람자 모드</option>
-      <option value="컴공 사이에 피어난 전쟁통">강사 모드</option>
-    </select>
-      {/* currentUser prop 전달 */}
-      <InquirySection 
-        lectureData={lectureData} 
-        currentUser={currentUser}  // currentUser 전달
-      />
-    </div>
-      
     </div>
   );
 };

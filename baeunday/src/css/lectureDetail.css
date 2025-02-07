@@ -158,7 +158,7 @@
 
 .application-status h3 {
   text-align: left;
-  margin: 0 0 20px -20px;
+  margin: 0 0 20px 10px;
 }
 
 .status-circle {
@@ -186,6 +186,8 @@
   font-weight: 500;
   margin-bottom: 4px;
   font-weight: bold;
+  border-bottom: 1.5px solid #216CFA;
+  display: inline-block;
 }
 
 .status-subtext {
@@ -201,9 +203,25 @@
   text-align: left;
   font-size: 16px;
   font-weight: 400;
-  margin: 0;
   padding: 16px 0;
   color: #333;
+}
+
+.inquiry-button {
+  width: calc(100% - 4vw);  /* 좌우 여백을 고려한 너비 */
+  margin: 20px 2vw;
+  padding: 12px 0;
+  background-color: #216CFA;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.inquiry-button:hover {
+  background-color: #1a56c6;
 }
 
 .comment-item {
@@ -263,5 +281,91 @@
   cursor: pointer;
   font-size: 20px;
   color: #666;
+}
+
+/* 모드 선택 드롭다운 스타일 */
+.mode-selector {
+  margin: 16px 2vw;
+  padding: 8px 12px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  background-color: white;
+  cursor: pointer;
+}
+
+.mode-selector:focus {
+  outline: none;
+  border-color: #216CFA;
+}
+
+/* 문의하기 버튼 컨테이너 */
+.inquiry-button-container {
+  padding: 20px 2vw;
+}
+
+/* 문의하기 버튼 스타일 */
+.inquiry-button {
+  width: 100%;
+  padding: 12px 0;
+  background-color: #216CFA;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.inquiry-button:hover {
+  background-color: #1a56c6;
+}
+
+/* 모드 선택 드롭다운 스타일 */
+.mode-selector {
+  margin: 16px 2vw;
+  padding: 8px 12px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  background-color: white;
+  cursor: pointer;
+}
+
+.mode-selector:focus {
+  outline: none;
+  border-color: #216CFA;
+}
+
+/* 문의하기 섹션 스타일 수정 */
+.inquiry-button-section {
+  padding: 16px 30px 16px 15px;  /* 왼쪽 패딩만 수정 */
+  border-top: 1px solid #E0E0E0;
+}
+
+.inquiry-button-section h3 {
+  text-align: left;
+  margin: 0 0 0px 16px;
+}
+
+
+.inquiry-button {
+  width: 100%;
+  padding: 8px;
+  background-color: white;
+  border: 1px solid #216CFA;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #216CFA;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.inquiry-button:hover {
+  background-color: #216CFA;
+  color: white;
 }
 

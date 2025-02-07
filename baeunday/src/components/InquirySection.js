@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import profileEx1 from '../assets/examples/profileEx1.png';
 import profileDft from '../assets/examples/profileDft1.png';
 import InquiryActionSheet from './InquiryActionSheet';
 import '../css/inquiryActionSheet.css';
@@ -18,14 +19,25 @@ const InquirySection = ({ lectureData, currentUser }) => {
 
   const handleInputChange = (e) => setNewQuestion(e.target.value);
 
+  const getUserProfileImage = (username) => {
+    switch(username) {
+      case '조림핑':
+        return profileEx1;
+      case '컴공 사이에 피어난 전쟁통':
+        return profileEx1;
+      default:
+        return profileDft;
+    }
+  };
+
   const handleSubmit = () => {
     if (newQuestion.trim()) {
       const newInquiry = {
         id: inquiries.length + 1,
-        user: currentUser, // 현재 사용자로 대체
+        user: currentUser,
         date: new Date().toISOString().slice(0, 10),
         question: newQuestion,
-        profileImg: null,
+        profileImg: getUserProfileImage(currentUser),
         answer: null,
       };
       setInquiries([...inquiries, newInquiry]);

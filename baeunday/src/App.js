@@ -6,6 +6,7 @@ import Loading from './pages/loading';
 import NotLogin from './pages/notlogin';
 import Login from './pages/login';
 import Signup from './pages/signup';
+import InquiryPage from './components/InquiryPage';
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/lecture/:lectureId" element={<LectureDetailPage />} />
+        <Route 
+          path="/lecture/:lectureId/inquiries" 
+          element={<InquiryPage />} 
+        />
       </Routes>
     </Router>
   );
