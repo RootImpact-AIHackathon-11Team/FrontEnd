@@ -6,7 +6,7 @@ import Loading from './pages/loading';
 import NotLogin from './pages/notlogin';
 import Login from './pages/login';
 import Signup from './pages/signup';
-import InquiryPage from './components/InquiryPage';
+import InquiryPage from './pages/InquiryPage';
 
 function App() {
   return (

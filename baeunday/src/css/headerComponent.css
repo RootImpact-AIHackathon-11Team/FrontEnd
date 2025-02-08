@@ -29,7 +29,7 @@
 
 .lecture-header-right {
   position: absolute;
-  left: 5vw;
+  left: 4vw;
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -40,8 +40,43 @@
   border: none;
   cursor: pointer;
   position: absolute;
-  left: 85vw;
+  left: 82vw;
   top: 50%;
+  margin-right: 15px;
   transform: translateY(-50%);
 }
 
+#lecture-menu-icon {
+  right: 5vw;
+}
+
+#lecture-jjim-icon {
+  right: 6vw;  /* 기존 5vw보다 약간 더 큰 값 */
+}
+
+.apply-button-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background-color: white;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.apply-button {
+  width: 100%;
+  padding: 14px 0;
+  background-color: #216CFA;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.apply-button:hover {
+  background-color: #1a56c6;
+}

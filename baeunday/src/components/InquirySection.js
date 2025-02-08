@@ -3,6 +3,8 @@ import profileEx1 from '../assets/examples/profileEx1.png';
 import profileDft from '../assets/examples/profileDft1.png';
 import InquiryActionSheet from './InquiryActionSheet';
 import '../css/inquiryActionSheet.css';
+import '../css/inquirySection.css';
+import InquiryModal from './InquiryModal';
 
 const InquirySection = ({ lectureData, currentUser }) => {
   const [newQuestion, setNewQuestion] = useState('');
@@ -12,6 +14,7 @@ const InquirySection = ({ lectureData, currentUser }) => {
   const [isOwnComment, setIsOwnComment] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [isAnswerSelected, setIsAnswerSelected] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setIsOwner(currentUser === lectureData.instructor);
@@ -144,9 +147,28 @@ const InquirySection = ({ lectureData, currentUser }) => {
     setActionSheetVisible(false);
   };
 
+  const handleInquirySubmit = (content) => {
+    // 여기에 문의 등록 로직 추가
+    console.log('문의 등록:', content);
+    // API 호출 등의 로직이 들어갈 수 있습니다
+  };
+
   return (
-    <section className="inquiry-section">
-      <h3>문의하기</h3>
+    <div className="inquiry-section">
+      {!isOwner && ( <div className="inquiry-section-header">
+        <h3>문의하기</h3>
+        <button
+        className="direct-inquiry-btn"
+        onClick={() => setIsModalOpen(true)}>
+          문의 등록
+        </button>
+      </div>
+      )}
+      <InquiryModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleInquirySubmit}
+      />
       {inquiries.map((inquiry) => (
         <div key={inquiry.id} className="comment-item">
           <div className="comment-header">
@@ -186,16 +208,7 @@ const InquirySection = ({ lectureData, currentUser }) => {
         </div>
       ))}
 
-      {!isOwner && (
-        <div className="new-inquiry">
-          <textarea
-            value={newQuestion}
-            onChange={handleInputChange}
-            placeholder="새로운 문의를 작성하세요."
-          />
-          <button onClick={handleSubmit}>문의 등록</button>
-        </div>
-      )}
+      
 
       <InquiryActionSheet
         isVisible={actionSheetVisible}
@@ -206,7 +219,7 @@ const InquirySection = ({ lectureData, currentUser }) => {
         onDelete={handleDelete}
         onReply={handleReply}
       />
-    </section>
+    </div>
   );
 };
 

@@ -228,7 +228,7 @@ const LectureDetailPage = () => {
   return (
     <div className="lecture-detail-wrapper">
       <div className="lecture-detail-container">
-        <LectureHeader />
+        <LectureHeader isInstructor={currentUser === "컴공 사이에 피어난 전쟁통"} />
         
         {/* 모드 선택 드롭다운 */}
         <select 
@@ -319,17 +319,17 @@ const LectureDetailPage = () => {
         </div>
         
         {/* 문의하기 섹션 수정 */}
-        <section className="inquiry-button-section">
+        <div className={`inquiry-button-section ${!isOwner ? 'viewer-mode' : ''}`}>
           <h3>문의하기</h3>
           <div className="inquiry-button-wrapper">
             <button 
               className="inquiry-button"
               onClick={handleInquiryClick}
             >
-              문의 작성하기
+              문의 전체보기
             </button>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );
