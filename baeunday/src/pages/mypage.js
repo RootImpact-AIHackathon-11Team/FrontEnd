@@ -18,9 +18,9 @@ export default function MyPage() {
   // 모달 닫기
   const handleCloseModal = () => setIsModalOpen(false);
   // 프로필 편집 페이지로 이동
-  const handleProfileEdit = () => navigate('/profileedit');
+  const handleProfileEdit = () => navigate('/profile/edit');
   // 받은 평가 페이지로 이동
-  const handleReviewPage = () => navigate('/reviewpage');  // 이 부분이 새로 추가됨
+  const handleReviewPage = () => navigate('/mypage/review');  // 이 부분이 새로 추가됨
 
   return (
     <div className="p-container">

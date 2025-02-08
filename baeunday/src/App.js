@@ -22,6 +22,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/lecture/:lectureId" element={<LectureDetailPage />} />
+        <Route path="/lecture/:lectureId/inquiries" element={<InquiryPage />} />
+        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/mypage/review" element={<ReviewPage />} />
+        <Route path="/profile/edit" element={<ProfileEdit />} />
+        <Route path="/profile/nickname" element={<NicknameEdit />} />
       </Routes>
     </Router>
   );
