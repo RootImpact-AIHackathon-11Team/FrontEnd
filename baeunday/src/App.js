@@ -11,6 +11,7 @@ import ProfileEdit from './components/ProfileEdit';
 import NicknameEdit from './components/NicknameEdit';
 import ReviewPage from './components/ReviewPage';
 import InquiryPage from './pages/InquiryPage';
+import AppliedPage from './pages/AppliedPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/mypage/review" element={<ReviewPage />} />
         <Route path="/profile/edit" element={<ProfileEdit />} />
         <Route path="/profile/nickname" element={<NicknameEdit />} />
+        <Route path="/applied" element={<AppliedPage />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,27 @@
+/* inquiryHeader.css */
+/* Inquiry Header 스타일 */
+.applied-header {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  position: relative;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.applied-header-title {
+  font-size: 15px;
+  font-weight: 400;
+  text-align: center;
+  margin: 0 0 5px 0;
+  padding-right: 10vw;
+}
+
+.applied-header-left {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}

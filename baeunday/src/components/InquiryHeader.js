@@ -15,7 +15,7 @@ const InquiryHeader = ({ title = "문의" }) => {
 
       </div>
       <div className="lecture-header-right">
-        <h1 className="header-title">{title}</h1>
+        <h1 className="inquiry-header-title">{title}</h1>
       </div>
     </div>
   );

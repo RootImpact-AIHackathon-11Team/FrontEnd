@@ -1,0 +1,124 @@
+.applied-container {
+  padding-top: 6vh;  /* LectureDetailPage와 동일하게 6vh로 설정 */
+  font-family: 'Pretendard', sans-serif;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+
+.filter-section {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 6px 15px;
+  border: 1px solid #d0d0d0;
+  border-radius: 20px;
+  background: white;
+  font-size: 14px;
+  color: #000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-btn.active {
+  background: #216CFA;
+  color: white;
+  border-color: #216CFA;
+}
+
+.applied-content {
+  padding: 15px;
+}
+
+.applied-card {
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.applied-date {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.applied-info h2 {
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  font-weight: normal;
+}
+
+.applied-info p {
+  color: #666;
+  font-size: 14px;
+  margin: 0 0 8px 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status-badge.confirmed {
+  background: #216CFA;
+  color: white;
+}
+
+.status-badge.pending {
+  background: #E0E0E0;
+  color: #666;
+}
+
+.inquiry-header {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  position: relative;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.lecture-header-left {
+  position: absolute;
+  left: -2vw;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.inquiry-back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  left: 5vw;
+}
+
+.header-title {
+  font-size: 15px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.header-search {
+  position: absolute;
+  right: 5vw;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+} 
