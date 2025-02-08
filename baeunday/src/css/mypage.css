@@ -1,0 +1,241 @@
+.p-container {
+  background-color: white;
+  padding: 0 0 20px 0;
+  margin-top: -12px;  /* 전체 컨텐츠를 위로 12px 올림 */
+}
+
+.p-header {
+  font-size: 16px;
+  text-align: center;
+  padding: 15px 0;
+  border-bottom: 1px solid white;
+  margin-bottom: 0;
+  font-weight: normal;
+  margin-top: 5vh;
+}
+
+.p-profileCard {
+  background: white;
+  padding: 16px 20px;
+  margin-bottom: 0;
+}
+
+.p-profileInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+}
+
+.p-profileImage {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  margin-left:-2vw;
+}
+
+.p-profileName {
+  color: #2D68FF;
+  font-size: 16px;
+  margin-bottom: -0.5vh;
+}
+
+.p-profileDesc {
+  font-size: 10px;
+  color: #999;
+}
+
+.p-arrow {
+  width: 13px;
+  height: 13px;
+  opacity: 0.9;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+#arrow1 {
+  margin-left: 22vw;
+}
+#arrow2{
+  margin-right: -0.5vw;
+  margin-bottom: 5.8vh;
+}
+#arrow3{
+  margin-right: 0vw;
+  margin-bottom: 31vh;
+}
+
+.p-temperatureWrapper {
+  border-top: none;
+  padding-top: 0;
+}
+
+.p-temperatureLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 9px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.p-temperatureLeft {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.p-temperatureText {
+  font-size: 12px;
+  color: #666;
+  text-decoration: underline;
+}
+
+.p-temperatureValue {
+  font-size: 12.5px;
+  color: #2D68FF;
+  font-weight: 500;
+}
+
+.p-infoIcon {
+  color: #999;
+}
+
+.p-progressBar {
+  height: 6px;
+  background: #eee;
+  border-radius: 3px;
+}
+
+.p-progressFill {
+  height: 100%;
+  background: #2D68FF;
+  border-radius: 2px;
+  width: 35%;  /* 36.5도에 맞는 너비 */
+}
+
+
+.p-menuCard {
+  background: white;
+  border-radius: 0px;
+  padding: 11px;
+  margin: 16px;  /* 다시 16px로 복원 */
+  box-shadow: 0 0 0 0.2px rgba(0, 0, 0, 0.08);
+  width: 94.5vw;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  margin-left: 3vw;
+  margin-top: -0vh;
+}
+
+
+.p-menuContent {
+  display: flex;
+  align-items: flex-start;
+  gap: -5px;
+  position: relative;
+}
+
+.p-menuIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+
+.p-menuTextContainer {
+  flex: 1;
+  padding-left: 32px;
+}
+
+.p-menuTitle {
+  font-size: 15px;
+  font-weight: normal;
+  margin-bottom: 11px;
+  margin-left: -1vw;
+}
+
+.p-menuDesc {
+  font-size: 11px;
+  color: #999;
+  margin-left: -2vw;
+}
+
+.p-reviewList {
+  margin-top: 12px;
+}
+
+.p-reviewItem {
+  position: relative;  /* 상위 요소를 위치 기준점으로 설정 */
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  margin-top: -0.5vh;
+}
+
+.p-reviewerImage {
+  position: absolute;  /* 절대 위치 설정 */
+  width: 16px;
+  height: 16px;  /* 상위 요소의 중간에 위치 */
+  margin-left: -6vw;
+  margin-top: -1vh;
+}
+
+
+.p-reviewItem:last-child {
+  border-bottom: none;
+}
+
+.p-reviewContent {
+  flex: 1;
+}
+
+.p-reviewerName {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #2D68FF;
+  margin-bottom: 4px;
+  margin-top:-1vh;
+  font-weight: bold;
+}
+
+.p-reviewText {
+  font-size: 11.5px;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 1vh;
+}
+
+.p-starIcon {
+  width: 21px;
+  height: 21px;
+  margin-top: -32vh;
+  margin-right: 0vw;
+}
+
+.p-questionIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.5;
+}
+
+.p-temperatureSection {
+  background: white;
+  border-radius: 0px;
+  padding: 10px;  
+  margin: 11px;
+  box-shadow: 0 0 0 0.2px rgba(0, 0, 0, 0.08);
+  width: 94.5vw;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  margin-left: -2.5vw;
+  margin-top: -3.5vh;
+  height: 6.5vh;
+}
+
+
+
+
+

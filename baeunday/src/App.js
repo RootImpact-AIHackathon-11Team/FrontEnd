@@ -6,6 +6,10 @@ import Loading from './pages/loading';
 import NotLogin from './pages/notlogin';
 import Login from './pages/login';
 import Signup from './pages/signup';
+import Mypage from './pages/mypage';
+import ProfileEdit from './components/ProfileEdit';
+import NicknameEdit from './components/NicknameEdit';
+import ReviewPage from './components/ReviewPage';
 import InquiryPage from './pages/InquiryPage';
 
 function App() {
@@ -18,10 +22,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/lecture/:lectureId" element={<LectureDetailPage />} />
-        <Route 
-          path="/lecture/:lectureId/inquiries" 
-          element={<InquiryPage />} 
-        />
       </Routes>
     </Router>
   );
