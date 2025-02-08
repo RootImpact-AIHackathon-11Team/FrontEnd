@@ -14,13 +14,13 @@
   margin-top: 5vh;
 }
 
-.profileCard {
+.p-profileCard {
   background: white;
   padding: 16px 20px;
   margin-bottom: 0;
 }
 
-.profileInfo {
+.p-profileInfo {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -28,25 +28,25 @@
   padding-bottom: 16px;
 }
 
-.profileImage {
+.p-profileImage {
   width: 56px;
   height: 56px;
   border-radius: 50%;
   margin-left:-2vw;
 }
 
-.profileName {
+.p-profileName {
   color: #2D68FF;
   font-size: 16px;
   margin-bottom: -0.5vh;
 }
 
-.profileDesc {
+.p-profileDesc {
   font-size: 10px;
   color: #999;
 }
 
-.arrow {
+.p-arrow {
   width: 13px;
   height: 13px;
   opacity: 0.9;
@@ -66,12 +66,12 @@
   margin-bottom: 31vh;
 }
 
-.temperatureWrapper {
+.p-temperatureWrapper {
   border-top: none;
   padding-top: 0;
 }
 
-.temperatureLabel {
+.p-temperatureLabel {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,35 +80,35 @@
   flex-shrink: 0;
 }
 
-.temperatureLeft {
+.p-temperatureLeft {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.temperatureText {
+.p-temperatureText {
   font-size: 12px;
   color: #666;
   text-decoration: underline;
 }
 
-.temperatureValue {
+.p-temperatureValue {
   font-size: 12.5px;
   color: #2D68FF;
   font-weight: 500;
 }
 
-.infoIcon {
+.p-infoIcon {
   color: #999;
 }
 
-.progressBar {
+.p-progressBar {
   height: 6px;
   background: #eee;
   border-radius: 3px;
 }
 
-.progressFill {
+.p-progressFill {
   height: 100%;
   background: #2D68FF;
   border-radius: 2px;
@@ -116,7 +116,7 @@
 }
 
 
-.menuCard {
+.p-menuCard {
   background: white;
   border-radius: 0px;
   padding: 11px;
@@ -130,14 +130,14 @@
 }
 
 
-.menuContent {
+.p-menuContent {
   display: flex;
   align-items: flex-start;
   gap: -5px;
   position: relative;
 }
 
-.menuIcon {
+.p-menuIcon {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
@@ -146,36 +146,36 @@
   top: 2px;
 }
 
-.menuTextContainer {
+.p-menuTextContainer {
   flex: 1;
   padding-left: 32px;
 }
 
-.menuTitle {
+.p-menuTitle {
   font-size: 15px;
   font-weight: normal;
   margin-bottom: 11px;
   margin-left: -1vw;
 }
 
-.menuDesc {
+.p-menuDesc {
   font-size: 11px;
   color: #999;
   margin-left: -2vw;
 }
 
-.reviewList {
+.p-reviewList {
   margin-top: 12px;
 }
 
-.reviewItem {
+.p-reviewItem {
   position: relative;  /* 상위 요소를 위치 기준점으로 설정 */
   padding: 12px 0;
   border-bottom: 1px solid #eee;
   margin-top: -0.5vh;
 }
 
-.reviewerImage {
+.p-reviewerImage {
   position: absolute;  /* 절대 위치 설정 */
   width: 16px;
   height: 16px;  /* 상위 요소의 중간에 위치 */
@@ -184,15 +184,15 @@
 }
 
 
-.reviewItem:last-child {
+.p-reviewItem:last-child {
   border-bottom: none;
 }
 
-.reviewContent {
+.p-reviewContent {
   flex: 1;
 }
 
-.reviewerName {
+.p-reviewerName {
   font-size: 12.5px;
   font-weight: 500;
   color: #2D68FF;
@@ -201,27 +201,27 @@
   font-weight: bold;
 }
 
-.reviewText {
+.p-reviewText {
   font-size: 11.5px;
   color: #666;
   line-height: 1.4;
   margin-bottom: 1vh;
 }
 
-.starIcon {
+.p-starIcon {
   width: 21px;
   height: 21px;
   margin-top: -32vh;
   margin-right: 0vw;
 }
 
-.questionIcon {
+.p-questionIcon {
   width: 16px;
   height: 16px;
   opacity: 0.5;
 }
 
-.temperatureSection {
+.p-temperatureSection {
   background: white;
   border-radius: 0px;
   padding: 10px;  

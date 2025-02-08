@@ -1,27 +1,95 @@
-.profileEditContainer {
-    padding: 20px;
-    background-color: #f8f8f8;
-  }
-  
-  .profileDetails img {
-    width: 100px; 
-    height: 100px; 
-    border-radius: 50%; 
-    margin-bottom: 20px; 
-  }
-  
-  .profileDetails p {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 10px; 
-  }
-  
-  .profileDetails button {
-    padding: 10px 20px;
-    background-color: #4CAF50; 
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
+.profileeditContainer {
+  background-color: white;
+  min-height: 100vh;
+}
+
+.profileeditHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  position: relative;
+  margin-top: 40px;
+}
+
+.profileeditbackButton {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  margin-left: 7px;
+}
+
+.profileeditheaderTitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 15px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.profileImageSection {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.profileImageWrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.profileeditprofileImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cameraIconWrapper {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileeditcameraIcon {
+  width: 26px;
+  height: 26px;
+}
+
+.profileList {
+  padding: 0 20px;
+}
+
+.profileItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.itemLabel {
+  color: #2D68FF;
+  font-size: 15px;
+}
+
+.itemContent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 14px;
+}
+
+.profileeditarrowIcon {
+  width: 12px;
+  height: 12px;
+  opacity: 0.9;
+} 

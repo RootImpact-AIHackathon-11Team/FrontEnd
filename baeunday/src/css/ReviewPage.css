@@ -1,0 +1,86 @@
+.reviewpagereviewContainer {
+  background-color: white;
+  min-height: 100vh;
+}
+
+.reviewpagereviewHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  position: relative;
+}
+
+.reviewpagebackButton {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.reviewpageheaderTitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.reviewpagereviewItem {
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.reviewpagereviewProfile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.reviewpagereviewerImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.reviewpagereviewerName {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reviewpagereviewDate {
+  margin-left: auto;
+  color: #999;
+  font-size: 14px;
+}
+
+.reviewpagestarRating {
+  margin-bottom: 12px;
+}
+
+.reviewpagestar {
+  color: #FFD600;
+  font-size: 20px;
+  margin-right: 2px;
+}
+
+.reviewpagestar.filled {
+  color: #FFD600;
+}
+
+.reviewpagestar.empty {
+  color: #E0E0E0;
+}
+
+.reviewpagereviewText {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  margin: 0;
+}
