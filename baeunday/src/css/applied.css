@@ -1,5 +1,5 @@
 .applied-container {
-  padding-top: 6vh;  /* LectureDetailPage와 동일하게 6vh로 설정 */
+  padding-top: 4.5vh; /* 상단 여백 제거 */
   font-family: 'Pretendard', sans-serif;
   width: 100%;
   max-width: 100%;
@@ -7,28 +7,32 @@
   position: relative;
 }
 
-
-.filter-section {
-  padding: 10px 15px;
+.applied-filter-wrap {
+  padding: 14px 15px;
+  padding-bottom: 0px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 10px;  /* 아이콘과의 간격 조정 */
 }
 
-.filter-btn {
-  padding: 6px 15px;
-  border: 1px solid #d0d0d0;
-  border-radius: 20px;
+.applied-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;  /* MainPage와 동일한 패딩 */
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
   background: white;
   font-size: 14px;
-  color: #000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #666;  /* MainPage와 동일한 색상 */
+  cursor: pointer;
+  height: 32px;  /* MainPage와 동일한 높이 */
 }
 
-.filter-btn.active {
-  background: #216CFA;
-  color: white;
-  border-color: #216CFA;
+.applied-filter-btn img {
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
 }
 
 .applied-content {
@@ -41,40 +45,77 @@
   cursor: pointer;
 }
 
+.applied-date-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #666;
+}
+
 .applied-date {
-  color: #666;
   font-size: 14px;
-  margin-bottom: 8px;
 }
 
-.applied-info h2 {
-  font-size: 16px;
-  margin: 0 0 8px 0;
-  font-weight: normal;
+.applied-card-main {
+  display: flex;
+  gap: 3vw;
+  align-items: center;
 }
 
-.applied-info p {
-  color: #666;
+.applied-card-image {
+  width: 22vw;
+  height: 22vw;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid #e0e0e0;
+}
+
+.applied-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.applied-card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.applied-card-info h2 {
+  font-size: 1.8vh;
+  margin: 0 0 2vh 0;  /* 하단 마진 2vh 추가 */
+  color: #000;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.applied-card-info p {
+  margin: 0;
   font-size: 14px;
-  margin: 0 0 8px 0;
+  color: #666;
 }
 
 .status-badge {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 2px 6px;  /* 패딩 크기 축소 */
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 11px;  /* 폰트 크기 축소 */
   font-weight: bold;
 }
 
 .status-badge.confirmed {
-  background: #216CFA;
-  color: white;
+  background: rgba(33, 108, 250, 0.3);  /* #216CFA with 30% opacity */
+  color: #216CFA;
 }
 
 .status-badge.pending {
   background: #E0E0E0;
-  color: #666;
+  color: #323E36;
+  opacity: 0.5;  /* 투명도 50% 추가 */
 }
 
 .inquiry-header {
@@ -121,4 +162,39 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
-} 
+}
+
+.applied-card-footer {
+  margin-top: 15px;
+  width: 100%;  /* 전체 너비 사용 */
+}
+
+.action-button {
+  width: 100%;
+  padding: 6px 16px;  /* 상하 패딩을 8px에서 6px로 줄임 */
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* 신청 취소 버튼 스타일 */
+.action-button.cancel {
+  background: white;
+  color: #666;
+  border: 1px solid #E0E0E0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 후기 작성 버튼 스타일 */
+.action-button.review {
+  background: #216CFA;
+  color: white;
+  border: none;
+}
+
+.question-icon {
+  width: 20px;  /* 16px에서 20px로 증가 */
+  height: 20px;  /* 16px에서 20px로 증가 */
+  cursor: pointer;
+}

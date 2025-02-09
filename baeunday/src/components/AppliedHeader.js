@@ -1,17 +1,23 @@
 import React from 'react';
 import '../css/appliedHeader.css';
-import { useNavigate } from 'react-router-dom';
+import searchBlackIcon from '../assets/images/search-black.svg';
 
-const InquiryHeader = ({ title = "신청한" }) => {
-
+const AppliedHeader = ({ title = "신청한" }) => {
   return (
     <div className="applied-header">
-
-      <div className="applied-header-left">
+      <div className="applied-header-content">
         <h1 className="applied-header-title">{title}</h1>
+        <div className="applied-header-right">
+          <img 
+            src={searchBlackIcon} 
+            alt="검색" 
+            className="search-black-icon"
+            style={{ display: 'block' }}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
-export default InquiryHeader;
+export default AppliedHeader;
