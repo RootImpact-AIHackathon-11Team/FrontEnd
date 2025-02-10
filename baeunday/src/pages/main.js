@@ -171,7 +171,9 @@ const MainPage = () => {
           <div className="lecture-info">
             <h2>{lecture.title}</h2>
             <div className="lecture-details">
-              <p>{lecture.location} · D-{lecture.d_day} · {lecture.price}</p>
+              <p>
+                {lecture.location} · D-{lecture.d_day} · <span style={{ color: '#216CFA' }}>{lecture.price}</span>
+              </p>
               <button className={`status-btn ${lecture.status === '모집 중' ? 'recruiting' : 'filled'}`}>
                 {lecture.status}
               </button>
