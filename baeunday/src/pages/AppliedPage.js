@@ -8,6 +8,7 @@ import ActionSheet from '../components/ActionSheet';
 import mainEx1 from '../assets/examples/mainEx1.png';
 import AppliedModal from '../components/AppliedModal';
 import CancelConfirmModal from '../components/CancelConfirmModal';
+import BottomNavigation from '../components/BottomNavigation';
 
 // 신청한 강의 더미 데이터 수정
 const appliedLectures = [
@@ -159,6 +160,8 @@ const AppliedPage = () => {
           onConfirm={handleCancelConfirm}
         />
       )}
+
+      <BottomNavigation />
     </div>
   );
 };

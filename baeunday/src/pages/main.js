@@ -15,6 +15,7 @@ import React, { useState } from 'react';
 import RegionSelector from '../components/RegionSelector';
 import ActionSheet from '../components/ActionSheet';
 import { useNavigate } from 'react-router-dom';
+import BottomNavigation from '../components/BottomNavigation';
 
 
 
@@ -190,6 +191,7 @@ const MainPage = () => {
         onClose={() => setSheetOpen(false)}
         />
       )}
+      <BottomNavigation />
     </div>
   );
 };
