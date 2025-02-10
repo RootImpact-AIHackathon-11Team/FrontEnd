@@ -13,6 +13,7 @@ import ReviewPage from './components/ReviewPage';
 import InquiryPage from './pages/InquiryPage';
 import AppliedPage from './pages/AppliedPage';
 import WishlistPage from './pages/WishlistPage';
+import RegisteredLecturePage from './pages/RegisteredLecturePage';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/profile/nickname" element={<NicknameEdit />} />
         <Route path="/applied" element={<AppliedPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
+        <Route path="/registered" element={<RegisteredLecturePage />} />
       </Routes>
     </Router>
   );
