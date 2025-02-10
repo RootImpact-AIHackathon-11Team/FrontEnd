@@ -1,0 +1,77 @@
+.wishlist-container {
+  padding-top: 4.5vh;
+  font-family: 'Pretendard', sans-serif;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  background: white;
+}
+
+.wishlist-content {
+  padding: 15px;
+}
+
+.wishlist-item {
+  display: flex;
+  gap: 3vw;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.wishlist-image {
+  width: 22vw;
+  height: 22vw;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid #e0e0e0;
+}
+
+.wishlist-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wishlist-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wishlist-info h2 {
+  font-size: 1.8vh;
+  margin: 0 0 2vh 0;
+  color: #000;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.wishlist-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.status-badge.recruiting {
+  background: #216CFA;
+  color: white;
+}
+
+.status-badge.completed {
+  background: #E0E0E0;
+  color: #323E36;
+  opacity: 0.5;
+} 

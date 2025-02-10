@@ -12,6 +12,7 @@ import NicknameEdit from './components/NicknameEdit';
 import ReviewPage from './components/ReviewPage';
 import InquiryPage from './pages/InquiryPage';
 import AppliedPage from './pages/AppliedPage';
+import WishlistPage from './pages/WishlistPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/profile/edit" element={<ProfileEdit />} />
         <Route path="/profile/nickname" element={<NicknameEdit />} />
         <Route path="/applied" element={<AppliedPage />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
       </Routes>
     </Router>
   );

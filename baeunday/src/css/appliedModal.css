@@ -1,0 +1,79 @@
+.applied-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.applied-modal-content {
+  background: white;
+  width: 75%;
+  max-width: 400px;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.applied-modal-content h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.applied-status-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.applied-status-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.applied-status-item span {
+  margin-bottom: 8px;
+}
+
+.applied-status-label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.applied-status-item p {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.applied-highlight {
+  color: #216CFA !important;
+  font-size: 11px !important;
+  line-height: 1.2;
+}
+
+.applied-confirm-btn {
+  width: 61px;
+  height: 32px;
+  padding: 0;
+  background: #216CFA;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-top: 16px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+} 

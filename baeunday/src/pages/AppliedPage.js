@@ -6,6 +6,8 @@ import dropdownIcon from '../assets/images/dropdown.svg';
 import questionIcon from '../assets/images/question.svg';
 import ActionSheet from '../components/ActionSheet';
 import mainEx1 from '../assets/examples/mainEx1.png';
+import AppliedModal from '../components/AppliedModal';
+import CancelConfirmModal from '../components/CancelConfirmModal';
 
 // 신청한 강의 더미 데이터 수정
 const appliedLectures = [
@@ -46,6 +48,9 @@ const AppliedPage = () => {
   const navigate = useNavigate();
   const [activeAppliedFilter, setActiveAppliedFilter] = useState('전체');
   const [isSheetOpen, setSheetOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [selectedLectureId, setSelectedLectureId] = useState(null);
 
   const handleAppliedFilterClick = () => {
     setSheetOpen(true);
@@ -67,11 +72,18 @@ const AppliedPage = () => {
   };
 
   const handleReviewClick = (lectureId) => {
-    // 후기 작성 로직 구현
+    navigate(`/review/${lectureId}`);
   };
 
   const handleCancelClick = (lectureId) => {
-    // 신청 취소 로직 구현
+    setSelectedLectureId(lectureId);
+    setShowCancelModal(true);
+  };
+
+  const handleCancelConfirm = () => {
+    // 여기에 실제 취소 로직 구현
+    console.log(`강의 ${selectedLectureId} 취소`);
+    setShowCancelModal(false);
   };
 
   return (
@@ -90,6 +102,7 @@ const AppliedPage = () => {
           src={questionIcon} 
           alt="도움말" 
           className="question-icon"
+          onClick={() => setIsModalOpen(true)}
         />
       </div>
 
@@ -135,6 +148,15 @@ const AppliedPage = () => {
           options={sheetOptions}
           onSelect={handleSelect}
           onClose={() => setSheetOpen(false)}
+        />
+      )}
+
+      {isModalOpen && <AppliedModal onClose={() => setIsModalOpen(false)} />}
+
+      {showCancelModal && (
+        <CancelConfirmModal 
+          onClose={() => setShowCancelModal(false)}
+          onConfirm={handleCancelConfirm}
         />
       )}
     </div>
