@@ -11,30 +11,111 @@ import mainEx3 from '../assets/examples/mainEx3.png';
 import mainEx4 from '../assets/examples/mainEx4.png';
 import mainEx5 from '../assets/examples/mainEx5.png';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import axios from 'axios';
 import RegionSelector from '../components/RegionSelector';
 import ActionSheet from '../components/ActionSheet';
 import { useNavigate } from 'react-router-dom';
 import BottomNavigation from '../components/BottomNavigation';
-
-
-
-const lectures = [
-  { id: 1, title: '"디자인이 제일 쉬웠어요" - 하루만에 배우는 디자인 철학', location: '구미시 거여동', d_day: 99, price: '무료', status: '모집 중', image: mainEx1 },
-  { id: 2, title: '"꽃... 좋아하세요?"', location: '구미시 사곡동', d_day: 50, price: '25,000원', status: '인원 달성', image: mainEx2 },
-  { id: 3, title: '현직 대기업 개발자가 알려주는 개발자의 미래', location: '구미시 송정동', d_day: 34, price: '무료', status: '모집 중', image: mainEx3 },
-  { id: 4, title: '기획: 전공자가 아니어도 할 수 있습니다.', location: '구미시 산동읍', d_day: 10, price: '무료', status: '모집 중', image: mainEx4 },
-  { id: 5, title: '남녀노소 누구나 따라할 수 있는 홈트레이닝 강의', location: '구미시 원평동', d_day: 7, price: '10,000원', status: '모집 중', image: mainEx5 }
-];
-
+import { autoLogin, getAuthHeader } from '../utils/auth';
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const [lectures, setLectures] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [hasNext, setHasNext] = useState(true);
+  const [nextCursor, setNextCursor] = useState(null);
+  
+  // 무한 스크롤 관련 ref
+  const observerRef = useRef();
+  const lastLectureRef = useCallback(node => {
+    if (loading) return;
+    
+    if (observerRef.current) observerRef.current.disconnect();
+    
+    observerRef.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasNext) {
+        fetchMoreLectures();
+      }
+    });
+    
+    if (node) observerRef.current.observe(node);
+  }, [loading, hasNext]);
+
+  // 초기 강의 목록 로딩
+  const fetchLectures = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('http://43.202.15.40/posts', {
+        headers: getAuthHeader()
+      });
+      
+      const { body, cursor } = response.data.data;
+      const lectures = body.postList;
+      
+      setLectures(lectures);
+      setHasNext(cursor.hasNext);
+      setNextCursor(cursor.nextId);
+    } catch (error) {
+      console.error('Error details:', error.response || error);
+      setError(error.response?.data?.message || '강의 목록을 불러오는데 실패했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 추가 강의 목록 로딩
+  const fetchMoreLectures = async () => {
+    if (!hasNext || loading) return;
+    
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      
+      const response = await axios.get(`http://43.202.15.40/posts?cursor=${nextCursor}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      const { body, cursor } = response.data.data;
+      const lectures = body.postList;
+      
+      setLectures(prev => [...prev, ...lectures]);
+      setHasNext(cursor.hasNext);
+      setNextCursor(cursor.nextId);
+    } catch (error) {
+      console.error('Error details:', error.response || error);
+      if (error.response?.status === 403) {
+        setError('접근 권한이 없습니다. 로그인이 필요합니다.');
+      } else {
+        setError('추가 강의 목록을 불러오는데 실패했습니다.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 자동 로그인 처리
+  const handleAutoLogin = async () => {
+    const result = await autoLogin();
+    if (result.success) {
+      fetchLectures();
+    } else {
+      setError(result.error);
+    }
+  };
+
+  useEffect(() => {
+    handleAutoLogin();
+  }, []);
 
   const handleLectureClick = (lectureId) => {
     navigate(`/lecture/${lectureId}`);
   };
-
 
   const [activeCategory, setActiveCategory] = useState('최신순');
   const [selectorMode, setSelectorMode] = useState(null);
@@ -159,30 +240,39 @@ const MainPage = () => {
       </div>
 
       <main className="content">
-      {lectures.map((lecture) => (
-        <div
-          className="lecture-card"
-          key={lecture.id}
-          onClick={() => handleLectureClick(lecture.id)}
-          style={{ cursor: 'pointer' }}
-        >
-          <div className="lecture-image">
-            <img src={lecture.image} alt={lecture.title} />
-          </div>
-          <div className="lecture-info">
-            <h2>{lecture.title}</h2>
-            <div className="lecture-details">
-              <p>
-                {lecture.location} · D-{lecture.d_day} · <span style={{ color: '#216CFA' }}>{lecture.price}</span>
-              </p>
-              <button className={`status-btn ${lecture.status === '모집 중' ? 'recruiting' : 'filled'}`}>
-                {lecture.status}
-              </button>
+        {lectures && lectures.length > 0 ? (
+          lectures.map((lecture, index) => (
+            <div
+              ref={index === lectures.length - 1 ? lastLectureRef : null}
+              className="lecture-card"
+              key={lecture.postId}
+              onClick={() => handleLectureClick(lecture.postId)}
+            >
+              <div className="lecture-image">
+                <img src={lecture.imgURL} alt={lecture.title} />
+              </div>
+              <div className="lecture-info">
+                <h2>{lecture.title}</h2>
+                <div className="lecture-details">
+                  <p>
+                    {lecture.city} · D-{calculateDday(lecture.deadline)} · 
+                    <span style={{ color: '#216CFA' }}>
+                      {lecture.fee === 0 ? '무료' : `${lecture.fee.toLocaleString()}원`}
+                    </span>
+                  </p>
+                  <button className={`status-btn ${lecture.status === 'AVAILABLE' ? 'recruiting' : 'filled'}`}>
+                    {lecture.status === 'AVAILABLE' ? '모집중' : '인원 달성'}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
-    </main>
+          ))
+        ) : (
+          <div>강의가 없습니다.</div>
+        )}
+        {loading && <div className="loading">로딩 중...</div>}
+        {error && <div className="error">{error}</div>}
+      </main>
 
       {isSheetOpen && (
         <ActionSheet
@@ -194,6 +284,15 @@ const MainPage = () => {
       <BottomNavigation />
     </div>
   );
+};
+
+// D-day 계산 함수
+const calculateDday = (deadline) => {
+  const today = new Date();
+  const dueDate = new Date(deadline);
+  const diffTime = dueDate - today;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
 };
 
 export default MainPage;

@@ -5,6 +5,7 @@ import AppliedHeader from '../components/AppliedHeader';
 import mainEx1 from '../assets/examples/mainEx1.png';
 import mainEx2 from '../assets/examples/mainEx2.png';
 import mainEx3 from '../assets/examples/mainEx3.png';
+import BottomNavigation from '../components/BottomNavigation';
 
 const WishlistPage = () => {
   const navigate = useNavigate();
@@ -72,6 +73,7 @@ const WishlistPage = () => {
           </div>
         ))}
       </div>
+      <BottomNavigation />
     </div>
   );
 };

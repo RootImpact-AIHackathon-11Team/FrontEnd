@@ -13,7 +13,7 @@ const BottomNavigation = () => {
 
   const getNavStyle = (path) => {
     return {
-      opacity: currentPath === path ? 1 : 0.3,
+      opacity: currentPath === path ? 1 : 0.6,
       color: '#323E36'
     };
   };
@@ -65,4 +65,4 @@ const BottomNavigation = () => {
   );
 };
 
-export default BottomNavigation; 
+export default BottomNavigation;
