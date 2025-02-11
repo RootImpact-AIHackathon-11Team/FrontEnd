@@ -1,0 +1,319 @@
+.lecture-register-container {
+  background-color: white;
+  min-height: 100vh;
+
+}
+
+.lecture-register-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  width: 100%;
+  margin-top: 40px;
+}
+
+.lecture-register-back {
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+}
+
+.lecture-register-title {
+  font-size: 15px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.lecture-register-help {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  margin-right: 37px;
+}
+
+.lecture-register-question {
+  font-size: 19px;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+}
+
+.lecture-register-required {
+  color: #2D68FF;
+  margin-left: 4px;
+}
+
+.lecture-register-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.lecture-register-input {
+  width: 348px;
+  padding: 3px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  margin-left: -7px;
+  margin-bottom:-6px;
+}
+
+
+.lecture-register-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: -6px;
+}
+
+.lecture-register-checkbox input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.lecture-register-checkbox label {
+  font-size: 14px;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+
+.lecture-register-options {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.lecture-register-options label {
+  display: flex;
+  background-color: #FFFFFF;
+  padding: 12px;
+  border: 2px solid #dcdcdc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.lecture-register-section {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.lecture-register-option-group {
+  background: #ffffff;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 7px;
+  margin-left: -8px;
+}
+
+.lecture-register-label {
+  font-size: 14px;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+}
+
+.lecture-register-checkbox-row,
+.lecture-register-radio-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.lecture-register-checkbox-label,
+.lecture-register-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+
+.lecture-register-checkbox-label input[type="checkbox"],
+.lecture-register-radio-label input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.lecture-register-date-inputs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.lecture-register-select {
+  flex: 1;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  appearance: none;
+  background-image: url('../assets/images/down-arrow.svg');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  cursor: pointer;
+  margin-left: -7px;
+  margin-bottom: -5px;
+  width: 320px;
+  height: 45px;
+  margin-right: 5px;
+}
+
+.lecture-register-location {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lecture-register-location-selects {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.location-select-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.arrow-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+}
+
+.lecture-register-select {
+  width: 162px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 13px;
+  background-color: white;
+  appearance: none;
+  cursor: pointer;
+  color: #1A1A1A;
+  height: 33px;
+  padding: 6px;
+}
+
+.lecture-register-select.location-select {
+  padding-left: 36px;
+}
+
+.lecture-register-input {
+  width: 335px;
+  padding: 12px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 12px;
+  background-color: white;
+  color: #1A1A1A;
+  height: 33px;
+}
+
+.lecture-register-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1A1A1A;
+  cursor: pointer;
+}
+
+.lecture-register-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.lecture-register-content {
+  margin: 0 auto;
+  padding: 24px 20px;
+  padding-bottom: 70px;
+}
+
+.lecture-register-student-inputs {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.lecture-register-student-inputs .lecture-register-select {
+  flex: 1;
+  min-width: 0;
+}
+
+.lecture-register-bottom-buttons {
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 375px;
+  background-color: white;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.lecture-register-draft-button {
+  flex: 0.3;
+  padding: 15px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  background-color: white;
+  color: #1a1a1a;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.lecture-register-submit-button {
+  flex: 0.7;
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #2D68FF;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.location-select-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.location-icon {
+  position: absolute;
+  left: 1px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  margin-top: 17px;
+  margin-left: -2px;
+}
+
+.location-select-wrapper .lecture-register-select {
+  padding-left: 25px;
+}
+
+.location-icon img {
+  width: 16px;
+  height: 16px;
+}
+

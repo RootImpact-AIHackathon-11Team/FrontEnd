@@ -1,0 +1,84 @@
+.description-container {
+    padding: 20px;
+    font-family: Arial, sans-serif; /* 폰트 스타일 추가 */
+  }
+  
+  .description-header {
+    display: flex;
+    margin-top: 45px;
+    margin-left: -20px; /* Add negative margin to counteract the container's padding */
+    margin-right: 10px; /* Add negative margin to counteract the container's padding */
+  /* Add horizontal padding here if needed */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    width: calc(100% + 40px); /* Increase width to account for negative margins */
+  }
+
+  
+  .description-header-title {
+    flex-grow: 1;
+    text-align: center;
+    margin-left: -22px; /* Compensate for back button space to center title */
+    margin-bottom: 15px;  
+  }
+  
+
+  .description-back-button {
+    cursor: pointer;
+    margin-left: 23px;
+    margin-top: -18px; /* 버튼과 제목 사이 간격 조정 */
+  }
+  
+  .description-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: -8px;
+    width: 350px;
+  }
+  
+  .description-content label {
+    margin-bottom: 20px; /* 레이블과 인풋 사이 간격 */
+  }
+  
+  .description-content input {
+    padding: 10px;
+    margin-bottom: 20px; /* 인풋 박스 스타일 */
+    border: 1px solid #ccc; 
+    font-size: 13px;/* 테두리 스타일 */
+  }
+  
+  .description-button-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background-color: white;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+  
+  .description-button {
+    width: 100%;
+    padding: 14px 0;
+    background-color: #216CFA;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .description-button:hover {
+    background-color: #1a56c6;
+  }
+ 
+  .description-input{
+    margin-top: 25px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    margin-left: 3px;
+    font-size: 17px;
+  }
+

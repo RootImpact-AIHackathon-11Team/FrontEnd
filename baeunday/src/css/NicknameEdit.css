@@ -33,10 +33,9 @@
 
 .nickname-title {
   font-size: 18px;
-  font-weight: normal;
-  color: #1a1a1a;
-  margin: 0 0 20px 0;
   font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 20px;
   margin-left: -5px;
 }
 
@@ -54,6 +53,7 @@
   font-size: 12px;
   margin-left: -7px;
   margin-top: -10px;
+  width: 230px;
 }
 
 .nickname-input::placeholder {
@@ -72,6 +72,11 @@
   white-space: nowrap;
   margin-right:-7px;
   margin-top: -10px;
+}
+
+.nickname-confirm-button.active {
+  background-color: #216CFA; /* 파란색으로 변경 */
+  color: white;
 }
 
 .nickname-bottom-button-wrapper {
@@ -95,9 +100,37 @@
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    font-weight: bold;
 }
 
-  .nickname-change-button:hover {
+.nickname-change-button:hover {
     background-color: #1a56c6;
-  }
+}
+
+.nickname-input-container {
+  flex: 1;
+}
+
+.nickname-success-message {
+  color: #007bff; /* Bootstrap 파란색 */
+  font-size: 12px;
+}
+
+.nickname-error-message {
+  color: #216CFA;
+  font-size: 12px 
+}
+
+.nickname-warning-icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 2px;
+  margin-left: -7px;
+  margin-top: -10px;
+}
+
+.icon-wrapper {
+  display: inline-block;
+  vertical-align: middle; /* 이걸 추가해서 아이콘을 수직 중앙 정렬할 수 있습니다 */
+  margin-top: 2px; /* 아이콘만 위쪽으로 조금 더 이동 */
+}
+

@@ -1,0 +1,315 @@
+.preview-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  padding: 20px 16px;  /* 상하 패딩 증가 */
+  border-bottom: 1px solid #F2F2F2;
+  position: sticky;
+  top: 0;
+  background: white;
+  height: 55px;  /* 높이 증가 */
+}
+
+.lecture-preview-back-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 24px;  /* 상단 마진 추가 */
+}
+
+.lecture-preview-back-button img {
+  width: 13px;
+  height: 13px;
+  margin-top: 39px;
+}
+
+.preview-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  margin-top: 40px; 
+}
+
+.preview-content {
+  padding: 20px 0;  /* 좌우 패딩 제거 */
+}
+
+.preview-profile {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  margin-left: 20px;
+}
+
+.thumbnail-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.thumbnail-box {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  background-color: #F5F5F5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-left: -7px;
+}
+
+.thumbnail-box.error {
+  border-color: #2D68FF;
+}
+
+.lecture-icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.5;
+}
+
+.thumbnail-text {
+  font-size: 14px;
+  color: #666666;
+}
+
+.preview-user-info {
+  flex: 1;
+  padding-top: 8px;
+  margin-top: 28px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%; 
+}
+
+.user-info h2 {
+  font-size: 17px;
+  margin-bottom: 0px;
+}
+
+.user-info p , .user-info h2 {
+    text-align: left;
+    margin-top: 40px;
+    margin-left: -5px;
+}
+
+.user-info p {
+    color: #1A1A1A;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+.username-blue {
+    color: #2D68FF;
+    font-weight: 600;
+    font-size: 18px;
+  } 
+
+
+.username-black {
+  color: #1A1A1A;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+
+.user-message {
+  font-size: 17.5px;
+  color: #1A1A1A;
+  font-weight: 600;
+  margin-left: 0px;
+  margin-top: -2px;
+}
+
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin: 0 0 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.label {
+  min-width: 70px;
+  color: #666666;
+  font-size: 12px;
+  text-align: left;
+  display: block; /* 레이블을 블록 요소로 만들어 너비 전체를 차지하게 함 */
+  color: #666666;
+  font-size: 14px;
+  margin-bottom: 10px; /* 레이블과 입력 필드 사이의 간격 추가 */
+  }
+  
+
+.input-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-left: 0;
+}
+
+.input-row input {
+  width: 140%;
+}
+
+.input-row-2 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-left: 0;
+}
+
+.input-row-2 input {
+  width: 70%;
+}
+
+.required {
+  color: #2D68FF;
+}
+
+
+.people-inputs input {
+  height: 28px; /* 통일된 높이 설정 */
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 11px;
+  margin-right: 20px;
+}
+
+
+.error {
+  border-color: #2D68FF
+}
+
+.error-message {
+  color: #2D68FF;
+  font-size: 14px;
+  margin-top: 3px;
+  margin-left: 5px;
+}
+
+.preview-thumbnail.error {
+  border: 3px solid #2D68FF;
+}
+
+.preview-thumbnail .error-message {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+/* input-wrapper 내부의 input이 에러 상태일 때 */
+.input-wrapper input.error {
+  border-color: #2D68FF;
+}
+
+.preview-bottom-button-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background-color: white;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+   
+  }
+  
+  .preview-submit-button {
+    width: 100%;
+    padding: 14px 0;
+    background-color: #216CFA;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .preview-submit-button:hover {
+    background-color: #1a56c6;
+  }
+
+.input-wrapper input::placeholder {
+  color: #2D68FF;
+}
+
+.thumbnail-error-message {
+  color: #2D68FF;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+  width: 100%;
+}
+
+.error-text {
+  color: #2D68FF;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+
+/* placeholder 텍스트 스타일 */
+.input-wrapper input:placeholder-shown {
+  color: #2D68FF;
+}
+
+#lecture-subject-row input{
+  flex: 1;
+  height: 27px; /* 높이를 40px로 조정 */
+  border: 1px solid #E0E0E0; /* 테두리 스타일 유지 */
+  border-radius: 4px; /* 테두리 둥글기를 4px로 조정 */
+  font-size: 12px; /* 글씨 크기를 14px로 조정 */
+  color: #1A1A1A; /* 글씨 색상 유지 */
+  background-color: white; /* 배경 색상 유지 */
+  width: 265px; 
+  margin-bottom: -8px;/* 너비를 100%로 조정하여 컨테이너를 꽉 채우도록 설정 *//* 상하 마진을 5px로 조정하여 더 깔끔하게 보이도록 함 */
+}
+
+#lecture-info-row input {
+  margin-top: -5px;
+  height: 30px; /* 높이를 40px로 조정 */
+  border: 1px solid #E0E0E0; /* 테두리 스타일 유지 */
+  border-radius: 4px; /* 테두리 둥글기를 4px로 조정 */
+  font-size: 12px; /* 글씨 크기를 14px로 조정 */
+  color: #1A1A1A; /* 글씨 색상 유지 */
+  background-color: white; 
+  width: 265px;/* 배경 색상 유지 */
+}
+
+.lecture-subject-section, .lecture-info-section {
+  margin-top: 20px;
+  margin-left: 16px;
+}
