@@ -14,14 +14,18 @@ import InquiryPage from './pages/InquiryPage';
 import AppliedPage from './pages/AppliedPage';
 import WishlistPage from './pages/WishlistPage';
 import RegisteredLecturePage from './pages/RegisteredLecturePage';
+import DescriptionEdit from './components/DescriptionEdit';
+import LectureRegister from './pages/LectureRegister';
+import LectureGuideModal from './components/LectureGuideModal';
+import LecturePreview from './pages/LecturePreview';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/mainpage" element={<MainPage />} />
+        <Route path="/main" element={<MainPage />} />
         <Route path="/loading" element={<Loading />} />
-        <Route path="/notlogin" element={<NotLogin />} />
+        <Route path="/not-login" element={<NotLogin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/lecture/:lectureId" element={<LectureDetailPage />} />
@@ -33,6 +37,11 @@ function App() {
         <Route path="/applied" element={<AppliedPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/registered" element={<RegisteredLecturePage />} />
+        <Route path="/profile/description" element={<DescriptionEdit />} />
+        <Route path="/lectureregister" element={<LectureRegister />} />
+        <Route path="/lecture-guide" element={<LectureGuideModal />} />
+        <Route path="/lecturepreview" element={<LecturePreview />} />
+        <Route path="/mainpage" element={<MainPage />} />
       </Routes>
     </Router>
   );
