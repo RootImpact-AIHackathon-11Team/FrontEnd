@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate 추가
+import { useNavigate } from 'react-router-dom';
 import InfoModal from '../components/InfoModal';
-import ReviewPage from '../components/ReviewPage'; // 리뷰 페이지 컴포넌트 추가
-import BottomNavigation from '../components/BottomNavigation'; // BottomNavigation import 추가
+import ReviewPage from '../components/ReviewPage';
+import BottomNavigation from '../components/BottomNavigation';
 import '../css/mypage.css';
 import mainEx6 from '../assets/examples/mainEx6.png';
 import paperIcon from '../assets/images/paper.svg';
@@ -11,17 +11,14 @@ import vectorIcon from '../assets/images/Vector2.svg';
 import questionIcon from '../assets/images/question.svg';
 
 export default function MyPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태 관리
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // 모달 열기
   const handleOpenModal = () => setIsModalOpen(true);
-  // 모달 닫기
   const handleCloseModal = () => setIsModalOpen(false);
-  // 프로필 편집 페이지로 이동
   const handleProfileEdit = () => navigate('/profile/edit');
-  // 받은 평가 페이지로 이동
-  const handleReviewPage = () => navigate('/mypage/review');  // 이 부분이 새로 추가됨
+  const handleReviewPage = () => navigate('/mypage/review');
+  const handleRegisteredLecturePage = () => navigate('/registered'); // 이 부분이 새로 추가됨
 
   return (
     <div className="p-container">
@@ -58,7 +55,7 @@ export default function MyPage() {
             <div className="p-menuTitle" id='p-menuTitle1'>등록한 강의</div>
             <div className="p-menuDesc">'배운데이'와 함께 작성한 강의 기획서들을 살펴볼 수 있어요</div>
           </div>
-          <img src={vectorIcon} alt="화살표" className="p-arrow" id='p-arrow2' onClick={handleReviewPage} />
+          <img src={vectorIcon} alt="화살표" className="p-arrow" id='p-arrow2' onClick={handleRegisteredLecturePage} />
         </div>
       </div>
 
@@ -88,8 +85,6 @@ export default function MyPage() {
         </div>
       </div>
       <InfoModal isOpen={isModalOpen} onClose={handleCloseModal} />
-      
-      {/* BottomNavigation 추가 */}
       <BottomNavigation />
     </div>
   );
