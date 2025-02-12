@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 import InfoModal from '../components/InfoModal';
 import ReviewPage from '../components/ReviewPage'; // 리뷰 페이지 컴포넌트 추가
+import BottomNavigation from '../components/BottomNavigation'; // BottomNavigation import 추가
 import '../css/mypage.css';
 import mainEx6 from '../assets/examples/mainEx6.png';
 import paperIcon from '../assets/images/paper.svg';
@@ -87,6 +88,9 @@ export default function MyPage() {
         </div>
       </div>
       <InfoModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      
+      {/* BottomNavigation 추가 */}
+      <BottomNavigation />
     </div>
   );
 }

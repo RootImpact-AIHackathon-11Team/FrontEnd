@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import "../css/login.css"; // CSS 파일 불러오기
 import backIcon from "../assets/images/Vector.svg"; // 뒤로가기 아이콘 불러오기
+import { useNavigate } from 'react-router-dom';
 
-function Login({ onBackClick }) {
-  const [userId, setUserId] = useState("");
+function Login() {
+  const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  // 하드코딩된 계정 정보
+  const VALID_ID = 'baeunday';
+  const VALID_PASSWORD = '1234';
 
   // ✅ 필수 입력값 검증 상태
   const [errors, setErrors] = useState({
-    userId: false,
+    id: false,
     password: false,
   });
 
@@ -20,10 +26,10 @@ function Login({ onBackClick }) {
     }));
   };
 
-  // ✅ 아이디 입력
-  const handleUserIdChange = (e) => {
-    setUserId(e.target.value);
-    handleInputChange("userId", e.target.value);
+  // ✅ 아이디 입력 (이메일 대신)
+  const handleIdChange = (e) => {
+    setId(e.target.value);
+    handleInputChange("id", e.target.value);
   };
 
   // ✅ 비밀번호 입력
@@ -33,9 +39,10 @@ function Login({ onBackClick }) {
   };
 
   // ✅ 로그인 버튼 클릭 시 검증
-  const handleLoginClick = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
     let newErrors = {
-      userId: !userId,
+      id: !id,
       password: !password,
     };
 
@@ -46,30 +53,36 @@ function Login({ onBackClick }) {
       return;
     }
 
+    // 아이디와 비밀번호 검증
+    if (id === VALID_ID && password === VALID_PASSWORD) {
+      navigate('/main');
+    } else {
+      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+    }
   };
 
   return (
     <div className="login-container">
       <header className="login-header">
         <div className="header-left">
-          <button className="back-button" onClick={onBackClick}>
+          <button className="back-button" onClick={() => navigate(-1)}>
             <img src={backIcon} alt="뒤로가기" className="back-icon" />
           </button>
         </div>
         <h1>로그인</h1>
       </header>
 
-      <form className="login-form">
-        {/* 아이디 입력 */}
-        <div className={`input-group ${errors.userId ? "error" : ""}`}>
+      <form onSubmit={handleLogin} className="login-form">
+        {/* 아이디 입력 (이메일 대신) */}
+        <div className={`input-group ${errors.id ? "error" : ""}`}>
           <label>아이디<span className="required">*</span></label>
           <input 
             type="text" 
-            placeholder="회원가입 때 작성했던 아이디를 입력해주세요"
-            value={userId}
-            onChange={handleUserIdChange}
+            placeholder="아이디를 입력해주세요"
+            value={id}
+            onChange={handleIdChange}
           />
-          {errors.userId && <p className="login-error-text">⚠ 필수 입력 항목입니다.</p>}
+          {errors.id && <p className="login-error-text">⚠ 필수 입력 항목입니다.</p>}
         </div>
 
         {/* 비밀번호 입력 */}
@@ -77,7 +90,7 @@ function Login({ onBackClick }) {
           <label>비밀번호<span className="required">*</span></label>
           <input 
             type="password" 
-            placeholder="회원가입 때 작성했던 비밀번호를 입력해주세요"
+            placeholder="비밀번호를 입력해주세요"
             value={password}
             onChange={handlePasswordChange}
           />
@@ -85,8 +98,8 @@ function Login({ onBackClick }) {
         </div>
 
         {/* 로그인 버튼 */}
-        <button type="button" className="login-button" onClick={handleLoginClick}>
-          로그인 하기
+        <button type="submit" className="login-button">
+          로그인
         </button>
       </form>
     </div>
