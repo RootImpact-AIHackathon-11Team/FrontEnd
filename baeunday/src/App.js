@@ -18,6 +18,7 @@ import DescriptionEdit from './components/DescriptionEdit';
 import LectureRegister from './pages/LectureRegister';
 import LectureGuideModal from './components/LectureGuideModal';
 import LecturePreview from './pages/LecturePreview';
+import ReviewForm from './pages/ReviewForm';
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
         <Route path="/lecture-guide" element={<LectureGuideModal />} />
         <Route path="/lecturepreview" element={<LecturePreview />} />
         <Route path="/mainpage" element={<MainPage />} />
+        <Route path="/reviewform" element={<ReviewForm />} />
+        <Route path="/reviewpage" element={<ReviewPage />} />
       </Routes>
     </Router>
   );

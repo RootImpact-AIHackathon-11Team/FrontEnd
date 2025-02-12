@@ -1,105 +1,58 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../css/ReviewPage.css';  // CSS 파일 import
-import backIcon from '../assets/images/Vector.svg';
-import profileImage from '../assets/examples/mainEx6.png';
+import { useNavigate } from 'react-router-dom'; // React Router v6의 useNavigate 훅 import
+import '../css/ReviewPage.css'; // CSS 파일 import
+import reviewpagebackIcon from '../assets/images/Vector.svg';
+import reviewstarIcon from '../assets/images/reviewstar.svg';
+import reviewstarEmptyIcon from '../assets/images/reviewstar_empty.svg';
+import reviewprofileImage from '../assets/examples/mainEx6.png'; // 경로 수정
 
-const ReviewPage = () => {
-  const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/mypage');
-  };
+const Review = ({ name, field, star, createdDate, courseName, review_id }) => {
+  const totalStars = 5;
+  const stars = Array.from({ length: totalStars }, (_, index) => (
+    <img key={index} src={index < star ? reviewstarIcon : reviewstarEmptyIcon} alt="star" className="reviewpage-star" />
+  ));
 
   return (
-    <div className="reviewpagereviewContainer">
-      {/* 헤더 */}
-      <div className="reviewpagereviewHeader">
-        <img 
-          src={backIcon} 
-          alt="뒤로가기" 
-          className="reviewpagebackButton"
-          onClick={handleBack}
-        />
-        <h1 className="reviewpageheaderTitle">받은 평가</h1>
+    <div className="reviewpage-review">
+      <div className="reviewpage-course-name">{courseName}</div>
+      <div className="reviewpage-user-info">
+        <img src={reviewprofileImage} alt="Profile" className="reviewpage-profile-image" />
+        <div className="reviewpage-name">{name}<span className="reviewpage-created-date">{createdDate}</span></div>
       </div>
-
-      {/* 첫 번째 리뷰 아이템 */}
-      <div className="reviewpagereviewItem">
-        <div className="reviewpagereviewProfile">
-          <img src={profileImage} alt="프로필" className="reviewpagereviewerImage" />
-          <span className="reviewpagereviewerName">조림정</span>
-          <span className="reviewpagereviewDate">2024-06-11</span>
-        </div>
-        
-        {/* 별점 */}
-        <div className="reviewpagestarRating">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <span key={star} className="reviewpagestar filled">★</span>
-          ))}
-        </div>
-
-        {/* 리뷰 내용 */}
-        <p className="reviewpagereviewText">
-          비전공자인 제가 듣기에도 알기 쉽게 설명해주셔서 팁까지는 5점으로 하겠습니다. 근데 이제 사심을 걸물인
-        </p>
-      </div>
-
-      {/* 두 번째 리뷰 아이템 */}
-      <div className="reviewpagereviewItem">
-        <div className="reviewpagereviewProfile">
-          <img src={profileImage} alt="프로필" className="reviewpagereviewerImage" />
-          <span className="reviewpagereviewerName">마음은 어부</span>
-          <span className="reviewpagereviewDate">2024-06-11</span>
-        </div>
-        <div className="reviewpagestarRating">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <span key={star} className="reviewpagestar filled">★</span>
-          ))}
-        </div>
-        <p className="reviewpagereviewText">
-          제네이 어든, 하나뿐인 아들들이 뭣하는지 알고싶었는데, 이제 이해할수 있겠습니다.
-        </p>
-      </div>
-
-      {/* 세 번째 리뷰 아이템 */}
-      <div className="reviewpagereviewItem">
-        <div className="reviewpagereviewProfile">
-          <img src={profileImage} alt="프로필" className="reviewpagereviewerImage" />
-          <span className="reviewpagereviewerName">Chill Guy</span>
-          <span className="reviewpagereviewDate">2024-06-11</span>
-        </div>
-        <div className="reviewpagestarRating">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <span key={star} className="reviewpagestar filled">★</span>
-          ))}
-        </div>
-        <p className="reviewpagereviewText">
-          강사님의 지시에 따라 물감을 chill했더니 좋은 작품이 나왔습니다. 별점 chill점 드리고 싶지만 5점이 만점이라 어쩔 수 없네요.
-        </p>
-      </div>
-
-      {/* 네 번째 리뷰 아이템 */}
-      <div className="reviewpagereviewItem">
-        <div className="reviewpagereviewProfile">
-          <img src={profileImage} alt="프로필" className="reviewpagereviewerImage" />
-          <span className="reviewpagereviewerName">마루궁궁마루쭁꾸마루덥썩</span>
-          <span className="reviewpagereviewDate">2024-06-10</span>
-        </div>
-        <div className="reviewpagestarRating">
-          {[1, 2].map((star) => (
-            <span key={star} className="reviewpagestar filled">★</span>
-          ))}
-          {[3, 4, 5].map((star) => (
-            <span key={star} className="reviewpagestar empty">★</span>
-          ))}
-        </div>
-        <p className="reviewpagereviewText">
-        </p>
+      <div className="reviewpage-review-content">
+        <div className="reviewpage-rating">{stars}</div>
+        <p>{field}</p>
       </div>
     </div>
   );
 };
 
-export default ReviewPage;
+function ReviewPage() {
+  const navigate = useNavigate(); // useNavigate 훅을 사용
 
+  const reviews = [
+    { review_id: 6, name: "조림핑", field: "비전공자인 제가 듣기에도 알기 쉽게 설명해주셔서 평가는 5점으로 하겠습니다. 근데 이제 사심을 곁들인", star: 5, createdDate: "2024-06-11", courseName: "마음이 차분해지는 수채화 교실" },
+    { review_id: 5, name: "마음은 어부", field: "내 나이 여든. 하나뿐인 아들놈이 뭣하는지 알고 싶었는대. 이제 이해할 수 있을 것 같습니다.", star: 5, createdDate: "2024-06-11", courseName: "마음이 차분해지는 수채화 교실" },
+    { review_id: 4, name: "Chill Guy", field: "강사님의 지시에 따라 물감을 chill했더니 좋은 작품이 나왔습니다. 별점 chill점 드리고 싶지만 5점이 만점이라 어쩔 수 없네요.", star: 5, createdDate: "2024-06-11", courseName: "마음이 차분해지는 수채화 교실" },
+    { review_id: 3, name: "마루킁킁마루쫑긋마루덥썩", field: "", star: 2, createdDate: "2024-06-10", courseName: "이것만 알면 나도 강아지가 될 수 있다." }
+  ];
+
+  return (
+    <div>
+      <div className="review-page-header">
+        <button className="review-page-back-button" onClick={() => navigate('/mypage')}>
+          <img src={reviewpagebackIcon} alt="Back" />
+        </button>
+        <div className="review-page-title">받은 평가</div>
+      </div>
+
+      <div className="reviewpage">
+        {reviews.map((review) => (
+          <Review key={review.review_id} {...review} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default ReviewPage;
