@@ -13,18 +13,19 @@ const ErrorMessage = ({ message }) => {
   );
 };
 
-const LecturePreview = ({ isOpen, onClose }) => {
+const LecturePreview = ({ isOpen, onClose, data }) => {
   const [formData, setFormData] = useState({
     thumbnail: '',
-    title: '홈베이킹 기초 클래스',
-    objective: '지역 특산물을 활용한 디저트 만들기',
-    description: '기초 제빵 기술과 지역 특산물을 활용한 응용법을 배운다.',
-    date: '2025.02.12 12:00~16:00',
-    registration: '2024.12.02 00:00 ~ 2024.12.30 17:00',
-    cost: '₩ 100,000',
-    location: '어벤더치카페 구미금오공대점',
-    minPeople: '최소 5명',
-    maxPeople: '최대 30명'
+    title: data?.subject || '',
+    objective: data?.goal || '',
+    description: data?.syllabus || '',
+    date: `${data?.startDate || ''} ${data?.time || ''}`,
+    registration: data?.registrationPeriod || '',
+    cost: data?.fee ? `₩ ${data?.fee.toLocaleString()}` : '무료',
+    location: data?.location || '',
+    minPeople: `최소 ${data?.minP || 0}명`,
+    maxPeople: `최대 ${data?.maxP || 0}명`,
+    gptContent: data?.gptContent || ''
   });
 
   const [touched, setTouched] = useState({});
@@ -194,6 +195,16 @@ const LecturePreview = ({ isOpen, onClose }) => {
           </div>
         </div>
 
+        <div className="lecture-detail-section">
+          <h3 className="section-title">상세 내용</h3>
+          <textarea 
+            className="detail-content-input"
+            placeholder="강의 상세 내용을 입력해주세요."
+            value={formData.gptContent}
+            onChange={(e) => setFormData({...formData, gptContent: e.target.value})}
+          />
+        </div>
+
         <div className="preview-bottom-button-wrapper">
           <button className="preview-submit-button" onClick={handleSubmit}>
             등록하기
@@ -201,6 +212,7 @@ const LecturePreview = ({ isOpen, onClose }) => {
         </div>
       </div>
     </div>
+    
   );
 };
 

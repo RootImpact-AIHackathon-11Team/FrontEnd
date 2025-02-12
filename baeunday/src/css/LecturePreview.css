@@ -58,11 +58,11 @@
   margin-left: 20px;
 }
 
-.thumbnail-wrapper {
+.thumbnail-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  min-width: 120px;
 }
 
 .thumbnail-box {
@@ -78,6 +78,7 @@
   gap: 8px;
   cursor: pointer;
   margin-left: -7px;
+  overflow: hidden;  /* 이미지가 박스를 벗어나지 않도록 */
 }
 
 .thumbnail-box.error {
@@ -85,8 +86,8 @@
 }
 
 .lecture-icon {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   opacity: 0.5;
 }
 
@@ -157,6 +158,7 @@
   display: flex;
   align-items: center;
   gap: 2px;
+  transition: color 0.3s ease;  /* 색상 변경 시 부드러운 전환 효과 */
 }
 
 .label {
@@ -179,7 +181,12 @@
 }
 
 .input-row input {
-  width: 140%;
+  width: 70%;  /* input-row-2와 동일한 너비로 변경 */
+  height: 28px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 0;  /* 오른쪽 마진 제거 */
 }
 
 .input-row-2 {
@@ -190,6 +197,15 @@
 }
 
 .input-row-2 input {
+  height: 28px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 0;
+}
+
+/* 일반 입력 필드의 너비 설정 */
+.input-row-2 > input {
   width: 70%;
 }
 
@@ -212,10 +228,16 @@
 }
 
 .error-message {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   color: #2D68FF;
-  font-size: 14px;
-  margin-top: 3px;
-  margin-left: 5px;
+  font-size: 12px;
+}
+
+.error-message img {
+  width: 16px;
+  height: 16px;
 }
 
 .preview-thumbnail.error {
@@ -286,30 +308,174 @@
   color: #2D68FF;
 }
 
-#lecture-subject-row input{
-  flex: 1;
-  height: 27px; /* 높이를 40px로 조정 */
-  border: 1px solid #E0E0E0; /* 테두리 스타일 유지 */
-  border-radius: 4px; /* 테두리 둥글기를 4px로 조정 */
-  font-size: 12px; /* 글씨 크기를 14px로 조정 */
-  color: #1A1A1A; /* 글씨 색상 유지 */
-  background-color: white; /* 배경 색상 유지 */
-  width: 265px; 
-  margin-bottom: -8px;/* 너비를 100%로 조정하여 컨테이너를 꽉 채우도록 설정 *//* 상하 마진을 5px로 조정하여 더 깔끔하게 보이도록 함 */
+#lecture-subject-row input {
+  width: 70%;  /* 다른 입력 필드와 동일한 너비로 변경 */
+  height: 28px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #1A1A1A;
+  background-color: white;
+  margin-right: 0;
 }
 
 #lecture-info-row input {
-  margin-top: -5px;
-  height: 30px; /* 높이를 40px로 조정 */
-  border: 1px solid #E0E0E0; /* 테두리 스타일 유지 */
-  border-radius: 4px; /* 테두리 둥글기를 4px로 조정 */
-  font-size: 12px; /* 글씨 크기를 14px로 조정 */
-  color: #1A1A1A; /* 글씨 색상 유지 */
-  background-color: white; 
-  width: 265px;/* 배경 색상 유지 */
+  width: 70%;  /* 다른 입력 필드와 동일한 너비로 변경 */
+  height: 28px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #1A1A1A;
+  background-color: white;
+  margin-right: 0;
 }
 
-.lecture-subject-section, .lecture-info-section {
-  margin-top: 20px;
-  margin-left: 16px;
+/* 공통 스타일 */
+.input-row input,
+.input-row-2 input,
+#lecture-subject-row input,
+#lecture-info-row input {
+  width: 70%;
+  height: 28px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 0;
+}
+
+/* 레이아웃 컨테이너 스타일 */
+.lecture-subject-section,
+.lecture-info-section {
+  margin: 20px 16px;
+  width: calc(100% - 32px);  /* 양쪽 마진을 고려한 전체 너비 */
+}
+
+/* 입력 행 스타일 */
+.input-row,
+.input-row-2 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-left: 0;
+  width: 100%;
+}
+
+.lecture-info-section {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.input-row-2 input.error {
+  border-color: #2D68FF;
+}
+
+.section-error {
+  margin-top: 8px;
+  margin-left: -4px;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #2D68FF;
+  font-size: 12px;
+}
+
+.thumbnail-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* 이미지 비율 유지하면서 박스 채우기 */
+}
+
+/* 이미지가 있을 때는 기본 아이콘과 텍스트 숨김 */
+.thumbnail-box img.thumbnail-preview + .lecture-icon,
+.thumbnail-box img.thumbnail-preview + .thumbnail-text {
+  display: none;
+}
+
+.error-title {
+  color: #2D68FF;
+}
+
+/* 인원 입력 컨테이너 스타일 */
+.people-input-container {
+  display: flex;
+  width: 70%;       /* 장소 입력 필드와 동일한 너비 */
+  gap: 8px;          /* 두 입력 필드 간격을 최소화 */
+}
+
+/* 인원 입력 필드 스타일 */
+.people-inputs input {
+  flex: 1;                /* 두 입력 필드가 동일한 너비를 가짐 */
+  height: 28px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 0;         /* 오른쪽 마진 제거 */
+}
+
+.lecture-detail-section {
+  margin: 20px 16px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.gpt-content {
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1A1A1A;
+}
+
+.gpt-content h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 24px 0 12px 0;
+}
+
+.gpt-content h3 {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 16px 0 8px 0;
+}
+
+.gpt-content p {
+  margin: 8px 0;
+}
+
+.gpt-content ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.gpt-content li {
+  margin: 4px 0;
+}
+
+.gpt-content h2:first-child {
+  margin-top: 0;
+}
+
+.detail-content-input {
+  width: 100%;
+  min-height: 200px;
+  padding: 12px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1A1A1A;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.detail-content-input:focus {
+  outline: none;
+  border-color: #2D68FF;
+}
+
+.detail-content-input::placeholder {
+  color: #999;
 }

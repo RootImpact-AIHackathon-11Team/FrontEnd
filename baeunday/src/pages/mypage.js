@@ -39,7 +39,7 @@ export default function MyPage() {
         <div className="p-temperatureSection">
           <div className="p-temperatureLabel">
             <div className="p-temperatureLeft">
-              <span className="p-temperatureText">매너온도</span>
+              <span className="p-temperatureText">매너발자국</span>
               <img src={questionIcon} alt="도움말" className="p-questionIcon" onClick={handleOpenModal} />
             </div>
             <span className="p-temperatureValue">36.5°C</span>
@@ -54,10 +54,10 @@ export default function MyPage() {
         <div className="p-menuContent">
           <img src={paperIcon} alt="강의" className="p-menuIcon" />
           <div className="p-menuTextContainer">
-            <div className="p-menuTitle">등록한 강의</div>
+            <div className="p-menuTitle" id='p-menuTitle1'>등록한 강의</div>
             <div className="p-menuDesc">'배운데이'와 함께 작성한 강의 기획서들을 살펴볼 수 있어요</div>
           </div>
-          <img src={vectorIcon} alt="화살표" className="p-arrow" />
+          <img src={vectorIcon} alt="화살표" className="p-arrow" id='p-arrow2' onClick={handleReviewPage} />
         </div>
       </div>
 
@@ -65,7 +65,7 @@ export default function MyPage() {
         <div className="p-menuContent">
           <img src={starIcon} alt="별점" className="p-menuIcon" />
           <div className="p-menuTextContainer">
-            <div className="p-menuTitle">받은 평가</div>
+            <div className="p-menuTitle" id='p-menuTitle2'>받은 평가</div>
             <div className="p-reviewList">
               <div className="p-reviewItem">
                 <img src={mainEx6} alt="프로필" className="p-reviewerImage" />

@@ -1,7 +1,7 @@
 .p-container {
   background-color: white;
   padding: 0 0 20px 0;
-  margin-top: -12px;  /* 전체 컨텐츠를 위로 12px 올림 */
+  margin-top: -12px;
 }
 
 .p-header {
@@ -32,7 +32,7 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  margin-left:-2vw;
+  margin-left: -2vw;
 }
 
 .p-profileName {
@@ -62,8 +62,8 @@
   margin-bottom: 5.8vh;
 }
 #arrow3{
-  margin-right: 0vw;
-  margin-bottom: 31vh;
+  margin-right: 0px;
+  margin-top: 30px;
 }
 
 .p-temperatureWrapper {
@@ -112,23 +112,21 @@
   height: 100%;
   background: #2D68FF;
   border-radius: 2px;
-  width: 35%;  /* 36.5도에 맞는 너비 */
+  width: 35%;
 }
-
 
 .p-menuCard {
   background: white;
   border-radius: 0px;
   padding: 11px;
-  margin: 16px;  /* 다시 16px로 복원 */
+  margin: 16px;
   box-shadow: 0 0 0 0.2px rgba(0, 0, 0, 0.08);
-  width: 94.5vw;
   box-sizing: border-box;
   border: 1px solid rgba(0, 0, 0, 0.12);
   margin-left: 3vw;
-  margin-top: -0vh;
+  margin-top: -3px;
+  width: 353px;
 }
-
 
 .p-menuContent {
   display: flex;
@@ -147,18 +145,25 @@
 }
 
 .p-menuTextContainer {
-  flex: 1;
   padding-left: 32px;
 }
 
 .p-menuTitle {
   font-size: 15px;
-  font-weight: normal;
-  margin-bottom: 11px;
-  margin-left: -1vw;
+  font-weight: 550;
 }
 
-.p-menuDesc {
+#p-menuTitle1{
+  margin-top: -10px;
+  padding: 19px;
+  margin-left: -21px;
+}
+
+#p-menuTitle2{
+  margin-top: 5px;
+}
+
+.p-menuDesc { 
   font-size: 11px;
   color: #999;
   margin-left: -2vw;
@@ -169,20 +174,24 @@
 }
 
 .p-reviewItem {
-  position: relative;  /* 상위 요소를 위치 기준점으로 설정 */
+  position: relative;
   padding: 12px 0;
   border-bottom: 1px solid #eee;
   margin-top: -0.5vh;
 }
 
-.p-reviewerImage {
-  position: absolute;  /* 절대 위치 설정 */
-  width: 16px;
-  height: 16px;  /* 상위 요소의 중간에 위치 */
-  margin-left: -6vw;
-  margin-top: -1vh;
+/* '마음은 어부' 항목에 추가적인 하단 마진 적용 */
+.p-reviewItem.heart-fisherman {
+  margin-bottom: 20px;
 }
 
+.p-reviewerImage {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin-left: -6vw;
+  margin-top: 2px;
+}
 
 .p-reviewItem:last-child {
   border-bottom: none;
@@ -197,7 +206,7 @@
   font-weight: 500;
   color: #2D68FF;
   margin-bottom: 4px;
-  margin-top:-1vh;
+  margin-top: 2px;
   font-weight: bold;
 }
 
@@ -205,7 +214,7 @@
   font-size: 11.5px;
   color: #666;
   line-height: 1.4;
-  margin-bottom: 1vh;
+  margin-bottom: 0;
 }
 
 .p-starIcon {
@@ -224,7 +233,7 @@
 .p-temperatureSection {
   background: white;
   border-radius: 0px;
-  padding: 10px;  
+  padding: 10px;
   margin: 11px;
   box-shadow: 0 0 0 0.2px rgba(0, 0, 0, 0.08);
   width: 94.5vw;
@@ -232,5 +241,7 @@
   border: 1px solid rgba(0, 0, 0, 0.12);
   margin-left: -2.5vw;
   margin-top: -3.5vh;
+
   height: 6.5vh;
 }
+

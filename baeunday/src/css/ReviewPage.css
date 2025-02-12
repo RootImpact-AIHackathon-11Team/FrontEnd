@@ -1,86 +1,102 @@
-.reviewpagereviewContainer {
+.review-page-header {
+  display: flex;
   background-color: white;
-  min-height: 100vh;
-}
-
-.reviewpagereviewHeader {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  position: relative;
-}
-
-.reviewpagebackButton {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
-
-.reviewpageheaderTitle {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  font-weight: normal;
-  margin: 0;
-}
-
-.reviewpagereviewItem {
   padding: 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid #E0E0E0;
+  margin-top: 45px;
 }
 
-.reviewpagereviewProfile {
+.review-page-back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 15px;
+  margin-bottom: -10px;
+}
+
+.review-page-back-button img {
+  width: 14px;
+  height: 14px;
+}
+
+.review-page-title {
+  font-size: 17px;
+  color: #333;
+  flex: 1;
+  margin-left: 100px;
+  margin-bottom: -8px;
+  font-weight: 500;
+}
+
+.reviewpage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reviewpage-review {
+  margin-top: 7px;
+  padding: 3px;
+  width: 90%;
+  border-bottom: 1px solid #E0E0E0;
+  position: relative; /* 이 속성을 추가 */
+}
+
+.reviewpage-profile-image {
+  width: 27px;
+  height: 27px;
+  margin-right: 10px;
+  margin-left: -3px;
+}
+
+/* 마지막 리뷰 항목의 하단 선 제거 */
+.reviewpage-review:last-child {
+  border-bottom: none;
+}
+
+.reviewpage-user-info {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+  margin: 10px 0;
 }
 
-.reviewpagereviewerImage {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.reviewpagereviewerName {
+.reviewpage-name {
   font-size: 15px;
-  font-weight: 500;
-  color: #1a1a1a;
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-weight: 600;
+  color: #216CFA;
+  flex-grow: 1; /* 이 부분을 유지 */
+}
+
+.reviewpage-created-date {
+  position: absolute; /* 이 속성을 추가 */
+  right: 0; /* 오른쪽 끝에 고정 */
+  font-size: 16px;
+  color: #777;
   white-space: nowrap;
+  font-weight: 300;
 }
 
-.reviewpagereviewDate {
-  margin-left: auto;
-  color: #999;
+.reviewpage-course-name {
+  font-size: 15px;
+  color: #555;
+  font-weight: 600;
+  margin-left: -4px;
+}
+
+.reviewpage-rating img {
+  width: 15px;
+  height: 15px;
+  margin-right: -30px;
+  margin-left: 33px;
+  margin-bottom: 20px;
+  margin-top: -4px;
+}
+
+.reviewpage-review-content p {
+  color: #333;
+  margin-left: 35px;
+  margin-top: -4px;
   font-size: 14px;
-}
-
-.reviewpagestarRating {
-  margin-bottom: 12px;
-}
-
-.reviewpagestar {
-  color: #FFD600;
-  font-size: 20px;
-  margin-right: 2px;
-}
-
-.reviewpagestar.filled {
-  color: #FFD600;
-}
-
-.reviewpagestar.empty {
-  color: #E0E0E0;
-}
-
-.reviewpagereviewText {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #1a1a1a;
-  margin: 0;
+  font-weight: 300;
 }

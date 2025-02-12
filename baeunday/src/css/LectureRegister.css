@@ -1,7 +1,10 @@
 .lecture-register-container {
   background-color: white;
   min-height: 100vh;
-
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
 }
 
 .lecture-register-header {
@@ -37,6 +40,10 @@
   font-weight: bold;
   color: #1a1a1a;
   margin-bottom: 16px;
+}
+
+.lecture-register-question.error {
+  color: #2D68FF;
 }
 
 .lecture-register-required {
@@ -101,6 +108,11 @@
 .lecture-register-section {
   margin-top: 32px;
   margin-bottom: 32px;
+  position: relative;
+}
+
+.lecture-register-section:first-child {
+  margin-top: 16px;
 }
 
 .lecture-register-option-group {
@@ -133,6 +145,7 @@
   font-size: 13px;
   color: #1a1a1a;
   cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 .lecture-register-checkbox-label input[type="checkbox"],
@@ -165,6 +178,24 @@
   width: 320px;
   height: 45px;
   margin-right: 5px;
+  color: #999999;
+}
+
+.lecture-register-select:not([value=""]) {
+  color: #1A1A1A;
+}
+
+.lecture-register-date-inputs.error .lecture-register-select {
+  border-color: #2D68FF;
+  color: #2D68FF;
+}
+
+.lecture-register-date-inputs.error .lecture-register-select:not([value=""]) {
+  color: #1A1A1A;
+}
+
+.lecture-register-date-inputs.error + .lecture-register-input {
+  border-color: #2D68FF;
 }
 
 .lecture-register-location {
@@ -241,6 +272,7 @@
 .lecture-register-content {
   margin: 0 auto;
   padding: 24px 20px;
+  padding-top: 12px;
   padding-bottom: 70px;
 }
 
@@ -315,5 +347,60 @@
 .location-icon img {
   width: 16px;
   height: 16px;
+}
+
+.input-wrapper {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.lecture-register-input.error {
+  border-color: #FF0000;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #2D68FF;
+  font-size: 12px;
+}
+
+.error-message img {
+  width: 16px;
+  height: 16px;
+}
+
+.section-error {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  margin-left: -4px;
+}
+
+.lecture-register-input.error,
+.lecture-register-select.error,
+.lecture-register-option-group.error {
+  border-color: #2D68FF;
+}
+
+.lecture-register-option-group.error .lecture-register-checkbox-label,
+.lecture-register-option-group.error .lecture-register-radio-label {
+  color: #2D68FF;
+}
+
+.lecture-register-checkbox-label.selected,
+.lecture-register-radio-label.selected {
+  color: #1a1a1a;
+}
+
+/* 각 옵션 그룹별 에러 상태 스타일 */
+.lecture-register-option-group.error .lecture-register-label {
+  color: #2D68FF;  /* 옵션 그룹의 라벨도 파란색으로 변경 */
+}
+
+/* 체크박스/라디오 라벨 에러 상태 */
+.lecture-register-option-group.error .lecture-register-checkbox-label:not(.selected),
+.lecture-register-option-group.error .lecture-register-radio-label:not(.selected) {
+  color: #2D68FF;
 }
 
