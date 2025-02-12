@@ -212,6 +212,7 @@ const LecturePreview = ({ isOpen, onClose, data }) => {
         </div>
       </div>
     </div>
+    
   );
 };
 

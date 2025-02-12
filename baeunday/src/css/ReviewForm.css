@@ -1,0 +1,123 @@
+.review-form-header {
+    display: flex;
+    background-color: white;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 10px 20px;
+    margin-top: 50px;
+}
+
+.review-form-back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding-right: 20px;
+    width: 15px;
+    height: 15px;
+}
+
+.review-form-header-title {
+    font-size: 16px;
+    font-weight: normal;
+    color: black;
+    margin: 0;
+    margin-left: 100px;
+    margin-bottom: 5px;
+}
+
+.review-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.review-form-question {
+    font-size: 24px;
+    color: black;
+    margin-bottom: 2px;
+    margin-top: 90px;
+}
+
+.review-form-subtext {
+    font-size: 14px;
+    color: black;
+    margin-bottom: 25px;
+    margin-top: 30px;
+}
+
+.review-form-stars {
+    display: flex;
+    justify-content: center;
+    border-bottom: 0.6px solid #E0E0E0;
+    width: 105%;
+    margin-top: -9px;
+}
+
+.review-star {
+    width: 32px; /* Adjust size of stars */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-right: 7px;
+    margin-bottom: 35px;
+}
+
+.review-star:hover {
+    transform: scale(1.1);
+}
+
+.review-form-input {
+    width: 98%; /* Full width of the container */
+    height: 105px; /* Standard height for inputs */
+    margin-top: 20px; /* Space above the input */ /* Space below the input */
+    border: 1px solid #ccc; /* Subtle border style */
+    font-size: 16px; /* Matching the font size of other text elements */
+    box-sizing: border-box;
+}
+
+.review-form-button-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background-color: white;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.review-form-button {
+    width: 100%;
+    padding: 13px 0;
+    background-color: #216CFA;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.review-form-button:hover {
+    background-color: #1a56c6;
+}
+
+.review-form-input-container {
+    font-size: 16px; /* Default font size for the container */
+    color: #333; 
+    margin-top: 30px;
+    margin-left: -210px;
+    margin-bottom: -5px;
+}
+
+.review-main-text {
+    font-weight: bold; /* Makes "후기 남기기" bold */
+    margin-right: 5px; /* Adds a small space between the main text and the optional text */
+}
+
+.review-optional-text {
+    font-weight: normal; /* Regular font weight for "(선택)" */
+    font-size: 14px; /* Smaller font size */
+    color: #777; /* Lighter text color for less emphasis */
+}
+
