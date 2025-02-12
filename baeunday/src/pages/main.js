@@ -119,8 +119,8 @@ const MainPage = () => {
 
   const [activeCategory, setActiveCategory] = useState('최신순');
   const [selectorMode, setSelectorMode] = useState(null);
-  const [selectedRegion, setSelectedRegion] = useState('경북');
-  const [selectedCity, setSelectedCity] = useState('구미시');
+  const [selectedRegion, setSelectedRegion] = useState('전국');
+  const [selectedCity, setSelectedCity] = useState('전체');
 
   const [isSheetOpen, setSheetOpen] = useState(false);
   const [sheetOptions, setSheetOptions] = useState([]);
@@ -162,7 +162,7 @@ const MainPage = () => {
 
   const handleSelectRegion = (region) => {
     setSelectedRegion(region);
-    setSelectedCity('');
+    setSelectedCity('전체');
     setSelectorMode('city');
   };
 
@@ -171,6 +171,7 @@ const MainPage = () => {
     setSelectorMode(null);
   };
 
+ 
   return (
     <div className="main-container">
       <header className={`top ${selectorMode ? 'selector-open' : ''}`}>
@@ -276,12 +277,14 @@ const MainPage = () => {
 
       {isSheetOpen && (
         <ActionSheet
-        options={sheetOptions}
-        onSelect={handleSelect}
-        onClose={() => setSheetOpen(false)}
+          options={sheetOptions}
+          onSelect={handleSelect}
+          onClose={() => setSheetOpen(false)}
         />
       )}
       <BottomNavigation />
+
+     
     </div>
   );
 };

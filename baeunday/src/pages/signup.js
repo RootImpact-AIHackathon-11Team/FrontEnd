@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import "../css/signup.css"; // CSS 파일 불러오기
 import backIcon from "../assets/images/Vector.svg"; // ✅ 뒤로가기 아이콘 불러오기
 import exMark from "../assets/images/느낌표.svg"
+import { useNavigate } from 'react-router-dom'; // useNavigate import 추가
 
-function Signup({ onBackClick }) {
+function Signup() {
+  const navigate = useNavigate(); // useNavigate 훅 추가
   const [nickname, setNickname] = useState("");
   const [intro, setIntro] = useState("");
   const [userId, setUserId] = useState("");
@@ -110,11 +112,16 @@ function Signup({ onBackClick }) {
     alert("회원가입이 완료되었습니다.");
   };
 
+  // 뒤로가기 핸들러 추가
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="signup-container">
       <header className="signup-header">
         <div className="header-left">
-          <button className="back-button" onClick={onBackClick}>
+          <button className="back-button" onClick={handleBack}>
             <img src={backIcon} alt="뒤로가기" className="back-icon" />
           </button>
         </div>

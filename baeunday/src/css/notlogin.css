@@ -10,6 +10,7 @@ notlogin.css
 }
 
 .title {
+  margin-left: 20px;
   font-size: 17px;
   color: #4b5563;
   text-align: left;
@@ -21,7 +22,7 @@ notlogin.css
   font-size: 24px;
 }
 
-/* ✅ "와 함께"를 subtitle 스타일과 동일하게 설정 */
+
 .title-sub {
   font-size: 16px;
   color: #4b5563;
@@ -30,6 +31,7 @@ notlogin.css
 }
 
 .subtitle {
+  margin-left: 20px;
   font-size: 16px;
   color: #4b5563;
   text-align: left;
@@ -38,6 +40,7 @@ notlogin.css
 }
 
 .description {
+  margin-left: 20px;
   font-size: 16px;
   color: #6b7280;
   margin-top: 20px;
@@ -52,7 +55,7 @@ notlogin.css
   display: flex;
   flex-direction: column;
   gap: 2.5vh;
-  margin-left: 5vw;
+  margin-left: 16px;
   margin-bottom: 4vh;
 }
 

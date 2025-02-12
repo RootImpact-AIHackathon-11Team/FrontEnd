@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../css/ReviewForm.css';
 import starFilled from '../assets/images/reviewstar.svg';
 import starEmpty from '../assets/images/reviewstar_empty.svg';
 import backIcon from '../assets/images/Vector.svg';
 
 const ReviewHeader = () => {
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        navigate(-1);
+    };
+
     return (
         <div className="review-form-header">
-            <img src={backIcon} alt="back" className="review-form-back-button" />
+            <img 
+                src={backIcon} 
+                alt="back" 
+                className="review-form-back-button" 
+                onClick={handleBack}
+                style={{ cursor: 'pointer' }}
+            />
             <h1 className="review-form-header-title">후기 작성</h1>
         </div>
     );

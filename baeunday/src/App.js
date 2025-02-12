@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MainPage from './pages/main';
 import LectureDetailPage from './components/LectureDetailPage';
 import Loading from './pages/loading';
@@ -24,6 +24,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Loading />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/loading" element={<Loading />} />
         <Route path="/not-login" element={<NotLogin />} />

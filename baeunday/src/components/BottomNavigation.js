@@ -18,6 +18,10 @@ const BottomNavigation = () => {
     };
   };
 
+  const handlePlusClick = () => {
+    navigate('/lectureregister');
+  };
+
   return (
     <nav className="bottom-nav">
       <button 
@@ -38,7 +42,10 @@ const BottomNavigation = () => {
         <span>신청한</span>
       </button>
 
-      <button className="nav-item plus">
+      <button 
+        className="nav-item plus"
+        onClick={handlePlusClick}
+      >
         <div className="plus-circle">
           <span>+</span>
         </div>
