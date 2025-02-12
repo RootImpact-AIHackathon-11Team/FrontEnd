@@ -4,17 +4,14 @@ import backIcon from "../assets/images/Vector.svg"; // 뒤로가기 아이콘 �
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const [id, setId] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
-  // 하드코딩된 계정 정보
-  const VALID_ID = 'baeunday';
-  const VALID_PASSWORD = '1234';
+  const API_BASE_URL = 'http://43.202.15.40';
 
   // ✅ 필수 입력값 검증 상태
   const [errors, setErrors] = useState({
-    id: false,
+    username: false,
     password: false,
   });
 
@@ -22,14 +19,14 @@ function Login() {
   const handleInputChange = (field, value) => {
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [field]: !value.trim(), // 값이 있으면 false, 없으면 true
+      [field]: !value.trim(),
     }));
   };
 
-  // ✅ 아이디 입력 (이메일 대신)
-  const handleIdChange = (e) => {
-    setId(e.target.value);
-    handleInputChange("id", e.target.value);
+  // ✅ 아이디 입력
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+    handleInputChange("username", e.target.value);
   };
 
   // ✅ 비밀번호 입력
@@ -38,26 +35,63 @@ function Login() {
     handleInputChange("password", e.target.value);
   };
 
-  // ✅ 로그인 버튼 클릭 시 검증
-  const handleLogin = (e) => {
+  // ✅ 로그인 처리
+  const handleLogin = async (e) => {
     e.preventDefault();
+    
+    // 입력값 검증
     let newErrors = {
-      id: !id,
+      username: !username,
       password: !password,
     };
 
     setErrors(newErrors);
 
-    // 필수 입력값이 비어있으면 로그인 진행 X
     if (Object.values(newErrors).some((error) => error)) {
       return;
     }
 
-    // 아이디와 비밀번호 검증
-    if (id === VALID_ID && password === VALID_PASSWORD) {
-      navigate('/main');
-    } else {
-      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+    try {
+      const requestBody = {
+        username: username,
+        password: password
+      };
+      
+      console.log('로그인 요청:', requestBody);
+
+      const response = await fetch(`${API_BASE_URL}/user/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      console.log('로그인 응답 상태:', response.status);
+      
+      if (response.ok) {
+        // JWT 토큰 추출 (Authorization 헤더에서)
+        const token = response.headers.get('Authorization');
+        if (token) {
+          // Bearer 제거하고 토큰만 저장
+          const jwtToken = token.replace('Bearer ', '');
+          // localStorage에 토큰 저장
+          localStorage.setItem('token', jwtToken);
+          console.log('JWT 토큰 저장됨');
+        }
+
+        const data = await response.json();
+        console.log('로그인 응답 데이터:', data);
+
+        alert(data.message || "로그인 성공");
+        navigate('/main');
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "로그인 실패");
+      }
+    } catch (error) {
+      console.error('로그인 중 오류:', error);
+      alert(error.message || "로그인 처리 중 오류가 발생했습니다.");
     }
   };
 
@@ -73,16 +107,16 @@ function Login() {
       </header>
 
       <form onSubmit={handleLogin} className="login-form">
-        {/* 아이디 입력 (이메일 대신) */}
-        <div className={`input-group ${errors.id ? "error" : ""}`}>
+        {/* 아이디 입력 */}
+        <div className={`input-group ${errors.username ? "error" : ""}`}>
           <label>아이디<span className="required">*</span></label>
           <input 
             type="text" 
             placeholder="아이디를 입력해주세요"
-            value={id}
-            onChange={handleIdChange}
+            value={username}
+            onChange={handleUsernameChange}
           />
-          {errors.id && <p className="login-error-text">⚠ 필수 입력 항목입니다.</p>}
+          {errors.username && <p className="login-error-text">⚠ 필수 입력 항목입니다.</p>}
         </div>
 
         {/* 비밀번호 입력 */}

@@ -19,33 +19,34 @@ import LectureRegister from './pages/LectureRegister';
 import LectureGuideModal from './components/LectureGuideModal';
 import LecturePreview from './pages/LecturePreview';
 import ReviewForm from './pages/ReviewForm';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Loading />} />
-        <Route path="/main" element={<MainPage />} />
+        <Route path="/" element={<Navigate to="/loading" replace />} />
         <Route path="/loading" element={<Loading />} />
-        <Route path="/not-login" element={<NotLogin />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/lecture/:lectureId" element={<LectureDetailPage />} />
-        <Route path="/lecture/:lectureId/inquiries" element={<InquiryPage />} />
-        <Route path="/mypage" element={<Mypage />} />
-        <Route path="/mypage/review" element={<ReviewPage />} />
-        <Route path="/profile/edit" element={<ProfileEdit />} />
-        <Route path="/profile/nickname" element={<NicknameEdit />} />
-        <Route path="/applied" element={<AppliedPage />} />
-        <Route path="/wishlist" element={<WishlistPage />} />
-        <Route path="/registered" element={<RegisteredLecturePage />} />
-        <Route path="/profile/description" element={<DescriptionEdit />} />
-        <Route path="/lectureregister" element={<LectureRegister />} />
-        <Route path="/lecture-guide" element={<LectureGuideModal />} />
-        <Route path="/lecturepreview" element={<LecturePreview />} />
-        <Route path="/mainpage" element={<MainPage />} />
-        <Route path="/reviewform" element={<ReviewForm />} />
-        <Route path="/reviewpage" element={<ReviewPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/not-login" element={<NotLogin />} />
+        <Route path="/main" element={<ProtectedRoute><MainPage /></ProtectedRoute>} />
+        <Route path="/lecture/:lectureId" element={<ProtectedRoute><LectureDetailPage /></ProtectedRoute>} />
+        <Route path="/lecture/:lectureId/inquiries" element={<ProtectedRoute><InquiryPage /></ProtectedRoute>} />
+        <Route path="/mypage" element={<ProtectedRoute><Mypage /></ProtectedRoute>} />
+        <Route path="/mypage/review" element={<ProtectedRoute><ReviewPage /></ProtectedRoute>} />
+        <Route path="/profile/edit" element={<ProtectedRoute><ProfileEdit /></ProtectedRoute>} />
+        <Route path="/profile/nickname" element={<ProtectedRoute><NicknameEdit /></ProtectedRoute>} />
+        <Route path="/applied" element={<ProtectedRoute><AppliedPage /></ProtectedRoute>} />
+        <Route path="/wishlist" element={<ProtectedRoute><WishlistPage /></ProtectedRoute>} />
+        <Route path="/registered" element={<ProtectedRoute><RegisteredLecturePage /></ProtectedRoute>} />
+        <Route path="/profile/description" element={<ProtectedRoute><DescriptionEdit /></ProtectedRoute>} />
+        <Route path="/lectureregister" element={<ProtectedRoute><LectureRegister /></ProtectedRoute>} />
+        <Route path="/lecture-guide" element={<ProtectedRoute><LectureGuideModal /></ProtectedRoute>} />
+        <Route path="/lecturepreview" element={<ProtectedRoute><LecturePreview /></ProtectedRoute>} />
+        <Route path="/mainpage" element={<ProtectedRoute><MainPage /></ProtectedRoute>} />
+        <Route path="/reviewform" element={<ProtectedRoute><ReviewForm /></ProtectedRoute>} />
+        <Route path="/reviewpage" element={<ProtectedRoute><ReviewPage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

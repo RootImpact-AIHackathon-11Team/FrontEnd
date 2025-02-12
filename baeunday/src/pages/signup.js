@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'; // useNavigate import 추가
 
 function Signup() {
   const navigate = useNavigate(); // useNavigate 훅 추가
+  const API_BASE_URL = 'http://43.202.15.40';
   const [nickname, setNickname] = useState("");
   const [intro, setIntro] = useState("");
   const [userId, setUserId] = useState("");
@@ -25,6 +26,10 @@ function Signup() {
     password: false,
   });
 
+  // ✅ successName과 successUsername 상태 추가
+  const [successName, setSuccessName] = useState(0);
+  const [successUsername, setSuccessUsername] = useState(0);
+
   // ✅ 입력값 변경 시 오류 상태 해제
   const handleInputChange = (field, value) => {
     setErrors((prevErrors) => ({
@@ -35,18 +40,20 @@ function Signup() {
 
   // ✅ 닉네임 입력 시 오류 상태 초기화 & 중복 확인 버튼 활성화
   const handleNicknameChange = (e) => {
-    setNickname(e.target.value);
-    setIsNicknameValid(null);
+    const value = e.target.value;
+    setNickname(value);
+    setSuccessName(0); // 입력값 변경 시 중복 확인 상태 초기화
     setNicknameError("");
-    handleInputChange("nickname", e.target.value);
+    handleInputChange("nickname", value);
   };
 
   // ✅ 아이디 입력 시 오류 상태 초기화 & 중복 확인 버튼 활성화
   const handleUserIdChange = (e) => {
-    setUserId(e.target.value);
-    setIsUserIdValid(null);
+    const value = e.target.value;
+    setUserId(value);
+    setSuccessUsername(0); // 입력값 변경 시 중복 확인 상태 초기화
     setUserIdError("");
-    handleInputChange("userId", e.target.value);
+    handleInputChange("userId", value);
   };
 
   // ✅ 한 줄 소개 입력
@@ -62,54 +69,135 @@ function Signup() {
   };
 
   // ✅ 닉네임 중복 확인 기능
-  const handleCheckNickname = () => {
-    const existingNicknames = ["testuser", "john123", "nickname1"];
+  const handleCheckNickname = async () => {
+    try {
+      const requestBody = {
+        checkname: nickname
+      };
+      console.log('닉네임 중복 확인 요청:', requestBody);
 
-    if (existingNicknames.includes(nickname)) {
-      setIsNicknameValid(false);
-      setNicknameError("이미 사용 중인 닉네임입니다.");
-    } else {
-      setIsNicknameValid(true);
-      setNicknameError("사용 가능한 닉네임입니다.");
+      const response = await fetch(`${API_BASE_URL}/user/check-name`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+      
+      console.log('닉네임 중복 확인 응답 상태:', response.status);
+      const data = await response.json();
+      console.log('닉네임 중복 확인 응답 데이터:', data);
+      
+      setSuccessName(data.successName);
+      setNicknameError(data.message);
+      
+    } catch (error) {
+      console.error('닉네임 중복 확인 중 오류:', error);
+      setNicknameError("중복 확인 중 오류가 발생했습니다.");
+      setSuccessName(0);
     }
   };
 
   // ✅ 아이디 중복 확인 기능
-  const handleCheckUserId = () => {
-    const existingUserIds = ["user123", "admin", "testaccount"];
+  const handleCheckUserId = async () => {
+    try {
+      const requestBody = {
+        checkname: userId
+      };
+      console.log('아이디 중복 확인 요청:', requestBody);
 
-    if (existingUserIds.includes(userId)) {
-      setIsUserIdValid(false);
-      setUserIdError("이미 사용 중인 아이디입니다.");
-    } else {
-      setIsUserIdValid(true);
-      setUserIdError("사용 가능한 아이디입니다.");
+      const response = await fetch(`${API_BASE_URL}/user/check-username`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+      
+      console.log('아이디 중복 확인 응답 상태:', response.status);
+      const data = await response.json();
+      console.log('아이디 중복 확인 응답 데이터:', data);
+      
+      setSuccessUsername(data.successUserName);
+      setUserIdError(data.message);
+      
+    } catch (error) {
+      console.error('아이디 중복 확인 중 오류:', error);
+      setUserIdError("중복 확인 중 오류가 발생했습니다.");
+      setSuccessUsername(0);
     }
   };
 
-  // ✅ 회원가입 버튼 클릭 시 필수 입력값 검증
-  const handleSignupClick = () => {
-    let newErrors = {
-      nickname: !nickname.trim(),
-      intro: !intro.trim(),
-      userId: !userId.trim(),
-      password: !password.trim(),
-    };
+  // ✅ 회원가입 버튼 클릭 시 처리
+  const handleSignupClick = async () => {
+    // 현재 상태값들 로깅
+    console.log('현재 상태값:', {
+      nickname,
+      userId,
+      password,
+      intro,
+      successName,
+      successUsername
+    });
 
-    setErrors(newErrors);
-
-    // 필수 입력값이 하나라도 없으면 에러 메시지를 표시
-    if (Object.values(newErrors).some((error) => error)) {
+    // 입력값 검증
+    if (!nickname || !userId || !password || !intro) {
+      alert("모든 필수 항목을 입력해주세요.");
       return;
     }
 
-    // 닉네임 또는 아이디가 중복되었을 경우 회원가입 불가
-    if (isNicknameValid === false || isUserIdValid === false) {
-      alert("닉네임 또는 아이디가 중복되었습니다.");
+    // 중복 확인 검증
+    if (successName !== 1 || successUsername !== 1) {
+      console.log('중복 확인 상태:', {
+        successName,
+        successUsername
+      });
+      alert("닉네임과 아이디 중복 확인이 필요합니다.");
       return;
     }
 
-    alert("회원가입이 완료되었습니다.");
+    try {
+      const requestBody = {
+        name: nickname,
+        username: userId,
+        password: password,
+        field: intro,
+        successName: successName,
+        successUsername: successUsername
+      };
+      
+      // 요청 데이터 상세 로깅
+      console.log('회원가입 요청 데이터:', {
+        URL: `${API_BASE_URL}/user/register`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: requestBody
+      });
+
+      const response = await fetch(`${API_BASE_URL}/user/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      console.log('서버 응답 상태:', response.status);
+      const data = await response.json();
+      console.log('서버 응답 데이터:', data);
+
+      if (response.ok) {
+        alert("회원가입이 완료되었습니다.");
+        navigate('/login');
+      } else {
+        throw new Error(data.message || "회원가입 처리 중 오류가 발생했습니다.");
+      }
+    } catch (error) {
+      console.error('회원가입 중 오류:', error);
+      alert(error.message);
+    }
   };
 
   // 뒤로가기 핸들러 추가
