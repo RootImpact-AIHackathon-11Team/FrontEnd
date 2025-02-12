@@ -42,7 +42,7 @@ export default function MyPage() {
               <span className="p-temperatureText">매너발자국</span>
               <img src={questionIcon} alt="도움말" className="p-questionIcon" onClick={handleOpenModal} />
             </div>
-            <span className="p-temperatureValue">36.5°C</span>
+            <span className="p-temperatureValue">1000보</span>
           </div>
           <div className="p-progressBar">
             <div className="p-progressFill" />

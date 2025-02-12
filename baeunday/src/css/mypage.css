@@ -5,13 +5,14 @@
 }
 
 .p-header {
-  font-size: 16px;
+  font-size: 15px;
   text-align: center;
   padding: 15px 0;
   border-bottom: 1px solid white;
   margin-bottom: 0;
-  font-weight: normal;
-  margin-top: 5vh;
+  font-weight: 400;
+  margin-top: 50px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .p-profileCard {
@@ -54,16 +55,16 @@
   flex-shrink: 0;
 }
 
-#arrow1 {
-  margin-left: 22vw;
+#p-arrow1 {
+  margin-right: 2px;
 }
-#arrow2{
-  margin-right: -0.5vw;
-  margin-bottom: 5.8vh;
-}
-#arrow3{
+#p-arrow2{
   margin-right: 0px;
-  margin-top: 30px;
+  margin-top: 5px;
+}
+#p-arrow3{
+  margin-right: 0px;
+  margin-top: 8px;
 }
 
 .p-temperatureWrapper {
@@ -154,13 +155,14 @@
 }
 
 #p-menuTitle1{
-  margin-top: -10px;
+  margin-top: -16px;
   padding: 19px;
-  margin-left: -21px;
+  margin-left: -24px;
 }
 
 #p-menuTitle2{
   margin-top: 5px;
+  margin-left: -3px;
 }
 
 .p-menuDesc { 
@@ -240,8 +242,8 @@
   box-sizing: border-box;
   border: 1px solid rgba(0, 0, 0, 0.12);
   margin-left: -2.5vw;
-  margin-top: -3.5vh;
-
+  margin-top: -20px;
   height: 6.5vh;
+  margin-bottom: 0px;
 }
 

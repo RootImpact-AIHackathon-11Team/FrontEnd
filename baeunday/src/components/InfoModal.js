@@ -7,9 +7,9 @@ const InfoModal = ({ isOpen, onClose }) => {
   return (
     <div className="modalBackdrop">
       <div className="modalContent">
-        <h2 className="modalHeader">매너온도란?</h2>
-        <p className="modalBody">매너온도는 수강생으로부터 받은 별점을 종합하여 만든 매너 지표입니다.</p>
-        <p className="modalBody">첫 매너온도는 36.5°C에서 시작해요!</p>
+        <h2 className="modalHeader">매너발자국이란?</h2>
+        <p className="modalBody">매너발자국은 수강생으로부터 받은 별점을 종합하여 만든 매너 지표입니다.</p>
+        <p className="modalBody">첫 매너발자국은 1000보에서 시작해요!</p>
         <button onClick={onClose} className="modalCloseButton">확인</button>
       </div>
     </div>

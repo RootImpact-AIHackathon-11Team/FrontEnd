@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/ProfileEdit.css';
 import backIcon from '../assets/images/Vector.svg';
@@ -9,6 +9,7 @@ import profileImage from '../assets/examples/mainEx6.png';
 const ProfileEdit = () => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('컴공 사이에 피어난 전쟁');
+  const fileInputRef = useRef(null);
 
   const handleBack = () => {
     navigate(-1);
@@ -22,6 +23,20 @@ const ProfileEdit = () => {
     navigate('/profile/description');
   };
 
+  const handleCameraIconClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
+    }
+
+    // You can handle file upload or preview here
+    console.log(file.name);
+  };
+
   return (
     <div className="editContainer">
       <div className="profileeditHeader">
@@ -32,11 +47,19 @@ const ProfileEdit = () => {
       <div className="profileImageSection">
         <div className="profileImageWrapper">
           <img src={profileImage} alt="프로필" className="profileeditprofileImage" />
-          <div className="cameraIconWrapper">
+          <div className="cameraIconWrapper" onClick={handleCameraIconClick}>
             <img src={cameraIcon} alt="카메라" className="profileeditcameraIcon" />
           </div>
         </div>
       </div>
+
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        accept="image/*" // Accept only images
+        onChange={handleFileChange}
+      />
 
       <div className="profileList">
         <div className="profileItem" onClick={handleNicknameEdit}>
