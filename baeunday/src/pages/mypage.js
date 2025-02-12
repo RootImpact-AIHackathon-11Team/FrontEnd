@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import InfoModal from '../components/InfoModal';
 import ReviewPage from '../components/ReviewPage';
 import BottomNavigation from '../components/BottomNavigation';
@@ -12,13 +13,77 @@ import questionIcon from '../assets/images/question.svg';
 
 export default function MyPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState({
+    name: '',
+    profileImg: '',
+    field: ''
+  });
   const navigate = useNavigate();
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
   const handleProfileEdit = () => navigate('/profile/edit');
   const handleReviewPage = () => navigate('/mypage/review');
-  const handleRegisteredLecturePage = () => navigate('/registered'); // 이 부분이 새로 추가됨
+  const handleRegisteredLecturePage = () => navigate('/registered');
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        // 모든 가능한 토큰 확인
+        const token = localStorage.getItem('token');
+        
+        console.log('=== API Request Debug Info ===');
+        console.log('1. Request URL:', 'http://43.202.15.40/user/profile');
+        console.log('2. Request Method:', 'GET');
+        
+        const finalToken = `Bearer ${token.replace('Bearer ', '')}`;
+        const headers = {
+          'Authorization': finalToken,
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        };
+        
+        console.log('3. Request Headers:', headers);
+        console.log('4. Token Details:');
+        console.log('   - Raw token:', token);
+        console.log('   - Final token:', finalToken);
+        console.log('   - Token length:', finalToken.length);
+        
+        const response = await axios.get('http://43.202.15.40/user/profile', { headers });
+        
+        console.log('=== API Response Debug Info ===');
+        console.log('1. Response Status:', response.status);
+        console.log('2. Response Headers:', response.headers);
+        console.log('3. Response Data:', response.data);
+        console.log('================================');
+
+        if (response.data) {
+          const userData = {
+            name: response.data.name || '',
+            profileImg: response.data.profileImg || '',
+            field: response.data.field || ''
+          };
+          
+          console.log('4. Parsed User Data:', userData);
+          setUserProfile(userData);
+        } else {
+          console.error('Invalid response structure:', response.data);
+        }
+
+      } catch (error) {
+        console.error('Profile fetch error:', {
+          message: error.message,
+          status: error.response?.status,
+          data: error.response?.data
+        });
+        if (error.response?.status === 401) {
+          navigate('/login');
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, [navigate]);
 
   return (
     <div className="p-container">
@@ -26,10 +91,10 @@ export default function MyPage() {
       
       <div className="p-profileCard">
         <div className="p-profileInfo">
-          <img src={mainEx6} alt="프로필" className="p-profileImage" />
+          <img src={userProfile.profileImg || mainEx6} alt="프로필" className="p-profileImage" />
           <div>
-            <h2 className="p-profileName">컴공 사이에 피어난 전쟁통</h2>
-            <p className="p-profileDesc">나로 말할 것 같으면~ 자신감있는 강사~</p>
+            <h2 className="p-profileName">{userProfile.name || '로딩 중...'}</h2>
+            <p className="p-profileDesc">{userProfile.field || '기본 필드'}</p>
           </div>
           <img src={vectorIcon} alt="화살표" className="p-arrow" id='p-arrow1' onClick={handleProfileEdit} />
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/ProfileEdit.css';
 import backIcon from '../assets/images/Vector.svg';
@@ -8,8 +8,33 @@ import profileImage from '../assets/examples/mainEx6.png';
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
-  const [nickname, setNickname] = useState('컴공 사이에 피어난 전쟁');
+  const [profileData, setProfileData] = useState({
+    name: '',
+    profileImg: '',
+    field: ''
+  });
   const fileInputRef = useRef(null);
+
+  // 프로필 데이터 가져오기
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await fetch('http://43.202.15.40/user/profile', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        
+        if (!response.ok) throw new Error('Failed to fetch profile data');
+        const data = await response.json();
+        setProfileData(data);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
 
   const handleBack = () => {
     navigate(-1);
@@ -27,14 +52,55 @@ const ProfileEdit = () => {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
-    // You can handle file upload or preview here
-    console.log(file.name);
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      // FormData 내용 확인
+      console.log('Request Body (FormData):');
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ', pair[1]);
+      }
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      const response = await fetch(
+        `http://43.202.15.40/user/profile/img/upload?deleteImage=${profileData.profileImg || ''}`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error Response:', errorData);
+        throw new Error(errorData.message || 'Failed to upload image');
+      }
+
+      const data = await response.json();
+      console.log('Response Body:', data);
+
+      setProfileData(prevData => ({
+        ...prevData,
+        name: data.name,
+        profileImg: data.profileImg
+      }));
+
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      // 에러 처리 (예: 토스트 메시지 표시)
+    }
   };
 
   return (
@@ -46,7 +112,11 @@ const ProfileEdit = () => {
 
       <div className="profileImageSection">
         <div className="profileImageWrapper">
-          <img src={profileImage} alt="프로필" className="profileeditprofileImage" />
+          <img 
+            src={profileData.profileImg || profileImage} 
+            alt="프로필" 
+            className="profileeditprofileImage" 
+          />
           <div className="cameraIconWrapper" onClick={handleCameraIconClick}>
             <img src={cameraIcon} alt="카메라" className="profileeditcameraIcon" />
           </div>
@@ -65,7 +135,7 @@ const ProfileEdit = () => {
         <div className="profileItem" onClick={handleNicknameEdit}>
           <span className="itemLabel">닉네임</span>
           <div className="itemContent">
-            <span>{nickname}</span>
+            <span>{profileData.name}</span>
             <img src={arrowIcon} alt="화살표" className="profileeditarrowIcon" />
           </div>
         </div>

@@ -17,9 +17,12 @@ import RegionSelector from '../components/RegionSelector';
 import ActionSheet from '../components/ActionSheet';
 import { useNavigate } from 'react-router-dom';
 import BottomNavigation from '../components/BottomNavigation';
-import { autoLogin, getAuthHeader } from '../utils/auth';
 
 const MainPage = () => {
+  const API_BASE_URL = window.location.hostname.includes('ngrok') 
+    ? 'https://edd9-2001-2d8-74ca-b3b1-9d4d-a8f-1e0f-ee66.ngrok-free.app' 
+    : 'http://43.202.15.40';
+  
   const navigate = useNavigate();
   const [lectures, setLectures] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,6 +30,41 @@ const MainPage = () => {
   const [hasNext, setHasNext] = useState(true);
   const [nextCursor, setNextCursor] = useState(null);
   
+  // 필터 매핑 객체들
+  const statusMapping = {
+    '전체 상태': null,
+    '모집 중': 'AVAILABLE',
+    '인원 달성': 'ING',
+    '종료': 'END'
+  };
+
+  const feeMapping = {
+    '전체 금액': null,
+    '무료': 'FREE',
+    '3만원 이하': 'UNDER_3',
+    '3~5만원': 'BETWEEN3_5',
+    '5~10만원': 'BETWEEN5_10',
+    '10만원 이상': 'OVER_10'
+  };
+
+  const sortMapping = {
+    '최신순': 'recent',
+    '마감순': 'deadline',
+    '찜 많은 순': 'heart'
+  };
+
+  const [activeCategory, setActiveCategory] = useState('최신순');
+  const [selectorMode, setSelectorMode] = useState(null);
+  const [selectedRegion, setSelectedRegion] = useState('전국');
+  const [selectedCity, setSelectedCity] = useState('전체');
+  const [isSheetOpen, setSheetOpen] = useState(false);
+  const [sheetOptions, setSheetOptions] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({
+    최신순: '최신순',
+    모집상태: '모집상태',
+    신청금액: '신청금액'
+  });
+
   // 무한 스크롤 관련 ref
   const observerRef = useRef();
   const lastLectureRef = useCallback(node => {
@@ -47,50 +85,123 @@ const MainPage = () => {
   const fetchLectures = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://43.202.15.40/posts', {
-        headers: getAuthHeader()
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
+      
+      const status = statusMapping[selectedFilters['모집상태']];
+      const feeRange = feeMapping[selectedFilters['신청금액']];
+      const sort = sortMapping[selectedFilters['최신순']];
+      
+      const params = { sort: sort || 'recent' };
+      if (status && status !== 'ALL') {
+        params.status = status;
+      }
+      if (feeRange && feeRange !== 'ALL') {
+        params.feeRange = feeRange;
+      }
+      
+      console.log('API 요청 정보:', {
+        url: `${API_BASE_URL}/posts`,
+        params,
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const response = await axios.get(`${API_BASE_URL}/posts`, {
+        params,
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
       
-      const { body, cursor } = response.data.data;
-      const lectures = body.postList;
-      
-      setLectures(lectures);
-      setHasNext(cursor.hasNext);
-      setNextCursor(cursor.nextId);
+      if (response.data && response.data.data) {
+        const { body, cursor } = response.data.data;
+        if (body && body.postList) {
+          setLectures(body.postList);
+          setHasNext(cursor.hasNext);
+          setNextCursor(cursor.nextId);
+        } else {
+          setLectures([]);
+        }
+      }
     } catch (error) {
-      console.error('Error details:', error.response || error);
-      setError(error.response?.data?.message || '강의 목록을 불러오는데 실패했습니다.');
+      console.error('에러 상세 정보:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message
+      });
+      if (error.response?.status === 403) {
+        setError('접근 권한이 없습니다. 로그인이 필요합니다.');
+        navigate('/login');
+      } else if (error.response?.status === 400) {
+        setError('잘못된 요청입니다.');
+      } else {
+        setError('강의 목록을 불러오는데 실패했습니다.');
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  // 추가 강의 목록 로딩
+  // 추가 강의 목록 로딩 (페이지네이션)
   const fetchMoreLectures = async () => {
     if (!hasNext || loading) return;
     
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      
-      const response = await axios.get(`http://43.202.15.40/posts?cursor=${nextCursor}`, {
+      if (!token) {
+        setError('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
+
+      const status = statusMapping[selectedFilters['모집상태']];
+      const feeRange = feeMapping[selectedFilters['신청금액']];
+      const sort = sortMapping[selectedFilters['최신순']];
+
+      const params = { sort: sort || 'recent' };
+      if (nextCursor) {
+        params.cursor = nextCursor;
+      }
+      if (status && status !== 'ALL') {
+        params.status = status;
+      }
+      if (feeRange && feeRange !== 'ALL') {
+        params.feeRange = feeRange;
+      }
+
+      const response = await axios.get(`${API_BASE_URL}/posts`, {
+        params,
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         }
       });
-      
-      const { body, cursor } = response.data.data;
-      const lectures = body.postList;
-      
-      setLectures(prev => [...prev, ...lectures]);
-      setHasNext(cursor.hasNext);
-      setNextCursor(cursor.nextId);
+
+      if (response.data && response.data.data) {
+        const { body, cursor } = response.data.data;
+        if (body && body.postList) {
+          setLectures(prev => [...prev, ...body.postList]);
+          setHasNext(cursor.hasNext);
+          setNextCursor(cursor.nextId);
+        }
+      }
     } catch (error) {
-      console.error('Error details:', error.response || error);
-      if (error.response?.status === 403) {
-        setError('접근 권한이 없습니다. 로그인이 필요합니다.');
+      console.error('페이지네이션 에러:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message
+      });
+      if (error.response?.status === 401) {
+        setError('토큰이 만료되었습니다. 다시 로그인해주세요.');
+        navigate('/login');
+      } else if (error.response?.status === 403) {
+        setError('접근 권한이 없습니다.');
       } else {
         setError('추가 강의 목록을 불러오는데 실패했습니다.');
       }
@@ -99,36 +210,13 @@ const MainPage = () => {
     }
   };
 
-  // 자동 로그인 처리
-  const handleAutoLogin = async () => {
-    const result = await autoLogin();
-    if (result.success) {
-      fetchLectures();
-    } else {
-      setError(result.error);
-    }
-  };
-
   useEffect(() => {
-    handleAutoLogin();
+    fetchLectures();
   }, []);
 
   const handleLectureClick = (lectureId) => {
     navigate(`/lecture/${lectureId}`);
   };
-
-  const [activeCategory, setActiveCategory] = useState('최신순');
-  const [selectorMode, setSelectorMode] = useState(null);
-  const [selectedRegion, setSelectedRegion] = useState('전국');
-  const [selectedCity, setSelectedCity] = useState('전체');
-
-  const [isSheetOpen, setSheetOpen] = useState(false);
-  const [sheetOptions, setSheetOptions] = useState([]);
-  const [selectedFilters, setSelectedFilters] = useState({
-    최신순: '최신순',
-    모집상태: '모집상태',
-    신청금액: '신청금액'
-  });
 
   const options = {
     최신순: ['최신순', '마감순', '찜 많은 순'],
@@ -171,7 +259,6 @@ const MainPage = () => {
     setSelectorMode(null);
   };
 
- 
   return (
     <div className="main-container">
       <header className={`top ${selectorMode ? 'selector-open' : ''}`}>
@@ -258,7 +345,7 @@ const MainPage = () => {
                   <p>
                     {lecture.city} · D-{calculateDday(lecture.deadline)} · 
                     <span style={{ color: '#216CFA' }}>
-                      {lecture.fee === 0 ? '무료' : `${lecture.fee.toLocaleString()}원`}
+                      {lecture.feeRange === 0 || !lecture.feeRange ? '무료' : `${lecture.feeRange.toLocaleString()}원`}
                     </span>
                   </p>
                   <button className={`status-btn ${lecture.status === 'AVAILABLE' ? 'recruiting' : 'filled'}`}>
