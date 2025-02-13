@@ -70,12 +70,12 @@ const ReviewForm = () => {
 
             // 요청 정보 로깅
             console.log('📝 후기 작성 요청:');
-            console.log('URL:', `http://43.202.15.40/api/review/${lecture.postId}`);
+            console.log('URL:', `https://mannajang.store/api/review/${lecture.postId}`);
             console.log('Config:', config);
             console.log('Request Body:', requestBody);
 
             const response = await axios.post(
-                `http://43.202.15.40/api/review/${lecture.postId}`,
+                `https://mannajang.store/api/review/${lecture.postId}`,
                 requestBody,
                 config
             );

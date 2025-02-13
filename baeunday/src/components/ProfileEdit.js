@@ -19,7 +19,7 @@ const ProfileEdit = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch('http://43.202.15.40/api/user/profile', {
+        const response = await fetch('https://mannajang.store/api/user/profile', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -72,7 +72,7 @@ const ProfileEdit = () => {
       }
 
       const response = await fetch(
-        `http://43.202.15.40/api/user/profile/img/upload?deleteImage=${profileData.profileImg || ''}`,
+        `https://mannajang.store/api/user/profile/img/upload?deleteImage=${profileData.profileImg || ''}`,
         {
           method: 'POST',
           headers: {

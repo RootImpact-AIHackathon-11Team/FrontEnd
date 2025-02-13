@@ -7,7 +7,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const API_BASE_URL = 'http://43.202.15.40/api';
+  const API_BASE_URL = 'https://mannajang.store/api';
   // ✅ 필수 입력값 검증 상태
   const [errors, setErrors] = useState({
     username: false,

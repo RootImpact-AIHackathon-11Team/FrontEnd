@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'; // useNavigate import 추가
 
 function Signup() {
   const navigate = useNavigate(); // useNavigate 훅 추가
-  const API_BASE_URL = 'http://43.202.15.40/api';
+  const API_BASE_URL = 'https://mannajang.store/api';
   const [nickname, setNickname] = useState("");
   const [intro, setIntro] = useState("");
   const [userId, setUserId] = useState("");

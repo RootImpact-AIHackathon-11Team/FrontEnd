@@ -30,7 +30,7 @@ const DescriptionEdit = () => {
       }
 
       const response = await axios.put(
-        'http://43.202.15.40/user/profile/field',
+        'https://mannajang.store/api/user/profile/field',
         { field: description },
         {
           headers: {
