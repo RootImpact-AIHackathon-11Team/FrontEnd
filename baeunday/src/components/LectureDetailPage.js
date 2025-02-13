@@ -158,53 +158,68 @@ const LectureDetailPage = () => {
   const [isHearted, setIsHearted] = useState(false);
   const navigate = useNavigate();
 
-  // 찜하기 토글 함수
   const toggleHeart = async () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        setError('로그인이 필요합니다.');
+        console.log('❌ 토큰이 없습니다.');
         navigate('/login');
         return;
       }
 
       const config = {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Accept': '*/*'
-        }
+          'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
       };
 
-      // Request 로깅
-      console.log('🚀 Heart Request:', {
-        method: 'POST',
-        url: `${API_BASE_URL}/posts/${lectureId}/heart`,
-        headers: config.headers
-      });
+      const requestBody = {
+        postId: lectureId.toString(),
+        createdDate: new Date().toISOString()
+      };
+
+      // 상태를 먼저 업데이트하여 UI 반응성 향상
+      setLectureData(prevData => ({
+        ...prevData,
+        isHearted: !prevData.isHearted,
+        likeCount: prevData.isHearted ? prevData.likeCount - 1 : prevData.likeCount + 1
+      }));
 
       const response = await axios.post(
-        `${API_BASE_URL}/posts/${lectureId}/heart`,
-        {},
+        `${API_BASE_URL}/hearts`,
+        requestBody,
         config
       );
 
-      // Response 로깅
-      console.log('✅ Heart Response:', response.data);
-
-      if (response.status === 200) {
-        setLectureData(prev => ({
-          ...prev,
-          isHearted: !prev.isHearted,
-          likeCount: prev.isHearted ? prev.likeCount - 1 : prev.likeCount + 1
+      if (response.status !== 200) {
+        // API 호출이 실패하면 상태를 원래대로 되돌림
+        setLectureData(prevData => ({
+          ...prevData,
+          isHearted: !prevData.isHearted,
+          likeCount: prevData.isHearted ? prevData.likeCount - 1 : prevData.likeCount + 1
         }));
       }
-      
     } catch (error) {
+      // API 호출이 실패하면 상태를 원래대로 되돌림
+      setLectureData(prevData => ({
+        ...prevData,
+        isHearted: !prevData.isHearted,
+        likeCount: prevData.isHearted ? prevData.likeCount - 1 : prevData.likeCount + 1
+      }));
+
       console.error('❌ Heart Error:', error);
       if (error.response?.status === 403) {
+        console.log('🔒 토큰이 만료되었거나 유효하지 않습니다.');
         localStorage.removeItem('token');
-        setError('접근 권한이 없습니다.');
-        navigate('/login');
+        navigate('/login', { 
+          state: { 
+            message: '로그인이 필요합니다. 다시 로그인해주세요.',
+            returnPath: `/lecture/${lectureId}`
+          } 
+        });
       }
     }
   };
@@ -221,7 +236,7 @@ const LectureDetailPage = () => {
 
         const config = {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
             'Accept': '*/*'
           }
         };
@@ -287,7 +302,12 @@ const LectureDetailPage = () => {
   return (
     <div className="lecture-detail-wrapper">
       <div className="lecture-detail-container">
-        <LectureHeader isInstructor={isOwner} />
+        <LectureHeader 
+          isInstructor={isOwner} 
+          isHearted={lectureData?.isHearted}
+          onHeartClick={toggleHeart}
+          lectureId={lectureId}
+        />
         
         {/* 모드 선택 드롭다운 */}
         <select 
@@ -377,8 +397,8 @@ const LectureDetailPage = () => {
           </div>
           <div className="like-info">
             <img 
-              src={lectureData?.isHearted ? jjimedIcon : jjimIcon} 
-              alt={lectureData?.isHearted ? "찜됨" : "찜하기"} 
+              src={lectureData.isHearted ? jjimedIcon : jjimIcon} 
+              alt={lectureData.isHearted ? "찜됨" : "찜하기"} 
               className="jjimed-icon"
               onClick={toggleHeart}
               style={{ cursor: 'pointer' }}
@@ -398,6 +418,14 @@ const LectureDetailPage = () => {
               문의 전체보기
             </button>
           </div>
+          {/* 작성자가 아닐 때만 신청하기 버튼 표시 */}
+          {!isOwner && (
+            <div className="apply-button-container">
+              <button className="apply-button">
+                신청하기
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

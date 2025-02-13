@@ -6,10 +6,17 @@
   overflow-x: hidden;
   position: relative;
   background: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .wishlist-content {
   padding: 15px;
+  padding-bottom: 80px;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .wishlist-item {

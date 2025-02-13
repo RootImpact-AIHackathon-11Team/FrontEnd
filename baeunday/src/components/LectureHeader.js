@@ -4,8 +4,9 @@ import backIcon from "../assets/images/left-arrow.svg";
 import tripleIcon from "../assets/images/triple-bar.svg";
 import jjimIcon from "../assets/images/jjim.svg";
 import '../css/headerComponent.css';
+import jjimedIcon from "../assets/images/jjimed.svg";
 
-const LectureHeader = ({ isInstructor }) => {
+const LectureHeader = ({ isInstructor, isHearted, onHeartClick, lectureId }) => {
   const navigate = useNavigate();
   const [showActions, setShowActions] = useState(false);
 
@@ -27,11 +28,6 @@ const LectureHeader = ({ isInstructor }) => {
     setShowActions(false);
   };
 
-  const handleJjimClick = () => {
-    console.log('찜하기');
-    // 여기에 찜하기 로직 추가
-  };
-
   return (
     <>
       <header className="lecture-detail-header">
@@ -46,8 +42,12 @@ const LectureHeader = ({ isInstructor }) => {
               <img src={tripleIcon} alt="메뉴" id="lecture-menu-icon" />
             </button>
           ) : (
-            <button className="lecture-menu-button" onClick={handleJjimClick}>
-              <img src={jjimIcon} alt="찜하기" id="lecture-jjim-icon" />
+            <button className="lecture-menu-button" onClick={onHeartClick}>
+              <img 
+                src={isHearted ? jjimedIcon : jjimIcon} 
+                alt={isHearted ? "찜됨" : "찜하기"} 
+                id="lecture-jjim-icon" 
+              />
             </button>
           )}
         </div>
@@ -69,14 +69,6 @@ const LectureHeader = ({ isInstructor }) => {
               삭제
             </button>
           </div>
-        </div>
-      )}
-
-      {!isInstructor && (
-        <div className="apply-button-container">
-          <button className="apply-button">
-            신청하기
-          </button>
         </div>
       )}
     </>
