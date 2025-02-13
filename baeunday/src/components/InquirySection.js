@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import profileEx1 from '../assets/examples/profileEx1.png';
 import profileDft from '../assets/examples/profileDft1.png';
 import InquiryActionSheet from './InquiryActionSheet';
@@ -6,73 +8,164 @@ import '../css/inquiryActionSheet.css';
 import '../css/inquirySection.css';
 import InquiryModal from './InquiryModal';
 
-const InquirySection = ({ lectureData, currentUser }) => {
-  const [newQuestion, setNewQuestion] = useState('');
-  const [inquiries, setInquiries] = useState(lectureData.inquiries);
+const API_BASE_URL = 'https://mannajang.store/api';
+
+const InquirySection = ({ lectureId, isOwner }) => {
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState('');
+  const [inquiries, setInquiries] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [nextCursor, setNextCursor] = useState(null);
+  const [nextId, setNextId] = useState(null);
   const [actionSheetVisible, setActionSheetVisible] = useState(false);
   const [selectedInquiry, setSelectedInquiry] = useState(null);
-  const [isOwnComment, setIsOwnComment] = useState(false);
-  const [isOwner, setIsOwner] = useState(false);
-  const [isAnswerSelected, setIsAnswerSelected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAnswerSelected, setIsAnswerSelected] = useState(false);
+
+  const fetchInquiries = async () => {
+    try {
+      console.log('🔍 lectureId:', lectureId);
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/login');
+        return;
+      }
+
+      const config = {
+        headers: {
+          'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
+          'Accept': '*/*'
+        }
+      };
+
+      // Request 로깅
+      console.log('📤 Request Info =========');
+      console.log('URL:', `${API_BASE_URL}/comments/${lectureId}`);
+      console.log('Method: GET');
+      console.log('Headers:', config.headers);
+      console.log('Query Params:', nextCursor ? { cursor: nextCursor, id: nextId } : 'none');
+
+      const url = nextCursor 
+        ? `${API_BASE_URL}/comments/${lectureId}?cursor=${nextCursor}&id=${nextId}`
+        : `${API_BASE_URL}/comments/${lectureId}`;
+
+      const response = await axios.get(url, config);
+      
+      // Response 로깅
+      console.log('📥 Response Info =========');
+      console.log('Status:', response.status);
+      console.log('Status Text:', response.statusText);
+      console.log('Headers:', response.headers);
+      console.log('Data:', response.data);
+
+      if (response.data?.data) {
+        console.log('✅ Response Details =========');
+        console.log('Cursor Info:', response.data.data.cursor);
+        console.log('Comments:', response.data.data.body);
+        console.log('Has Next Page:', response.data.data.cursor?.hasNext);
+        console.log('Next Cursor:', response.data.data.cursor?.nextCursor);
+      }
+
+      if (response.status === 200) {
+        const { cursor, body } = response.data.data;
+        
+        setInquiries(prev => 
+          nextCursor ? [...prev, ...body] : body
+        );
+
+        if (cursor) {
+          setHasMore(cursor.hasNext);
+          setNextCursor(cursor.nextCursor);
+          setNextId(cursor.nextId);
+        } else {
+          setHasMore(false);
+          setNextCursor(null);
+          setNextId(null);
+        }
+      }
+    } catch (error) {
+      console.error('❌ Error Info =========');
+      console.error('Error Message:', error.message);
+      console.error('Error Response:', error.response?.data);
+      console.error('Error Status:', error.response?.status);
+      console.error('Error Headers:', error.response?.headers);
+      console.error('Full Error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    setIsOwner(currentUser === lectureData.instructor);
-  }, [currentUser, lectureData.instructor]);
-
-  const handleInputChange = (e) => setNewQuestion(e.target.value);
-
-  const getUserProfileImage = (username) => {
-    switch(username) {
-      case '조림핑':
-        return profileEx1;
-      case '컴공 사이에 피어난 전쟁통':
-        return profileEx1;
-      default:
-        return profileDft;
+    console.log('🔄 lectureId 변경됨:', lectureId);
+    if (lectureId) {
+      fetchInquiries();
     }
-  };
+  }, [lectureId]);
 
-  const handleSubmit = () => {
-    if (newQuestion.trim()) {
-      const newInquiry = {
-        id: inquiries.length + 1,
-        user: currentUser,
-        date: new Date().toISOString().slice(0, 10),
-        question: newQuestion,
-        profileImg: getUserProfileImage(currentUser),
-        answer: null,
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    setCurrentUser(username || '');
+  }, []);
+
+  const handleInquirySubmit = async (content) => {
+    try {
+      const token = localStorage.getItem('token');
+      const config = {
+        headers: {
+          'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        }
       };
-      setInquiries([...inquiries, newInquiry]);
-      setNewQuestion('');
+
+      const response = await axios.post(
+        `${API_BASE_URL}/comments/${lectureId}`,
+        { field: content },
+        config
+      );
+
+      if (response.status === 200) {
+        setIsModalOpen(false);
+        fetchInquiries(); // 목록 새로고침
+      }
+    } catch (error) {
+      console.error('문의 등록 실패:', error);
+      alert('문의 등록에 실패했습니다.');
     }
   };
 
-  const handleAnswerSubmit = (inquiryId) => {
-    const answerContent = prompt('답변을 입력하세요:');
-    if (answerContent) {
-      const updatedInquiries = inquiries.map((inquiry) =>
-        inquiry.id === inquiryId
-          ? { ...inquiry, answer: { date: new Date().toISOString().slice(0, 10), content: answerContent } }
-          : inquiry
+  const handleAnswerSubmit = async (commentId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const config = {
+        headers: {
+          'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        }
+      };
+
+      const response = await axios.post(
+        `${API_BASE_URL}/comments/${lectureId}/reply/${commentId}`,
+        { field: prompt('답변을 입력하세요:') },
+        config
       );
-      setInquiries(updatedInquiries);
+
+      if (response.status === 200) {
+        fetchInquiries(); // 목록 새로고침
+      }
+    } catch (error) {
+      console.error('답변 등록 실패:', error);
+      alert('답변 등록에 실패했습니다.');
     }
+    setActionSheetVisible(false);
   };
 
   const handleMoreClick = (inquiry, isAnswer = false) => {
     setSelectedInquiry(inquiry);
     setIsAnswerSelected(isAnswer);
-    
-    if (isOwner) {
-      if (isAnswer) {
-        setIsOwnComment(true);
-      } else {
-        setIsOwnComment(false);
-      }
-    } else {
-      setIsOwnComment(inquiry.user === currentUser);
-    }
     
     setActionSheetVisible(true);
   };
@@ -147,54 +240,48 @@ const InquirySection = ({ lectureData, currentUser }) => {
     setActionSheetVisible(false);
   };
 
-  const handleInquirySubmit = (content) => {
-    // 여기에 문의 등록 로직 추가
-    console.log('문의 등록:', content);
-    // API 호출 등의 로직이 들어갈 수 있습니다
-  };
-
   return (
     <div className="inquiry-section">
-      {!isOwner && ( <div className="inquiry-section-header">
-        <h3>문의하기</h3>
-        <button
-        className="direct-inquiry-btn"
-        onClick={() => setIsModalOpen(true)}>
-          문의 등록
-        </button>
-      </div>
+      {!isOwner && (
+        <div className="inquiry-section-header">
+          <h3>문의하기</h3>
+          <button
+            className="direct-inquiry-btn"
+            onClick={() => setIsModalOpen(true)}
+          >
+            문의 등록
+          </button>
+        </div>
       )}
-      <InquiryModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleInquirySubmit}
-      />
+
       {inquiries.map((inquiry) => (
-        <div key={inquiry.id} className="comment-item">
+        <div key={inquiry.comment_id} className="comment-item">
           <div className="comment-header">
             <div className="comment-profile">
               <img 
-                src={inquiry.profileImg || profileDft} 
-                alt={inquiry.user} 
+                src={inquiry.profileImg} 
+                alt={inquiry.name} 
                 className="comment-profile-image"
               />
-              <span className="comment-username">{inquiry.user}</span>
-              <span className="comment-date">{inquiry.date}</span>
+              <span className="comment-username">{inquiry.name}</span>
+              <span className="comment-date">
+                {new Date(inquiry.createdDate).toLocaleDateString()}
+              </span>
             </div>
-            {(isOwner || (!isOwner && currentUser === inquiry.user)) && (
-              <button 
-                className="more-button" 
-                onClick={() => handleMoreClick(inquiry)}
-              >⋮</button>
-            )}
+            <button 
+              className="more-button" 
+              onClick={() => handleMoreClick(inquiry)}
+            >⋮</button>
           </div>
-          <p className="comment-text">{inquiry.question}</p>
+          <p className="comment-text">{inquiry.field}</p>
           
-          {inquiry.answer && (
-            <div className="comment-reply">
+          {inquiry.replies?.map(reply => (
+            <div key={reply.reply_id} className="comment-reply">
               <div className="comment-header">
-                <span className="comment-username">강사님</span>
-                <span className="comment-date">{inquiry.answer.date}</span>
+                <span className="comment-username">{reply.name}</span>
+                <span className="comment-date">
+                  {new Date(reply.createdDate).toLocaleDateString()}
+                </span>
                 {isOwner && (
                   <button 
                     className="more-button"
@@ -202,18 +289,24 @@ const InquirySection = ({ lectureData, currentUser }) => {
                   >⋮</button>
                 )}
               </div>
-              <p className="comment-text">{inquiry.answer.content}</p>
+              <p className="comment-text">{reply.field}</p>
             </div>
-          )}
+          ))}
         </div>
       ))}
 
+      {loading && <div className="loading">로딩 중...</div>}
       
+      <InquiryModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleInquirySubmit}
+      />
 
       <InquiryActionSheet
         isVisible={actionSheetVisible}
         onClose={() => setActionSheetVisible(false)}
-        isOwnComment={isOwnComment}
+        isOwnComment={selectedInquiry?.name === currentUser}
         isOwner={isOwner}
         onEdit={handleEdit}
         onDelete={handleDelete}

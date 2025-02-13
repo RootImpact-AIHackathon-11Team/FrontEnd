@@ -265,12 +265,7 @@ const LectureDetailPage = () => {
   };
 
   const handleInquiryClick = () => {
-    navigate(`/lecture/${lectureId}/inquiries`, {
-      state: {
-        lectureData: lectureData,
-        currentUser: currentUser
-      }
-    });
+    navigate(`/lecture/${lectureId}/inquiries`);
   };
 
   if (error) return <div>Error: {error}</div>;
