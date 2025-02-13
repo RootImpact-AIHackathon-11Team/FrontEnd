@@ -378,35 +378,6 @@
   padding: 5px 30px 20px 30px;  /* 하단 패딩만 20px로 감소 */
 }
 
-.like-info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 16px;
-}
-
-.jjimed-icon {
-  width: 20px;
-  height: 20px;
-  transition: transform 0.2s ease;
-}
-
-.jjimed-icon:hover {
-  transform: scale(1.1);
-}
-
-.apply-button-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16px;
-  background-color: white;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-}
-
 .apply-button {
   width: 100%;
   padding: 14px 0;
@@ -417,8 +388,19 @@
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.apply-button.cancel {
+  background-color: #E0E0E0;
+  color: #666;
 }
 
 .apply-button:hover {
   background-color: #1a56c6;
 }
+
+.apply-button.cancel:hover {
+  background-color: #D0D0D0;
+}
+

@@ -1,4 +1,150 @@
 .preview-container {
+  width: 100%;
+  min-height: 100vh;
+  background: white;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.back-button {
+  border: none;
+  background: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.preview-header h1 {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.profile-section {
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.thumbnail-box {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #F5F5F5;
+  margin-bottom: 4px;
+}
+
+.thumbnail-box.error {
+  border: 1px solid #216CFA;
+}
+
+.thumbnail-box img {
+  width: 32px;
+  height: 32px;
+  opacity: 0.5;
+}
+
+.thumbnail-box span {
+  font-size: 14px;
+  color: #666;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #216CFA;
+  font-size: 12px;
+  margin-top: 4px;
+  white-space: nowrap;
+  width: 120px;
+}
+
+.error-message img {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.profile-info h2 {
+  font-size: 18px;
+  margin: 16px 0 4px 0;
+}
+
+.blue-text {
+  color: #2D68FF;
+}
+
+.section {
+  padding: 20px 8px;
+  position: relative;
+  padding-bottom: 32px;
+}
+
+.section h3 {
+  font-size: 16px;
+  margin: 0 0 16px 0;
+}
+
+.required {
+  color: #2D68FF;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-left: 0;
+}
+
+.input-group label {
+  width: 28px;
+  height: 25px;
+  font-size: 14px;
+  color: #666;  
+  margin-right: 20px;
+  white-space: nowrap;
+  text-align: left;
+  display: inline-block;
+  line-height: 25px;
+  margin-left: 5px;
+}
+
+.input-group input {
+  width: 348px;
+  height: 32px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+.people-inputs {
+  width: 348px;
+  display: flex;
+  gap: 8px;
+}
+
+.people-inputs input {
+  width: calc(50% - 4px);
+  height: 32px;
+}
+
+.preview-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,12 +158,12 @@
 .preview-header {
   display: flex;
   align-items: center;
-  padding: 20px 16px;  /* 상하 패딩 증가 */
+  padding: 20px 16px;
   border-bottom: 1px solid #F2F2F2;
   position: sticky;
   top: 0;
   background: white;
-  height: 55px;  /* 높이 증가 */
+  height: 55px;
 }
 
 .lecture-preview-back-button {
@@ -27,7 +173,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  height: 24px;  /* 상단 마진 추가 */
+  height: 24px;
 }
 
 .lecture-preview-back-button img {
@@ -43,11 +189,11 @@
   font-size: 16px;
   font-weight: 400;
   margin: 0;
-  margin-top: 40px; 
+  margin-top: 40px;
 }
 
 .preview-content {
-  padding: 20px 0;  /* 좌우 패딩 제거 */
+  padding: 20px 0;
 }
 
 .preview-profile {
@@ -59,73 +205,28 @@
 }
 
 .thumbnail-section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 120px;
-}
-
-.thumbnail-box {
+  flex-shrink: 0;
   width: 120px;
-  height: 120px;
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  background-color: #F5F5F5;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
-  margin-left: -7px;
-  overflow: hidden;  /* 이미지가 박스를 벗어나지 않도록 */
 }
 
-.thumbnail-box.error {
-  border-color: #2D68FF;
-}
-
-.lecture-icon {
-  width: 32px;
-  height: 32px;
-  opacity: 0.5;
-}
-
-.thumbnail-text {
-  font-size: 14px;
-  color: #666666;
-}
-
-.preview-user-info {
+.profile-info {
   flex: 1;
   padding-top: 8px;
-  margin-top: 28px;
-}
-
-.user-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%; 
 }
 
 .user-info h2 {
   font-size: 17px;
-  margin-bottom: 0px;
-}
-
-.user-info p , .user-info h2 {
-    text-align: left;
-    margin-top: 40px;
-    margin-left: -5px;
+  margin: 0 0 4px 0;
 }
 
 .user-info p {
-    color: #1A1A1A;
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 4px;
-  }
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
 
 .username-blue {
     color: #2D68FF;
@@ -158,35 +259,40 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  transition: color 0.3s ease;  /* 색상 변경 시 부드러운 전환 효과 */
+  transition: color 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .label {
   min-width: 70px;
-  color: #666666;
-  font-size: 12px;
-  text-align: left;
-  display: block; /* 레이블을 블록 요소로 만들어 너비 전체를 차지하게 함 */
-  color: #666666;
   font-size: 14px;
-  margin-bottom: 10px; /* 레이블과 입력 필드 사이의 간격 추가 */
-  }
+  color: #666666;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
   
 
 .input-row {
   display: flex;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
   padding-left: 0;
+  width: 100%;
 }
 
 .input-row input {
-  width: 70%;  /* input-row-2와 동일한 너비로 변경 */
+  width: 70%;
   height: 28px;
   border: 1px solid #E0E0E0;
   border-radius: 4px;
   font-size: 12px;
-  margin-right: 0;  /* 오른쪽 마진 제거 */
+  margin-right: 0;
 }
 
 .input-row-2 {
@@ -204,18 +310,12 @@
   margin-right: 0;
 }
 
-/* 일반 입력 필드의 너비 설정 */
 .input-row-2 > input {
   width: 70%;
 }
 
-.required {
-  color: #2D68FF;
-}
-
-
 .people-inputs input {
-  height: 28px; /* 통일된 높이 설정 */
+  height: 28px;
   border: 1px solid #E0E0E0;
   border-radius: 4px;
   font-size: 11px;
@@ -225,19 +325,6 @@
 
 .error {
   border-color: #2D68FF
-}
-
-.error-message {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #2D68FF;
-  font-size: 12px;
-}
-
-.error-message img {
-  width: 16px;
-  height: 16px;
 }
 
 .preview-thumbnail.error {
@@ -251,7 +338,6 @@
   text-align: center;
 }
 
-/* input-wrapper 내부의 input이 에러 상태일 때 */
 .input-wrapper input.error {
   border-color: #2D68FF;
 }
@@ -302,14 +388,12 @@
   text-align: center;
 }
 
-
-/* placeholder 텍스트 스타일 */
 .input-wrapper input:placeholder-shown {
   color: #2D68FF;
 }
 
 #lecture-subject-row input {
-  width: 70%;  /* 다른 입력 필드와 동일한 너비로 변경 */
+  width: 70%;
   height: 28px;
   border: 1px solid #E0E0E0;
   border-radius: 4px;
@@ -320,7 +404,7 @@
 }
 
 #lecture-info-row input {
-  width: 70%;  /* 다른 입력 필드와 동일한 너비로 변경 */
+  width: 70%;
   height: 28px;
   border: 1px solid #E0E0E0;
   border-radius: 4px;
@@ -330,7 +414,6 @@
   margin-right: 0;
 }
 
-/* 공통 스타일 */
 .input-row input,
 .input-row-2 input,
 #lecture-subject-row input,
@@ -343,14 +426,20 @@
   margin-right: 0;
 }
 
-/* 레이아웃 컨테이너 스타일 */
-.lecture-subject-section,
-.lecture-info-section {
+.lecture-subject-section {
   margin: 20px 16px;
-  width: calc(100% - 32px);  /* 양쪽 마진을 고려한 전체 너비 */
+  width: calc(100% - 32px);
+  position: relative;
+  padding-bottom: 8px;
 }
 
-/* 입력 행 스타일 */
+.subject-error {
+  margin-top: -34px;
+  margin-left: 0px;
+  position: absolute;
+  left: 0;
+}
+
 .input-row,
 .input-row-2 {
   display: flex;
@@ -374,21 +463,12 @@
   margin-left: -4px;
 }
 
-.error-message {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #2D68FF;
-  font-size: 12px;
-}
-
 .thumbnail-preview {
   width: 100%;
   height: 100%;
-  object-fit: cover;  /* 이미지 비율 유지하면서 박스 채우기 */
+  object-fit: cover;
 }
 
-/* 이미지가 있을 때는 기본 아이콘과 텍스트 숨김 */
 .thumbnail-box img.thumbnail-preview + .lecture-icon,
 .thumbnail-box img.thumbnail-preview + .thumbnail-text {
   display: none;
@@ -398,21 +478,19 @@
   color: #2D68FF;
 }
 
-/* 인원 입력 컨테이너 스타일 */
 .people-input-container {
   display: flex;
-  width: 70%;       /* 장소 입력 필드와 동일한 너비 */
-  gap: 8px;          /* 두 입력 필드 간격을 최소화 */
+  width: 70%;
+  gap: 8px;
 }
 
-/* 인원 입력 필드 스타일 */
 .people-inputs input {
-  flex: 1;                /* 두 입력 필드가 동일한 너비를 가짐 */
+  flex: 1;
   height: 28px;
   border: 1px solid #E0E0E0;
   border-radius: 4px;
   font-size: 12px;
-  margin-right: 0;         /* 오른쪽 마진 제거 */
+  margin-right: 0;
 }
 
 .lecture-detail-section {
@@ -478,4 +556,60 @@
 
 .detail-content-input::placeholder {
   color: #999;
+}
+
+.thumbnail-error {
+  margin-left: -7px;
+  margin-top: 4px;
+}
+
+.preview-button-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background-color: white;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.preview-button {
+  width: 100%;
+  padding: 14px 0;
+  background-color: #216CFA;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.preview-button:hover {
+  background-color: #1a56c6;
+}
+
+.input-group input.error {
+  border-color: #216CFA;
+}
+
+.people-inputs input.error {
+  border-color: #216CFA;
+}
+
+.info-error-message {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #216CFA;
+  font-size: 12px;
+  margin-top: 8px;
+  margin-left: 5px;
+}
+
+.info-error-message img {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }

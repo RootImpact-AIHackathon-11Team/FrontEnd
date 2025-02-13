@@ -156,6 +156,7 @@ const LectureDetailPage = () => {
   const [currentUser, setCurrentUser] = useState('조림핑');
   const [isOwner, setIsOwner] = useState(false);
   const [isHearted, setIsHearted] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
   const navigate = useNavigate();
 
   const toggleHeart = async () => {
@@ -224,6 +225,64 @@ const LectureDetailPage = () => {
     }
   };
 
+  const handleReservation = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('❌ 토큰이 없습니다.');
+        navigate('/login');
+        return;
+      }
+
+      const config = {
+        headers: {
+          'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`,
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        }
+      };
+
+      const requestBody = {
+        postId: lectureId,
+        reservationDate: new Date().toISOString()
+      };
+
+      // 상태 먼저 업데이트
+      setIsApplied(prev => !prev);
+      console.log('🔄 Toggling isApplied to:', !isApplied);
+
+      const response = await axios.post(
+        `${API_BASE_URL}/reserve`,
+        requestBody,
+        config
+      );
+
+      if (response.status === 200) {
+        console.log('✅ 강의 신청 상태 변경 성공!');
+        alert(isApplied ? '신청이 취소되었습니다.' : '강의가 신청되었습니다!');
+        if (!isApplied) {
+          navigate('/applied');
+        }
+      }
+    } catch (error) {
+      // 실패시 상태 되돌리기
+      setIsApplied(prev => !prev);
+      console.error('❌ Reservation Error:', error);
+      if (error.response?.status === 403) {
+        console.log('🔒 토큰이 만료되었거나 유효하지 않습니다.');
+        localStorage.removeItem('token');
+        navigate('/login', { 
+          state: { 
+            message: '로그인이 필요합니다. 다시 로그인해주세요.',
+            returnPath: `/lecture/${lectureId}`
+          } 
+        });
+      } else {
+        alert(isApplied ? '신청 취소에 실패했습니다.' : '강의 신청에 실패했습니다.');
+      }
+    }
+  };
+
   useEffect(() => {
     const fetchLectureDetail = async () => {
       try {
@@ -268,7 +327,9 @@ const LectureDetailPage = () => {
           });
           setIsOwner(lectureDetail.isMyPost);
           setIsHearted(lectureDetail.isHearted);
+          setIsApplied(lectureDetail.isApplied); // 신청 상태 초기화
           console.log('Initial isHearted status:', lectureDetail.isHearted);
+          console.log('Initial isApplied status:', lectureDetail.isApplied);
         }
       } catch (error) {
         console.error('❌ Error:', error);
@@ -421,8 +482,11 @@ const LectureDetailPage = () => {
           {/* 작성자가 아닐 때만 신청하기 버튼 표시 */}
           {!isOwner && (
             <div className="apply-button-container">
-              <button className="apply-button">
-                신청하기
+              <button 
+                className={`apply-button ${isApplied ? 'cancel' : ''}`}
+                onClick={handleReservation}
+              >
+                {isApplied ? '신청 취소' : '신청하기'}
               </button>
             </div>
           )}

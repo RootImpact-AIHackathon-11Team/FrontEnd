@@ -26,6 +26,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/loading" replace />} />
+        <Route path="/lecturepreview" element={<LecturePreview />} />
         <Route path="/loading" element={<Loading />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
@@ -43,7 +44,7 @@ function App() {
         <Route path="/profile/description" element={<ProtectedRoute><DescriptionEdit /></ProtectedRoute>} />
         <Route path="/lectureregister" element={<ProtectedRoute><LectureRegister /></ProtectedRoute>} />
         <Route path="/lecture-guide" element={<ProtectedRoute><LectureGuideModal /></ProtectedRoute>} />
-        <Route path="/lecturepreview" element={<ProtectedRoute><LecturePreview /></ProtectedRoute>} />
+        {/* <Route path="/lecturepreview" element={<ProtectedRoute><LecturePreview /></ProtectedRoute>} /> */}
         <Route path="/mainpage" element={<ProtectedRoute><MainPage /></ProtectedRoute>} />
         <Route path="/reviewform" element={<ProtectedRoute><ReviewForm /></ProtectedRoute>} />
         <Route path="/reviewpage" element={<ProtectedRoute><ReviewPage /></ProtectedRoute>} />

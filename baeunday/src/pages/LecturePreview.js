@@ -2,217 +2,152 @@ import React, { useState } from 'react';
 import '../css/LecturePreview.css';
 import backIcon from '../assets/images/Vector.svg';
 import lectureIcon from '../assets/images/lecture.svg';
-import warningIcon from '../assets/images/느낌표.svg'; 
+import warningIcon from '../assets/images/느낌표.svg';
 
-const ErrorMessage = ({ message }) => {
-  if (!message) return null;
-  return (
-    <div style={{ color: 'red' }}>
-      {message}
-    </div>
-  );
-};
-
-const LecturePreview = ({ isOpen, onClose, data }) => {
+const LecturePreview = ({ onClose }) => {
   const [formData, setFormData] = useState({
-    thumbnail: '',
-    title: data?.subject || '',
-    objective: data?.goal || '',
-    description: data?.syllabus || '',
-    date: `${data?.startDate || ''} ${data?.time || ''}`,
-    registration: data?.registrationPeriod || '',
-    cost: data?.fee ? `₩ ${data?.fee.toLocaleString()}` : '무료',
-    location: data?.location || '',
-    minPeople: `최소 ${data?.minP || 0}명`,
-    maxPeople: `최대 ${data?.maxP || 0}명`,
-    gptContent: data?.gptContent || ''
+    title: '',
+    date: '',
+    registrationPeriod: '',
+    fee: '',
+    location: '',
+    minPeople: '',
+    maxPeople: ''
   });
 
-  const [touched, setTouched] = useState({});
   const [showErrors, setShowErrors] = useState(false);
   const [imageSelected, setImageSelected] = useState(false);
 
-  if (!isOpen) return null; 
-
-  const handleBlur = (field) => {
-    setTouched(prev => ({ ...prev, [field]: true }));
-  };
-
-  const isFieldEmpty = (value) => !value || value.trim() === '';
-
-  const getFieldError = (field) => {
-    if (touched[field] && isFieldEmpty(formData[field])) {
-      return "필수 입력 항목입니다.";
-    }
-    return "";
-  };
-
+  // 신청하기 버튼 클릭 핸들러
   const handleSubmit = () => {
-    setShowErrors(true);
-    if (!imageSelected || !formData.title || !formData.objective || !formData.description || !formData.location) {
-      return;
-    }
-    console.log('제출 성공:', formData);
+    setShowErrors(true);  // 에러 표시 활성화
+  };
+
+  // 입력 필드가 비어있는지 확인하는 함수
+  const isFieldEmpty = (value) => {
+    return !value || value.trim() === '';
+  };
+
+  // 강의정보의 모든 필드가 입력되었는지 확인하는 함수
+  const hasEmptyInfoFields = () => {
+    return ['title', 'date', 'registrationPeriod', 'fee', 'location', 'minPeople', 'maxPeople']
+      .some(field => isFieldEmpty(formData[field]));
   };
 
   return (
     <div className="preview-container">
       <div className="preview-header">
-        <button className="lecture-preview-back-button" onClick={onClose}>
+        <button className="back-button" onClick={onClose}>
           <img src={backIcon} alt="뒤로가기" />
         </button>
-        <h1 className="preview-title">강의 기획서 등록하기</h1>
+        <h1>강의 기획서 등록하기</h1>
       </div>
 
       <div className="preview-content">
-        <div className="preview-profile">
-          <div className={`thumbnail-box ${showErrors && !imageSelected ? 'error' : ''}`}>
-            <img src={lectureIcon} alt="강의 썸네일" className="lecture-icon" />
-            <span className="thumbnail-text">강의 썸네일 등록</span>
+        {/* 프로필 섹션 */}
+        <div className="profile-section">
+          <div className="thumbnail-section">
+            <div className={`thumbnail-box ${showErrors && !imageSelected ? 'error' : ''}`}>
+              <img src={lectureIcon} alt="강의 포스터 등록" />
+              <span>강의 포스터 등록</span>
+            </div>
+            {showErrors && !imageSelected && (
+              <div className="error-message">
+                <img src={warningIcon} alt="경고" />
+                필수 입력 항목입니다.
+              </div>
+            )}
           </div>
-          {showErrors && !imageSelected && (
-            <div className="error-message"><img src={warningIcon} alt="Warning" />필수 입력 항목입니다.</div>
-          )}
-          <div className="user-info">
+          <div className="profile-info">
             <h2>
-              <span className="username-blue">컴공사이에피어난전쟁통</span>
-              <span className="username-black">님</span>
+              <span className="blue-text">컴공사이에피어난전쟁통</span>
+              <span>님</span>
             </h2>
             <p>강의 기획서를 작성해 주세요</p>
           </div>
         </div>
 
-        <div className="lecture-subject-section">
-          <h3 className="section-title">
-            강의주제
-            <span className="required">*</span>
-          </h3>
-
-          <div className="input-row">
-            <span className="label">강의명</span>
-            <div className="input-wrapper">
-              <input 
-                type="text" 
-                value={formData.title}
-                onChange={(e) => setFormData({...formData, title: e.target.value})}
-                onBlur={() => handleBlur('title')}
-                className={getFieldError('title') ? 'error' : ''}
-              />
-              {getFieldError('title') && <ErrorMessage message={getFieldError('title')} />}
-            </div>
+        {/* 강의 정보 섹션 */}
+        <div className="section">
+          <h3>강의정보<span className="required">*</span></h3>
+          <div className="input-group">
+            <label>제목</label>
+            <input 
+              type="text" 
+              value={formData.title}
+              onChange={(e) => setFormData({...formData, title: e.target.value})}
+              className={showErrors && isFieldEmpty(formData.title) ? 'error' : ''}
+            />
           </div>
-
-          <div className="input-row">
-            <span className="label">강의목표</span>
-            <div className="input-wrapper">
-              <input 
-                type="text" 
-                value={formData.objective}
-                onChange={(e) => setFormData({...formData, objective: e.target.value})}
-                onBlur={() => handleBlur('objective')}
-                className={getFieldError('objective') ? 'error' : ''}
-              />
-              {getFieldError('objective') && <ErrorMessage message={getFieldError('objective')} />}
-            </div>
-          </div>
-
-          <div className="input-row">
-            <span className="label">강의개요</span>
-            <div className="input-wrapper">
-              <input 
-                type="text" 
-                value={formData.description}
-                onChange={(e) => setFormData({...formData, description: e.target.value})}
-                onBlur={() => handleBlur('description')}
-                className={getFieldError('description') ? 'error' : ''}
-              />
-              {getFieldError('description') && <ErrorMessage message={getFieldError('description')} />}
-            </div>
-          </div>
-        </div>
-
-        <div className="lecture-info-section">
-          <h3 className="section-title">강의 정보<span className="required">*</span></h3>
-          
-          <div className="input-row-2">
-            <span className="label">일시</span>
+          <div className="input-group">
+            <label>일시</label>
             <input 
               type="text" 
               value={formData.date}
-              readOnly
+              onChange={(e) => setFormData({...formData, date: e.target.value})}
+              className={showErrors && isFieldEmpty(formData.date) ? 'error' : ''}
             />
           </div>
-          
-          <div className="input-row-2">
-            <span className="label">신청</span>
+          <div className="input-group">
+            <label>신청</label>
             <input 
               type="text" 
-              value={formData.registration}
-              readOnly
+              value={formData.registrationPeriod}
+              onChange={(e) => setFormData({...formData, registrationPeriod: e.target.value})}
+              className={showErrors && isFieldEmpty(formData.registrationPeriod) ? 'error' : ''}
             />
           </div>
-          
-          <div className="input-row-2">
-            <span className="label">비용</span>
+          <div className="input-group">
+            <label>비용</label>
             <input 
               type="text" 
-              value={formData.cost}
-              readOnly
+              value={formData.fee}
+              onChange={(e) => setFormData({...formData, fee: e.target.value})}
+              className={showErrors && isFieldEmpty(formData.fee) ? 'error' : ''}
             />
           </div>
-          
-          <div className="input-row-2">
-            <span className="label">장소</span>
+          <div className="input-group">
+            <label>장소</label>
             <input 
               type="text" 
               value={formData.location}
               onChange={(e) => setFormData({...formData, location: e.target.value})}
-              onBlur={() => handleBlur('location')}
-              className={getFieldError('location') ? 'error' : ''}
-              placeholder="필수 입력 항목입니다."
+              className={showErrors && isFieldEmpty(formData.location) ? 'error' : ''}
             />
-            {getFieldError('location') && <ErrorMessage message={getFieldError('location')} />}
           </div>
-          
-          <div className="input-row people-row">
-            <label className="label">인원</label>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <div style={{ flex: 1, marginRight: '10px' }}>
-                <input 
-                  type="text" 
-                  value={formData.minPeople}
-                  readOnly
-                />
-              </div>
-              <div style={{ flex: 1 }}>
-                <input 
-                  type="text" 
-                  value={formData.maxPeople}
-                  readOnly
-                />
-              </div>
+          <div className="input-group">
+            <label>인원</label>
+            <div className="people-inputs">
+              <input 
+                type="text" 
+                value={formData.minPeople}
+                onChange={(e) => setFormData({...formData, minPeople: e.target.value})}
+                placeholder="최소 5명"
+                className={showErrors && isFieldEmpty(formData.minPeople) ? 'error' : ''}
+              />
+              <input 
+                type="text" 
+                value={formData.maxPeople}
+                onChange={(e) => setFormData({...formData, maxPeople: e.target.value})}
+                placeholder="최대 30명"
+                className={showErrors && isFieldEmpty(formData.maxPeople) ? 'error' : ''}
+              />
+            </div>
+            <div className="preview-button-container">
+              <button className="preview-button" onClick={handleSubmit}>
+                신청하기
+              </button>
             </div>
           </div>
-        </div>
-
-        <div className="lecture-detail-section">
-          <h3 className="section-title">상세 내용</h3>
-          <textarea 
-            className="detail-content-input"
-            placeholder="강의 상세 내용을 입력해주세요."
-            value={formData.gptContent}
-            onChange={(e) => setFormData({...formData, gptContent: e.target.value})}
-          />
-        </div>
-
-        <div className="preview-bottom-button-wrapper">
-          <button className="preview-submit-button" onClick={handleSubmit}>
-            등록하기
-          </button>
+          {showErrors && hasEmptyInfoFields() && (
+            <div className="info-error-message">
+              <img src={warningIcon} alt="경고" />
+              필수 입력 항목입니다.
+            </div>
+          )}
         </div>
       </div>
     </div>
-    
   );
 };
 
