@@ -21,7 +21,7 @@ import BottomNavigation from '../components/BottomNavigation';
 const MainPage = () => {
   const API_BASE_URL = window.location.hostname.includes('ngrok') 
     ? 'https://edd9-2001-2d8-74ca-b3b1-9d4d-a8f-1e0f-ee66.ngrok-free.app' 
-    : 'http://43.202.15.40';
+    : 'http://43.202.15.40/api';
   
   const navigate = useNavigate();
   const [lectures, setLectures] = useState([]);

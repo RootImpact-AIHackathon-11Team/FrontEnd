@@ -33,7 +33,7 @@ export default function MyPage() {
         const token = localStorage.getItem('token');
         
         console.log('=== API Request Debug Info ===');
-        console.log('1. Request URL:', 'http://43.202.15.40/user/profile');
+        console.log('1. Request URL:', 'http://43.202.15.40/api/user/profile');
         console.log('2. Request Method:', 'GET');
         
         const finalToken = `Bearer ${token.replace('Bearer ', '')}`;
@@ -49,7 +49,7 @@ export default function MyPage() {
         console.log('   - Final token:', finalToken);
         console.log('   - Token length:', finalToken.length);
         
-        const response = await axios.get('http://43.202.15.40/user/profile', { headers });
+        const response = await axios.get('http://43.202.15.40/api/user/profile', { headers });
         
         console.log('=== API Response Debug Info ===');
         console.log('1. Response Status:', response.status);

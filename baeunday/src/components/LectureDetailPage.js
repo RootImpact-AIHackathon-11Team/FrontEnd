@@ -44,7 +44,7 @@ const getMannerPercentage = (manner) => {
 };
 
 const LectureDetailPage = () => {
-  const API_BASE_URL = 'http://43.202.15.40';
+  const API_BASE_URL = 'http://43.202.15.40/api';
   const { lectureId } = useParams();
   const [lectureData, setLectureData] = useState(null);
   const [error, setError] = useState(null);

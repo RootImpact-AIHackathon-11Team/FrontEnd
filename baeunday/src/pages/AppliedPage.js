@@ -52,7 +52,7 @@ const AppliedPage = () => {
         }
       };
 
-      let url = 'http://43.202.15.40/reserve';
+      let url = 'http://43.202.15.40/api/reserve';
       const params = new URLSearchParams();
       
       if (filter === '참가확정') {
@@ -119,8 +119,10 @@ const AppliedPage = () => {
     navigate(`/lecture/${lectureId}`);
   };
 
-  const handleReviewClick = (lectureId) => {
-    navigate(`/review/${lectureId}`);
+  const handleReviewClick = (lecture) => {
+    navigate('/review', {
+      state: { lecture }  // 강의 정보 전체를 전달
+    });
   };
 
   const handleCancelClick = (lectureId) => {
@@ -151,7 +153,7 @@ const AppliedPage = () => {
 
       // 신청 취소 요청
       const response = await axios.post(
-        'http://43.202.15.40/reserve',
+        'http://43.202.15.40/api/reserve',
         requestBody,
         config
       );
@@ -240,7 +242,7 @@ const AppliedPage = () => {
                   onClick={(e) => {
                     e.stopPropagation();
                     if (lecture.myStatus === 'DONE') {
-                      handleReviewClick(lecture.postId);
+                      handleReviewClick(lecture);  // 강의 객체 전체 전달
                     } else {
                       handleCancelClick(lecture.postId);
                     }

@@ -43,7 +43,7 @@ const NicknameEdit = () => {
     }
 
     try {
-      const response = await fetch('http://43.202.15.40/user/login-check-name', {
+      const response = await fetch('http://43.202.15.40/api/user/login-check-name', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const NicknameEdit = () => {
       successName: duplicateCheckSuccess
     };
     console.log('닉네임 변경 Request:', {
-      url: 'http://43.202.15.40/user/profile/name',
+      url: 'http://43.202.15.40/api/user/profile/name',
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -108,7 +108,7 @@ const NicknameEdit = () => {
     });
 
     try {
-      const response = await fetch('http://43.202.15.40/user/profile/name', {
+      const response = await fetch('http://43.202.15.40/api/user/profile/name', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

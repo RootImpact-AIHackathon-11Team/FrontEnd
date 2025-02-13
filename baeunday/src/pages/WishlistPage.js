@@ -5,7 +5,7 @@ import '../css/wishlist.css';
 import AppliedHeader from '../components/AppliedHeader';
 import BottomNavigation from '../components/BottomNavigation';
 
-const API_BASE_URL = 'http://43.202.15.40';
+const API_BASE_URL = 'http://43.202.15.40/api';
 
 const WishlistPage = () => {
   const navigate = useNavigate();
