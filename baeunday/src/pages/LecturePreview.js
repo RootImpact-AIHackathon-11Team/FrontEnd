@@ -1,219 +1,162 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/LecturePreview.css';
-import backIcon from '../assets/images/Vector.svg';
-import lectureIcon from '../assets/images/lecture.svg';
-import warningIcon from '../assets/images/느낌표.svg'; 
+import { ReactComponent as BackIcon } from '../assets/images/Vector.svg';
+import { ReactComponent as PosterIcon } from '../assets/images/poster.svg';
+import { ReactComponent as PaintIcon } from '../assets/images/paint-icon.svg';
+import exclamationIcon from '../assets/images/느낌표.svg';
 
-const ErrorMessage = ({ message }) => {
-  if (!message) return null;
-  return (
-    <div style={{ color: 'red' }}>
-      {message}
-    </div>
-  );
-};
+function LecturePreview() {
+    const [lectureInfo, setLectureInfo] = useState({
+        lectureName: "홈베이킹 기초 클래스",
+        lectureName1: "2025.02.12",
+        lectureName2: "2024.12.02 00:00 - 2024.12.30 17:00",
+        lectureName3: "₩  100,000",
+        lectureName4: "어벤더치커피 구미금오공대점",
+        lectureTopic: "홈베이킹 기초 클래스",
+        lectureInfo: "홈베이킹 기초 클래스",
+        image: null,
+        errors: {
+            lectureName: false,
+            lectureName1: false,
+            lectureName2: false,
+            lectureName3: false,
+            lectureName4: false,
+            lectureTopic: false,
+            lectureInfo: false,
+            image: false
+        }
+    });
 
-const LecturePreview = ({ isOpen, onClose, data }) => {
-  const [formData, setFormData] = useState({
-    thumbnail: '',
-    title: data?.subject || '',
-    objective: data?.goal || '',
-    description: data?.syllabus || '',
-    date: `${data?.startDate || ''} ${data?.time || ''}`,
-    registration: data?.registrationPeriod || '',
-    cost: data?.fee ? `₩ ${data?.fee.toLocaleString()}` : '무료',
-    location: data?.location || '',
-    minPeople: `최소 ${data?.minP || 0}명`,
-    maxPeople: `최대 ${data?.maxP || 0}명`,
-    gptContent: data?.gptContent || ''
-  });
+    useEffect(() => {
+        async function fetchLectureData() {
+            try {
+                const response = await fetch('API_ENDPOINT_URL');
+                const data = await response.json();
+                setLectureInfo(prev => ({
+                    ...prev,
+                    lectureName: data.info.title,
+                    lectureTopic: data.info.subject
+                }));
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+            }
+        }
+        fetchLectureData();
+    }, []);
 
-  const [touched, setTouched] = useState({});
-  const [showErrors, setShowErrors] = useState(false);
-  const [imageSelected, setImageSelected] = useState(false);
+    const handleChange = (field, value) => {
+        setLectureInfo(prev => ({
+            ...prev,
+            [field]: value,
+            errors: { ...prev.errors, [field]: false }
+        }));
+    };
 
-  if (!isOpen) return null; 
+    const handleImageChange = (event) => {
+        setLectureInfo(prev => ({
+            ...prev,
+            image: event.target.files[0] || null,
+            errors: { ...prev.errors, image: false }
+        }));
+    };
 
-  const handleBlur = (field) => {
-    setTouched(prev => ({ ...prev, [field]: true }));
-  };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const errors = {
+            lectureName: !lectureInfo.lectureName.trim(),
+            lectureName1: !lectureInfo.lectureName1.trim(),
+            lectureName2: !lectureInfo.lectureName2.trim(),
+            lectureName3: !lectureInfo.lectureName3.trim(),
+            lectureName4: !lectureInfo.lectureName4.trim(),
+            lectureTopic: !lectureInfo.lectureTopic.trim(),
+            lectureInfo: !lectureInfo.lectureInfo.trim(),
+            image: !lectureInfo.image
+        };
 
-  const isFieldEmpty = (value) => !value || value.trim() === '';
+        setLectureInfo(prev => ({ ...prev, errors }));
 
-  const getFieldError = (field) => {
-    if (touched[field] && isFieldEmpty(formData[field])) {
-      return "필수 입력 항목입니다.";
-    }
-    return "";
-  };
+        if (!Object.values(errors).includes(true)) {
+            console.log("Form submitted", lectureInfo);
+        }
+    };
 
-  const handleSubmit = () => {
-    setShowErrors(true);
-    if (!imageSelected || !formData.title || !formData.objective || !formData.description || !formData.location) {
-      return;
-    }
-    console.log('제출 성공:', formData);
-  };
-
-  return (
-    <div className="preview-container">
-      <div className="preview-header">
-        <button className="lecture-preview-back-button" onClick={onClose}>
-          <img src={backIcon} alt="뒤로가기" />
-        </button>
-        <h1 className="preview-title">강의 기획서 등록하기</h1>
-      </div>
-
-      <div className="preview-content">
-        <div className="preview-profile">
-          <div className={`thumbnail-box ${showErrors && !imageSelected ? 'error' : ''}`}>
-            <img src={lectureIcon} alt="강의 썸네일" className="lecture-icon" />
-            <span className="thumbnail-text">강의 썸네일 등록</span>
-          </div>
-          {showErrors && !imageSelected && (
-            <div className="error-message"><img src={warningIcon} alt="Warning" />필수 입력 항목입니다.</div>
-          )}
-          <div className="user-info">
-            <h2>
-              <span className="username-blue">컴공사이에피어난전쟁통</span>
-              <span className="username-black">님</span>
-            </h2>
-            <p>강의 기획서를 작성해 주세요</p>
-          </div>
-        </div>
-
-        <div className="lecture-subject-section">
-          <h3 className="section-title">
-            강의주제
-            <span className="required">*</span>
-          </h3>
-
-          <div className="input-row">
-            <span className="label">강의명</span>
-            <div className="input-wrapper">
-              <input 
-                type="text" 
-                value={formData.title}
-                onChange={(e) => setFormData({...formData, title: e.target.value})}
-                onBlur={() => handleBlur('title')}
-                className={getFieldError('title') ? 'error' : ''}
-              />
-              {getFieldError('title') && <ErrorMessage message={getFieldError('title')} />}
+    return (
+        <>
+        <header className="lecturepreview-header">
+            <button className="lecturepreview-back-button">
+                <BackIcon />
+            </button>
+            <div className="lecturepreview-title">강의 기획서 등록하기</div>
+        </header>
+        <div className="lecturepreview-card">
+            <div className="lecturepreview-icon-wrapper" style={{ position: 'absolute', top: '105px', left: '10px' }}>
+                <PosterIcon className="lecturepreview-poster-icon">
+                    <PaintIcon className="lecturepreview-paint-icon" />
+                </PosterIcon>
             </div>
-          </div>
+            <div className="lecturepreview-content">
+                <div className="lecturepreview-subtitle">
+                    <span className="lecturepreview-main-subtitle">컴공사이에피어난전쟁통</span>
+                    <span className="lecturepreview-suffix">님</span>
+                </div>
+                <p className="lecturepreview-description">강의 기획서를 작성해 주세요</p>
+                <div className="lecture-inputs-container">
+                    {/* 강의주제 */}
+                    <div className="lecture-topic-container">
+                        <div className="lecture-label">강의주제<span className="important-star">*</span></div>
+                    </div>
 
-          <div className="input-row">
-            <span className="label">강의목표</span>
-            <div className="input-wrapper">
-              <input 
-                type="text" 
-                value={formData.objective}
-                onChange={(e) => setFormData({...formData, objective: e.target.value})}
-                onBlur={() => handleBlur('objective')}
-                className={getFieldError('objective') ? 'error' : ''}
-              />
-              {getFieldError('objective') && <ErrorMessage message={getFieldError('objective')} />}
+                    {/* 강의명 */}
+                    <div className="lecture-name-container">
+                        <label className="lecture-name-label">강의명</label>
+                        <input type="text" className={`lecture-name-input ${lectureInfo.errors.lectureName ? 'input-error' : ''}`} value={lectureInfo.lectureName} onChange={(e) => handleChange('lectureName', e.target.value)} />
+                        {lectureInfo.errors.lectureName && <div className="error-message">필수 입력 항목입니다.</div>}
+                    </div>
+
+                    {/* 강의정보 */}
+                    <div className="lecture-info-container">
+                        <div className="lecture-label">강의정보<span className="important-star">*</span></div>
+                    </div>
+
+                    {/* 일시 */}
+                    <div className="lecture-name-container">
+                        <label className="lecture-name-label">일시</label>
+                        <input type="text" className={`lecture-name-input ${lectureInfo.errors.lectureName1 ? 'input-error' : ''}`} value={lectureInfo.lectureName1} onChange={(e) => handleChange('lectureName1', e.target.value)} />
+                        {lectureInfo.errors.lectureName1 && <div className="error-message">필수 입력 항목입니다.</div>}
+                    </div>
+
+                    {/* 신청 */}
+                    <div className="lecture-name-container">
+                        <label className="lecture-name-label">신청</label>
+                        <input type="text" className={`lecture-name-input ${lectureInfo.errors.lectureName2 ? 'input-error' : ''}`} value={lectureInfo.lectureName2} onChange={(e) => handleChange('lectureName2', e.target.value)} />
+                        {lectureInfo.errors.lectureName2 && <div className="error-message">필수 입력 항목입니다.</div>}
+                    </div>
+
+                    {/* 비용 */}
+                    <div className="lecture-name-container">
+                        <label className="lecture-name-label">비용</label>
+                        <input type="text" className={`lecture-name-input ${lectureInfo.errors.lectureName3 ? 'input-error' : ''}`} value={lectureInfo.lectureName3} onChange={(e) => handleChange('lectureName3', e.target.value)} />
+                        {lectureInfo.errors.lectureName3 && <div className="error-message">필수 입력 항목입니다.</div>}
+                    </div>
+
+                    {/* 장소 */}
+                    <div className="lecture-name-container">
+                        <label className="lecture-name-label">장소</label>
+                        <input type="text" className={`lecture-name-input ${lectureInfo.errors.lectureName4 ? 'input-error' : ''}`} value={lectureInfo.lectureName4} onChange={(e) => handleChange('lectureName4', e.target.value)} />
+                        {lectureInfo.errors.lectureName4 && <div className="error-message">필수 입력 항목입니다.</div>}
+                    </div>
+
+                    {/* 제출 버튼 */}
+                    <div className="lecture-preview-button-container">
+                        <button className="lecture-preview-button" onClick={handleSubmit}>
+                            등록하기
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <div className="input-row">
-            <span className="label">강의개요</span>
-            <div className="input-wrapper">
-              <input 
-                type="text" 
-                value={formData.description}
-                onChange={(e) => setFormData({...formData, description: e.target.value})}
-                onBlur={() => handleBlur('description')}
-                className={getFieldError('description') ? 'error' : ''}
-              />
-              {getFieldError('description') && <ErrorMessage message={getFieldError('description')} />}
-            </div>
-          </div>
         </div>
-
-        <div className="lecture-info-section">
-          <h3 className="section-title">강의 정보<span className="required">*</span></h3>
-          
-          <div className="input-row-2">
-            <span className="label">일시</span>
-            <input 
-              type="text" 
-              value={formData.date}
-              readOnly
-            />
-          </div>
-          
-          <div className="input-row-2">
-            <span className="label">신청</span>
-            <input 
-              type="text" 
-              value={formData.registration}
-              readOnly
-            />
-          </div>
-          
-          <div className="input-row-2">
-            <span className="label">비용</span>
-            <input 
-              type="text" 
-              value={formData.cost}
-              readOnly
-            />
-          </div>
-          
-          <div className="input-row-2">
-            <span className="label">장소</span>
-            <input 
-              type="text" 
-              value={formData.location}
-              onChange={(e) => setFormData({...formData, location: e.target.value})}
-              onBlur={() => handleBlur('location')}
-              className={getFieldError('location') ? 'error' : ''}
-              placeholder="필수 입력 항목입니다."
-            />
-            {getFieldError('location') && <ErrorMessage message={getFieldError('location')} />}
-          </div>
-          
-          <div className="input-row people-row">
-            <label className="label">인원</label>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <div style={{ flex: 1, marginRight: '10px' }}>
-                <input 
-                  type="text" 
-                  value={formData.minPeople}
-                  readOnly
-                />
-              </div>
-              <div style={{ flex: 1 }}>
-                <input 
-                  type="text" 
-                  value={formData.maxPeople}
-                  readOnly
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="lecture-detail-section">
-          <h3 className="section-title">상세 내용</h3>
-          <textarea 
-            className="detail-content-input"
-            placeholder="강의 상세 내용을 입력해주세요."
-            value={formData.gptContent}
-            onChange={(e) => setFormData({...formData, gptContent: e.target.value})}
-          />
-        </div>
-
-        <div className="preview-bottom-button-wrapper">
-          <button className="preview-submit-button" onClick={handleSubmit}>
-            등록하기
-          </button>
-        </div>
-      </div>
-    </div>
-    
-  );
-};
+        </>
+    );
+}
 
 export default LecturePreview;

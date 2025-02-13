@@ -1,481 +1,143 @@
-.preview-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  z-index: 1000;
-  overflow-y: auto;
-}
-
-.preview-header {
+.lecturepreview-header {
   display: flex;
   align-items: center;
-  padding: 20px 16px;  /* 상하 패딩 증가 */
-  border-bottom: 1px solid #F2F2F2;
-  position: sticky;
-  top: 0;
-  background: white;
-  height: 55px;  /* 높이 증가 */
+  padding: 10px 20px; /* Adjust padding as needed */
+  background-color: #fff; /* Adjust the background color as needed */
+  border-bottom: 1px solid #e0e0e0; /* Adds a subtle border to the bottom */
 }
 
-.lecture-preview-back-button {
-  border: none;
+.lecturepreview-back-button {
   background: none;
-  padding: 0;
+  border: none;
   cursor: pointer;
+  margin-top: 50px;
+  width: 20px;
+  height: 20px;
+}
+
+.lecturepreview-title {
+  margin-left: 77px; /* This creates space between the back button and the title */
+  font-size: 17px; /* Adjust font size as necessary */
+  color: #333;
+  margin-top: 50px;
+  font-weight: 450;
+}
+
+.lecturepreview-description {
+  font-size: 18px;
+  color: black;
+  font-weight: 600;
+  margin-top: 4px;
+  margin-left: 155px;
+}
+
+.lecturepreview-suffix {
+  font-size: 18px;
+  font-weight: 650; 
+  color: black;
+}
+
+.lecturepreview-main-subtitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #216CFA;
+  margin-left: 110px;
+}
+
+.lecture-topic-container, .lecture-name-container {
   display: flex;
-  align-items: center;
-  height: 24px;  /* 상단 마진 추가 */
+  align-items: center; /* Ensures vertical alignment is centered */
+  justify-content: flex-start; /* Ensures horizontal alignment to start */
+  margin-top: 10px; /* Consistent spacing */
+  width: 100%; /* Takes full width to line up edge-to-edge */
 }
 
-.lecture-preview-back-button img {
-  width: 13px;
-  height: 13px;
-  margin-top: 39px;
-}
-
-.preview-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  font-weight: 400;
-  margin: 0;
-  margin-top: 40px; 
-}
-
-.preview-content {
-  padding: 20px 0;  /* 좌우 패딩 제거 */
-}
-
-.preview-profile {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  margin-bottom: 24px;
-  margin-left: 20px;
-}
-
-.thumbnail-section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 120px;
-}
-
-.thumbnail-box {
-  width: 120px;
-  height: 120px;
-  border: 1px solid #E0E0E0;
+.lecture-topic-input, .lecture-name-input {
+  padding: 8px;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #F5F5F5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
-  margin-left: -7px;
-  overflow: hidden;  /* 이미지가 박스를 벗어나지 않도록 */
+  width: 250px; /* Adjust width to account for label width */
 }
 
-.thumbnail-box.error {
-  border-color: #2D68FF;
+.lecture-name-input.error, .lecture-topic-input.error {
+  border: 2px solid #216CFA; /* Blue border for error inputs */
 }
 
-.lecture-icon {
-  width: 32px;
-  height: 32px;
-  opacity: 0.5;
-}
-
-.thumbnail-text {
+#lecture-name-label1, #lecture-name-label2, #lecture-info-label, .lecture-label {
+  margin-right: 0px; 
   font-size: 14px;
-  color: #666666;
+  font-weight: 300;
+  margin-left: 15px;
+  width: 80px;
 }
 
-.preview-user-info {
-  flex: 1;
-  padding-top: 8px;
-  margin-top: 28px;
+.lecturepreview-poster-icon {
+  width: 135px;
+  height: 135px;
 }
 
-.user-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%; 
-}
-
-.user-info h2 {
-  font-size: 17px;
-  margin-bottom: 0px;
-}
-
-.user-info p , .user-info h2 {
-    text-align: left;
-    margin-top: 40px;
-    margin-left: -5px;
-}
-
-.user-info p {
-    color: #1A1A1A;
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 4px;
-  }
-
-.username-blue {
-    color: #2D68FF;
-    font-weight: 600;
-    font-size: 18px;
-  } 
-
-
-.username-black {
-  color: #1A1A1A;
+.lecturepreview-subtitle {
+  margin-top: 50px;
   font-weight: 600;
   font-size: 18px;
+  margin-left: 45px;
 }
 
-
-.user-message {
-  font-size: 17.5px;
-  color: #1A1A1A;
-  font-weight: 600;
-  margin-left: 0px;
-  margin-top: -2px;
-}
-
-
-.section-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1A1A1A;
-  margin: 0 0 15px 0;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  transition: color 0.3s ease;  /* 색상 변경 시 부드러운 전환 효과 */
-}
-
-.label {
-  min-width: 70px;
-  color: #666666;
-  font-size: 12px;
-  text-align: left;
-  display: block; /* 레이블을 블록 요소로 만들어 너비 전체를 차지하게 함 */
-  color: #666666;
-  font-size: 14px;
-  margin-bottom: 10px; /* 레이블과 입력 필드 사이의 간격 추가 */
-  }
-  
-
-.input-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 14px;
-  padding-left: 0;
-}
-
-.input-row input {
-  width: 70%;  /* input-row-2와 동일한 너비로 변경 */
-  height: 28px;
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-right: 0;  /* 오른쪽 마진 제거 */
-}
-
-.input-row-2 {
-  display: flex;
-  align-items: center;
-  margin-bottom: 14px;
-  padding-left: 0;
-}
-
-.input-row-2 input {
-  height: 28px;
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-right: 0;
-}
-
-/* 일반 입력 필드의 너비 설정 */
-.input-row-2 > input {
-  width: 70%;
-}
-
-.required {
-  color: #2D68FF;
-}
-
-
-.people-inputs input {
-  height: 28px; /* 통일된 높이 설정 */
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  font-size: 11px;
-  margin-right: 20px;
-}
-
-
-.error {
-  border-color: #2D68FF
-}
-
-.error-message {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #2D68FF;
-  font-size: 12px;
-}
-
-.error-message img {
-  width: 16px;
-  height: 16px;
-}
-
-.preview-thumbnail.error {
-  border: 3px solid #2D68FF;
-}
-
-.preview-thumbnail .error-message {
-  position: absolute;
+.lecture-preview-button-container {
+  position: fixed;
+  bottom: 0;
   left: 0;
-  width: 100%;
-  text-align: center;
-}
-
-/* input-wrapper 내부의 input이 에러 상태일 때 */
-.input-wrapper input.error {
-  border-color: #2D68FF;
-}
-
-.preview-bottom-button-wrapper {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 16px;
-    background-color: white;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-   
-  }
-  
-  .preview-submit-button {
-    width: 100%;
-    padding: 14px 0;
-    background-color: #216CFA;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-  }
-  
-  .preview-submit-button:hover {
-    background-color: #1a56c6;
-  }
-
-.input-wrapper input::placeholder {
-  color: #2D68FF;
-}
-
-.thumbnail-error-message {
-  color: #2D68FF;
-  font-size: 14px;
-  margin-top: 8px;
-  text-align: center;
-  width: 100%;
-}
-
-.error-text {
-  color: #2D68FF;
-  font-size: 14px;
-  margin-top: 8px;
-  text-align: center;
-}
-
-
-/* placeholder 텍스트 스타일 */
-.input-wrapper input:placeholder-shown {
-  color: #2D68FF;
-}
-
-#lecture-subject-row input {
-  width: 70%;  /* 다른 입력 필드와 동일한 너비로 변경 */
-  height: 28px;
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #1A1A1A;
-  background-color: white;
-  margin-right: 0;
-}
-
-#lecture-info-row input {
-  width: 70%;  /* 다른 입력 필드와 동일한 너비로 변경 */
-  height: 28px;
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #1A1A1A;
-  background-color: white;
-  margin-right: 0;
-}
-
-/* 공통 스타일 */
-.input-row input,
-.input-row-2 input,
-#lecture-subject-row input,
-#lecture-info-row input {
-  width: 70%;
-  height: 28px;
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-right: 0;
-}
-
-/* 레이아웃 컨테이너 스타일 */
-.lecture-subject-section,
-.lecture-info-section {
-  margin: 20px 16px;
-  width: calc(100% - 32px);  /* 양쪽 마진을 고려한 전체 너비 */
-}
-
-/* 입력 행 스타일 */
-.input-row,
-.input-row-2 {
-  display: flex;
-  align-items: center;
-  margin-bottom: 14px;
-  padding-left: 0;
-  width: 100%;
-}
-
-.lecture-info-section {
-  position: relative;
-  margin-bottom: 24px;
-}
-
-.input-row-2 input.error {
-  border-color: #2D68FF;
-}
-
-.section-error {
-  margin-top: 8px;
-  margin-left: -4px;
-}
-
-.error-message {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #2D68FF;
-  font-size: 12px;
-}
-
-.thumbnail-preview {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;  /* 이미지 비율 유지하면서 박스 채우기 */
-}
-
-/* 이미지가 있을 때는 기본 아이콘과 텍스트 숨김 */
-.thumbnail-box img.thumbnail-preview + .lecture-icon,
-.thumbnail-box img.thumbnail-preview + .thumbnail-text {
-  display: none;
-}
-
-.error-title {
-  color: #2D68FF;
-}
-
-/* 인원 입력 컨테이너 스타일 */
-.people-input-container {
-  display: flex;
-  width: 70%;       /* 장소 입력 필드와 동일한 너비 */
-  gap: 8px;          /* 두 입력 필드 간격을 최소화 */
-}
-
-/* 인원 입력 필드 스타일 */
-.people-inputs input {
-  flex: 1;                /* 두 입력 필드가 동일한 너비를 가짐 */
-  height: 28px;
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-right: 0;         /* 오른쪽 마진 제거 */
-}
-
-.lecture-detail-section {
-  margin: 20px 16px;
+  right: 0;
   padding: 16px;
-  background-color: #fff;
-  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
-.gpt-content {
-  white-space: pre-wrap;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #1A1A1A;
-}
-
-.gpt-content h2 {
+.lecture-preview-button {
+  width: 100%;
+  padding: 14px 0;
+  background-color: #216CFA;
+  color: white;
+  border: none;
+  border-radius: 4px;
   font-size: 16px;
   font-weight: 600;
-  margin: 24px 0 12px 0;
+  cursor: pointer;
+  margin-top: -10px;
+  margin-bottom: 10px;
 }
 
-.gpt-content h3 {
-  font-size: 15px;
-  font-weight: 500;
-  margin: 16px 0 8px 0;
+.lecture-preview-button:hover {
+  background-color: #1a56c6;
 }
 
-.gpt-content p {
-  margin: 8px 0;
+.lecture-info-container, .lecture-topic-container {
+  display: flex;
+  flex-direction: column; /* Ensures the labels and inputs are stacked vertically */
+  align-items: flex-start; /* Aligns items to the start of the container */
+  margin-top: -10px;
+   /* Full width to match other containers */
 }
 
-.gpt-content ul {
-  margin: 8px 0;
-  padding-left: 20px;
+/* Specific styles for 강의주제 and 강의정보 labels */
+#lecture-info-label{ 
+  font-size: 24px; /* Larger font size */
+  font-weight: 700; /* Bolder font weight */
+  color: black;
+  margin-top: 45px;
+  margin-left: 15px;
 }
 
-.gpt-content li {
-  margin: 4px 0;
+#lecture-topic-label {
+  font-size: 24px; /* Larger font size */
+  font-weight: 700; /* Bolder font weight */
+  color: black;
+  margin-top: 70px;
+  margin-left: 15px;
 }
 
-.gpt-content h2:first-child {
-  margin-top: 0;
-}
-
-.detail-content-input {
-  width: 100%;
-  min-height: 200px;
-  padding: 12px;
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #1A1A1A;
-  resize: vertical;
-  font-family: inherit;
-}
-
-.detail-content-input:focus {
-  outline: none;
-  border-color: #2D68FF;
-}
-
-.detail-content-input::placeholder {
-  color: #999;
+/* Styling for blue asterisks */
+.important-star {
+  color: #216CFA; /* Blue color for the asterisks */
 }
