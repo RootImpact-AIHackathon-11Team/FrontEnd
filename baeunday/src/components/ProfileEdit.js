@@ -143,7 +143,7 @@ const ProfileEdit = () => {
         <div className="profileItem" onClick={handleDescriptionEdit}>
           <span className="itemLabel">한 줄 소개</span>
           <div className="itemContent">
-            <span>나로 말할 것 같으면~자신감...</span>
+            <span>{profileData.field || '한 줄 소개를 입력해주세요'}</span>
             <img src={arrowIcon} alt="화살표" className="profileeditarrowIcon" />
           </div>
         </div>

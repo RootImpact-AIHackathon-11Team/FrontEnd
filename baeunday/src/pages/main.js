@@ -29,6 +29,7 @@ const MainPage = () => {
   const [error, setError] = useState(null);
   const [hasNext, setHasNext] = useState(true);
   const [nextCursor, setNextCursor] = useState(null);
+  const [nextId, setNextId] = useState(null);
   
   // 필터 매핑 객체들
   const statusMapping = {
@@ -81,65 +82,116 @@ const MainPage = () => {
     if (node) observerRef.current.observe(node);
   }, [loading, hasNext]);
 
+  // Axios 인터셉터 설정
+  useEffect(() => {
+    // Request 인터셉터
+    axios.interceptors.request.use(
+      (config) => {
+        console.log('🚀 Request:', {
+          method: config.method?.toUpperCase(),
+          url: config.url,
+          headers: config.headers,
+          params: config.params,
+          data: config.data
+        });
+        return config;
+      },
+      (error) => {
+        console.error('❌ Request Error:', error);
+        return Promise.reject(error);
+      }
+    );
+
+    // Response 인터셉터
+    axios.interceptors.response.use(
+      (response) => {
+        console.log('✅ Response:', {
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers,
+          data: response.data
+        });
+        return response;
+      },
+      (error) => {
+        console.error('❌ Response Error:', {
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          headers: error.response?.headers,
+          data: error.response?.data,
+          error: error.message
+        });
+        return Promise.reject(error);
+      }
+    );
+  }, []);
+
   // 초기 강의 목록 로딩
   const fetchLectures = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
+      
       if (!token) {
         setError('로그인이 필요합니다.');
         navigate('/login');
         return;
       }
-      
+
+      const sort = sortMapping[selectedFilters['최신순']] || 'recent';
+      const params = new URLSearchParams();
+      params.append('sort', sort);
+
       const status = statusMapping[selectedFilters['모집상태']];
       const feeRange = feeMapping[selectedFilters['신청금액']];
-      const sort = sortMapping[selectedFilters['최신순']];
       
-      const params = { sort: sort || 'recent' };
       if (status && status !== 'ALL') {
-        params.status = status;
+        params.append('status', status);
       }
       if (feeRange && feeRange !== 'ALL') {
-        params.feeRange = feeRange;
+        params.append('feeRange', feeRange);
       }
-      
-      console.log('API 요청 정보:', {
-        url: `${API_BASE_URL}/posts`,
-        params,
+
+      if (selectedRegion !== '전국') {
+        params.append('province', selectedRegion);
+      }
+      if (selectedCity !== '전체') {
+        params.append('city', selectedCity);
+      }
+
+      const config = {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Accept': '*/*'
         }
+      };
+
+      console.log('Request Details:', {
+        url: `${API_BASE_URL}/posts?${params.toString()}`,
+        headers: config.headers,
+        token: token
       });
 
-      const response = await axios.get(`${API_BASE_URL}/posts`, {
-        params,
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await axios.get(`${API_BASE_URL}/posts?${params.toString()}`, config);
       
       if (response.data && response.data.data) {
         const { body, cursor } = response.data.data;
         if (body && body.postList) {
           setLectures(body.postList);
           setHasNext(cursor.hasNext);
-          setNextCursor(cursor.nextId);
+          setNextCursor(cursor.nextCursor);
+          setNextId(cursor.nextId);
         } else {
           setLectures([]);
         }
       }
     } catch (error) {
-      console.error('에러 상세 정보:', {
-        status: error.response?.status,
-        data: error.response?.data,
-        message: error.message
-      });
+      console.error('API 요청 에러:', error);
+      console.error('요청 헤더:', error.config?.headers);  // 에러 발생 시 헤더 정보도 출력
       if (error.response?.status === 403) {
-        setError('접근 권한이 없습니다. 로그인이 필요합니다.');
+        localStorage.removeItem('token');
+        setError('접근 권한이 없습니다.');
         navigate('/login');
-      } else if (error.response?.status === 400) {
-        setError('잘못된 요청입니다.');
       } else {
         setError('강의 목록을 불러오는데 실패했습니다.');
       }
@@ -155,53 +207,71 @@ const MainPage = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
+      
       if (!token) {
         setError('로그인이 필요합니다.');
         navigate('/login');
         return;
       }
 
+      const sort = sortMapping[selectedFilters['최신순']] || 'recent';
+      const params = new URLSearchParams();
+      params.append('sort', sort);
+      
+      if (nextCursor) {
+        params.append('cursor', nextCursor);
+        params.append('cursorId', String(nextId));
+      }
+
       const status = statusMapping[selectedFilters['모집상태']];
       const feeRange = feeMapping[selectedFilters['신청금액']];
-      const sort = sortMapping[selectedFilters['최신순']];
-
-      const params = { sort: sort || 'recent' };
-      if (nextCursor) {
-        params.cursor = nextCursor;
-      }
+      
       if (status && status !== 'ALL') {
-        params.status = status;
+        params.append('status', status);
       }
       if (feeRange && feeRange !== 'ALL') {
-        params.feeRange = feeRange;
+        params.append('feeRange', feeRange);
+      }
+      if (selectedRegion !== '전국') {
+        params.append('province', selectedRegion);
+      }
+      if (selectedCity !== '전체') {
+        params.append('city', selectedCity);
       }
 
-      const response = await axios.get(`${API_BASE_URL}/posts`, {
-        params,
+      const config = {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Accept': '*/*'
         }
+      };
+
+      console.log('Pagination Request Details:', {
+        url: `${API_BASE_URL}/posts?${params.toString()}`,
+        headers: config.headers,
+        token: token,
+        cursor: nextCursor,
+        cursorId: nextId
       });
 
-      if (response.data && response.data.data) {
-        const { body, cursor } = response.data.data;
-        if (body && body.postList) {
+      const response = await axios.get(`${API_BASE_URL}/posts?${params.toString()}`, config);
+
+      if (response.data?.data) {
+        const { cursor, body } = response.data.data;
+        if (body?.postList) {
           setLectures(prev => [...prev, ...body.postList]);
           setHasNext(cursor.hasNext);
-          setNextCursor(cursor.nextId);
+          setNextCursor(cursor.nextCursor);
+          setNextId(cursor.nextId);
         }
       }
     } catch (error) {
-      console.error('페이지네이션 에러:', {
-        status: error.response?.status,
-        data: error.response?.data,
-        message: error.message
-      });
-      if (error.response?.status === 401) {
-        setError('토큰이 만료되었습니다. 다시 로그인해주세요.');
-        navigate('/login');
-      } else if (error.response?.status === 403) {
+      console.error('페이지네이션 에러:', error);
+      console.error('요청 헤더:', error.config?.headers);
+      if (error.response?.status === 403) {
+        localStorage.removeItem('token');
         setError('접근 권한이 없습니다.');
+        navigate('/login');
       } else {
         setError('추가 강의 목록을 불러오는데 실패했습니다.');
       }
@@ -211,8 +281,19 @@ const MainPage = () => {
   };
 
   useEffect(() => {
+    // 컴포넌트 마운트 시와 필터(정렬, 모집상태, 금액) + 지역/도시 변경 시 새 데이터 fetch
+    setLectures([]);
+    setNextCursor(null);
+    setNextId(null);
+    setHasNext(true);
     fetchLectures();
-  }, []);
+  }, [
+    selectedFilters['최신순'],
+    selectedFilters['모집상태'],
+    selectedFilters['신청금액'],
+    selectedRegion,          // <-- 추가
+    selectedCity             // <-- 추가
+  ]);
 
   const handleLectureClick = (lectureId) => {
     navigate(`/lecture/${lectureId}`);
@@ -221,7 +302,7 @@ const MainPage = () => {
   const options = {
     최신순: ['최신순', '마감순', '찜 많은 순'],
     모집상태: ['전체 상태', '모집 중', '인원 달성', '종료'],
-    신청금액: ['전체 금액', '무료', '3만원 이하', '3~5만원', '10만원 이상']
+    신청금액: ['전체 금액', '무료', '3만원 이하', '3~5만원', '5~10만원', '10만원 이상']
   };
 
   const handleCategoryClick = (category) => {
@@ -240,6 +321,11 @@ const MainPage = () => {
     setSelectedFilters((prev) => ({ ...prev, [activeCategory]: label }));
     if (activeCategory === '최신순') {
       setActiveCategory(label);
+      // 정렬 옵션이 변경될 때마다 상태 초기화
+      setLectures([]); // 기존 데이터 초기화
+      setNextCursor(null); // cursor 초기화
+      setNextId(null); // cursorId 초기화
+      setHasNext(true); // hasNext 초기화
     }
     setSheetOpen(false);
   };
@@ -343,10 +429,11 @@ const MainPage = () => {
                 <h2>{lecture.title}</h2>
                 <div className="lecture-details">
                   <p>
-                    {lecture.city} · D-{calculateDday(lecture.deadline)} · 
+                    {lecture.city} · {calculateDday(lecture.deadline)} · 
                     <span style={{ color: '#216CFA' }}>
-                      {lecture.feeRange === 0 || !lecture.feeRange ? '무료' : `${lecture.feeRange.toLocaleString()}원`}
-                    </span>
+  {lecture.fee === 0 ? '무료' : `${lecture.fee.toLocaleString()}원`}
+</span>
+
                   </p>
                   <button className={`status-btn ${lecture.status === 'AVAILABLE' ? 'recruiting' : 'filled'}`}>
                     {lecture.status === 'AVAILABLE' ? '모집중' : '인원 달성'}
@@ -382,7 +469,14 @@ const calculateDday = (deadline) => {
   const dueDate = new Date(deadline);
   const diffTime = dueDate - today;
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays;
+
+  if (diffDays >= 0) {
+    // 마감일이 아직 남아있다면 D-값
+    return `D-${diffDays}`;
+  } else {
+    // 이미 마감일이 지났다면 D+값
+    return `D+${Math.abs(diffDays)}`;
+  }
 };
 
 export default MainPage;

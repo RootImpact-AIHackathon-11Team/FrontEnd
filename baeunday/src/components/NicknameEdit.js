@@ -14,7 +14,7 @@ const NicknameEdit = () => {
 
   // 뒤로가기 핸들러
   const handleBack = () => {
-    navigate('/mypage');
+    navigate(-1);
   };
 
   // 닉네임 입력 변경 시 상태 초기화
@@ -120,7 +120,7 @@ const NicknameEdit = () => {
 
       if (response.ok) {
         alert(data.message || '닉네임 수정 완료');
-        navigate('/mypage');
+        navigate(-1);
       } else {
         setErrorMessage(data.message || '닉네임 수정 실패');
         setSuccessMessage('');
