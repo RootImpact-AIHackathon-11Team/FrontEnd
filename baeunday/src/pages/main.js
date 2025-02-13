@@ -429,7 +429,7 @@ const MainPage = () => {
                 <h2>{lecture.title}</h2>
                 <div className="lecture-details">
                   <p>
-                    {lecture.city} · {calculateDday(lecture.deadline)} · 
+                  {lecture.province} {lecture.city} · {calculateDday(lecture.deadline)} · 
                     <span style={{ color: '#216CFA' }}>
   {lecture.fee === 0 ? '무료' : `${lecture.fee.toLocaleString()}원`}
 </span>

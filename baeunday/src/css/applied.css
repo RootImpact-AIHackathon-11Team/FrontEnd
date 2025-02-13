@@ -1,12 +1,12 @@
 .applied-container {
-  padding-top: 4.5vh; /* 상단 여백 제거 */
+  padding-top: 4.5vh;
+  padding-bottom: calc(80px + 15px); /* 하단 네비게이션만큼 공간 확보 */
   font-family: 'Pretendard', sans-serif;
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
   position: relative;
 }
-
 .applied-filter-wrap {
   padding: 14px 15px;
   padding-bottom: 0px;
@@ -197,4 +197,13 @@
   width: 20px;  /* 16px에서 20px로 증가 */
   height: 20px;  /* 16px에서 20px로 증가 */
   cursor: pointer;
+}
+
+.no-lectures {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #666;
+  font-size: 16px;
 }

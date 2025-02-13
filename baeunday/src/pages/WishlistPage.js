@@ -41,15 +41,25 @@ const WishlistPage = () => {
       if (response.status === 200) {
         const { cursor, body } = response.data.data;
         
+        // body나 body.postList가 null일 경우 빈 배열로 처리
+        const postList = body?.postList || [];
+        
         setWishlistItems(prev => 
           nextCursor 
-            ? [...prev, ...body.postList]
-            : body.postList
+            ? [...prev, ...postList]
+            : postList
         );
         
-        setHasMore(cursor.hasNext);
-        setNextCursor(cursor.nextCursor);
-        setNextId(cursor.nextId);
+        // cursor가 있을 경우에만 페이징 정보 업데이트
+        if (cursor) {
+          setHasMore(cursor.hasNext);
+          setNextCursor(cursor.nextCursor);
+          setNextId(cursor.nextId);
+        } else {
+          setHasMore(false);
+          setNextCursor(null);
+          setNextId(null);
+        }
       }
     } catch (error) {
       console.error('찜 목록 조회 실패:', error);
@@ -78,13 +88,15 @@ const WishlistPage = () => {
     navigate(`/lecture/${lectureId}`);
   };
 
-  // deadline을 D-day로 변환하는 함수
+  // deadline을 D-day로 변환하는 함수 수정
   const calculateDday = (deadline) => {
     const today = new Date();
     const dueDate = new Date(deadline);
     const diffTime = dueDate - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
+    
+    // 음수일 경우 D+로 표시
+    return diffDays < 0 ? `D+${Math.abs(diffDays)}` : `D-${diffDays}`;
   };
 
   return (
@@ -92,31 +104,37 @@ const WishlistPage = () => {
       <AppliedHeader title="찜" />
       
       <div className="wishlist-content" onScroll={handleScroll}>
-        {wishlistItems.map((item) => (
-          <div 
-            key={item.postId} 
-            className="wishlist-item"
-            onClick={() => handleLectureClick(item.postId)}
-          >
-            <div className="wishlist-image">
-              <img src={item.imgURL} alt={item.title} />
-            </div>
-            <div className="wishlist-info">
-              <h2>{item.title}</h2>
-              <p>
-                <span>
-                  {item.city} {item.address} · D-{calculateDday(item.deadline)} · 
-                  <span style={{ color: '#216CFA' }}>
-                    {item.fee === 0 ? '무료' : `${item.fee.toLocaleString()}원`}
+        {wishlistItems.length > 0 ? (
+          wishlistItems.map((item) => (
+            <div 
+              key={item.postId} 
+              className="wishlist-item"
+              onClick={() => handleLectureClick(item.postId)}
+            >
+              <div className="wishlist-image">
+                <img src={item.imgURL} alt={item.title} />
+              </div>
+              <div className="wishlist-info">
+                <h2>{item.title}</h2>
+                <p>
+                  <span>
+                    {item.province} {item.city} · {calculateDday(item.deadline)} · 
+                    <span style={{ color: '#216CFA' }}>
+                      {item.fee === 0 ? '무료' : `${item.fee.toLocaleString()}원`}
+                    </span>
                   </span>
-                </span>
-                <span className={`status-badge ${item.status === 'AVAILABLE' ? 'recruiting' : 'completed'}`}>
-                  {item.status === 'AVAILABLE' ? '모집중' : item.status === 'ING' ? '진행중' : '종료'}
-                </span>
-              </p>
+                  <span className={`status-badge ${item.status === 'AVAILABLE' ? 'recruiting' : 'completed'}`}>
+                    {item.status === 'AVAILABLE' ? '모집중' : item.status === 'ING' ? '진행중' : '종료'}
+                  </span>
+                </p>
+              </div>
             </div>
+          ))
+        ) : (
+          <div className="no-wishlist">
+            <p>찜한 강의가 없습니다.</p>
           </div>
-        ))}
+        )}
         {isLoading && <div className="loading">로딩 중...</div>}
       </div>
       <BottomNavigation />
