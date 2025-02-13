@@ -378,7 +378,6 @@
   padding: 5px 30px 20px 30px;  /* 하단 패딩만 20px로 감소 */
 }
 
-/* application-status 섹션 내에 추가 */
 .like-info {
   display: flex;
   align-items: center;
@@ -390,10 +389,10 @@
 .jjimed-icon {
   width: 20px;
   height: 20px;
+  transition: transform 0.2s ease;
 }
 
-.like-count {
-  font-size: 14px;
-  color: #666;
+.jjimed-icon:hover {
+  transform: scale(1.1);
 }
 

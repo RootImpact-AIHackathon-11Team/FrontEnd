@@ -13,6 +13,7 @@ import mainEx4 from '../assets/examples/mainEx4.png';
 import mainEx5 from '../assets/examples/mainEx5.png';
 import profileEx1 from '../assets/examples/profileEx1.png';
 import profileDft from '../assets/examples/profileDft1.png';
+import jjimIcon from '../assets/images/jjim.svg';
 import jjimedIcon from '../assets/images/jjimed.svg';
 
 const dummyLectures = {
@@ -154,7 +155,59 @@ const LectureDetailPage = () => {
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState('조림핑');
   const [isOwner, setIsOwner] = useState(false);
+  const [isHearted, setIsHearted] = useState(false);
   const navigate = useNavigate();
+
+  // 찜하기 토글 함수
+  const toggleHeart = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
+
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': '*/*'
+        }
+      };
+
+      // Request 로깅
+      console.log('🚀 Heart Request:', {
+        method: 'POST',
+        url: `${API_BASE_URL}/posts/${lectureId}/heart`,
+        headers: config.headers
+      });
+
+      const response = await axios.post(
+        `${API_BASE_URL}/posts/${lectureId}/heart`,
+        {},
+        config
+      );
+
+      // Response 로깅
+      console.log('✅ Heart Response:', response.data);
+
+      if (response.status === 200) {
+        setLectureData(prev => ({
+          ...prev,
+          isHearted: !prev.isHearted,
+          likeCount: prev.isHearted ? prev.likeCount - 1 : prev.likeCount + 1
+        }));
+      }
+      
+    } catch (error) {
+      console.error('❌ Heart Error:', error);
+      if (error.response?.status === 403) {
+        localStorage.removeItem('token');
+        setError('접근 권한이 없습니다.');
+        navigate('/login');
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchLectureDetail = async () => {
@@ -173,17 +226,8 @@ const LectureDetailPage = () => {
           }
         };
 
-        // Request 로깅
-        console.log('🚀 Request:', {
-          method: 'GET',
-          url: `${API_BASE_URL}/posts/${lectureId}`,
-          headers: config.headers
-        });
-
         const response = await axios.get(`${API_BASE_URL}/posts/${lectureId}`, config);
-
-        // Response 로깅
-        console.log('✅ Response:', response.data);
+        console.log('✅ Lecture Detail Response:', response.data);
 
         if (response.data?.data?.body) {
           const lectureDetail = response.data.data.body;
@@ -208,16 +252,11 @@ const LectureDetailPage = () => {
             manner: lectureDetail.user.manner // 매너 점수 원본값 저장
           });
           setIsOwner(lectureDetail.isMyPost);
+          setIsHearted(lectureDetail.isHearted);
+          console.log('Initial isHearted status:', lectureDetail.isHearted);
         }
       } catch (error) {
         console.error('❌ Error:', error);
-        if (error.response?.status === 403) {
-          localStorage.removeItem('token');
-          setError('접근 권한이 없습니다.');
-          navigate('/login');
-        } else {
-          setError('강의 정보를 불러오는데 실패했습니다.');
-        }
       }
     };
 
@@ -284,10 +323,11 @@ const LectureDetailPage = () => {
             <div className="temperature-container">
               <span className="lecture-detail-temperature">{lectureData.instructorTemperature}</span>
               <div className="temperature-bar">
-                <div 
-                  className="temperature-fill" 
-                  style={{ width: `${getMannerPercentage(lectureData.manner)}%` }}
-                ></div>
+              <div 
+              className="temperature-fill" 
+              style={{ width: `${getMannerPercentage(lectureData.manner)}%` }}
+            ></div>
+
               </div>
             </div>
           </div>
@@ -336,8 +376,14 @@ const LectureDetailPage = () => {
             </div>
           </div>
           <div className="like-info">
-            <img src={jjimedIcon} alt="찜" className="jjimed-icon" />
-            <span className="like-count">{lectureData.likeCount}</span>
+            <img 
+              src={lectureData?.isHearted ? jjimedIcon : jjimIcon} 
+              alt={lectureData?.isHearted ? "찜됨" : "찜하기"} 
+              className="jjimed-icon"
+              onClick={toggleHeart}
+              style={{ cursor: 'pointer' }}
+            />
+            <span className="like-count">{lectureData?.likeCount || 0}</span>
           </div>
         </div>
         
